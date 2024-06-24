@@ -5,7 +5,7 @@
         var searchValue = $(this).val();
         var result = null;
         if (searchValue != null && searchValue != '' && searchValue.length >= 3) {
-            $.getJSON("/VehicleStandardValue/GetMadeModel", { searchString: searchValue }, function (models) {
+            $.getJSON("/IRD_VAVS_Client/VehicleStandardValue/GetMadeModel", { searchString: searchValue }, function (models) {
                 if (models != null && !jQuery.isEmptyObject(models)) {
                     $('.selectpicker').empty(); 
                     $.each(models, function (index, model) {
@@ -25,7 +25,7 @@
         console.log("Selected Option Text4: " + result);
         console.log("result null..................................." + (result !== null) + " / " + (result !== 'undefined') + "/" + (result !== ""))
         if (result !== null && result !== "" && result !== "undefined") {
-            $.getJSON("/VehicleStandardValue/GetMadeModelYear", { madeModel: result }, function (years) {
+            $.getJSON("/IRD_VAVS_Client/VehicleStandardValue/GetMadeModelYear", { madeModel: result }, function (years) {
                 console.log("here1 .............................................");
                 if (years != null && !jQuery.isEmptyObject(years)) {
                     $('#modelYear').empty();
@@ -47,7 +47,7 @@
             console.log("result1 null..................................." + (result1 !== null) + " / " + (result1 !== 'undefined') + "/" + (result1 !== ""))
 
             if (result1 !== null && result1 !== "" && result1 !== "undefined") {
-                $.getJSON("/VehicleStandardValue/GetMadeModelYear", { madeModel: result1 }, function (years) {
+                $.getJSON("/IRD_VAVS_Client/VehicleStandardValue/GetMadeModelYear", { madeModel: result1 }, function (years) {
                     console.log("here2 .............................................");
 
                     if (years != null && !jQuery.isEmptyObject(years)) {

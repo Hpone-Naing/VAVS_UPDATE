@@ -6,7 +6,7 @@
     var selectedStateDivision = lstStateDivisionCtrl.options[lstStateDivisionCtrl.selectedIndex].value;
 
     if (selectedStateDivision != null && selectedStateDivision != '') {
-        $.getJSON("/Login/GetTownshipByStateDivision", { stateDivisionPkId: selectedStateDivision }, function (townships) {
+        $.getJSON("/IRD_VAVS_Client/Login/GetTownshipByStateDivision", { stateDivisionPkId: selectedStateDivision }, function (townships) {
             if (townships != null && !jQuery.isEmptyObject(townships)) {
                 $.each(townships, function (index, township) {
                     lstTownships.append($('<option/>',
@@ -31,7 +31,7 @@ function FilterNRCTownshipInitial(lstNRCTownshipNumberCtrl, lstNRCTownshipInitia
     var selectedNRCTownshipNumber = lstNRCTownshipNumberCtrl.options[lstNRCTownshipNumberCtrl.selectedIndex].value;
     console.log("township number................" + selectedNRCTownshipNumber);
     if (selectedNRCTownshipNumber != null && selectedNRCTownshipNumber != '') {
-        $.getJSON("/Login/GetNRCTownshipInitials", { nrcTownshipNumber: selectedNRCTownshipNumber }, function (townships) {
+        $.getJSON("/IRD_VAVS_Client/Login/GetNRCTownshipInitials", { nrcTownshipNumber: selectedNRCTownshipNumber }, function (townships) {
             if (townships != null && !jQuery.isEmptyObject(townships)) {
                 $.each(townships, function (index, township) {
                     lstNRCTownshipInitials.append($('<option/>',
@@ -54,7 +54,7 @@ function FilterNRCTownshipInitial1(lstNRCTownshipNumberCtrl1, lstNRCTownshipInit
     var selectedNRCTownshipNumber1 = lstNRCTownshipNumberCtrl1.options[lstNRCTownshipNumberCtrl1.selectedIndex].value;
 
     if (selectedNRCTownshipNumber1 != null && selectedNRCTownshipNumber1 != '') {
-        $.getJSON("/Login/GetNRCTownshipInitials", { nrcTownshipNumber: selectedNRCTownshipNumber1 }, function (townships) {
+        $.getJSON("/IRD_VAVS_Client/Login/GetNRCTownshipInitials", { nrcTownshipNumber: selectedNRCTownshipNumber1 }, function (townships) {
             if (townships != null && !jQuery.isEmptyObject(townships)) {
                 $.each(townships, function (index, township) {
                     lstNRCTownshipInitials1.append($('<option/>',
@@ -78,7 +78,7 @@ function FilterStateDivision(lstStateDivisionCtrl, lstNRCTownshipId) {
     var selectedStateDivision = lstStateDivisionCtrl.options[lstStateDivisionCtrl.selectedIndex].value;
 
     if (selectedStateDivision != null && selectedStateDivision != '') {
-        $.getJSON("/PersonalDetail/GetTownships", { stateDivisionCode: selectedStateDivision }, function (townships) {
+        $.getJSON("/IRD_VAVS_Client/PersonalDetail/GetTownships", { stateDivisionCode: selectedStateDivision }, function (townships) {
             if (townships != null && !jQuery.isEmptyObject(townships)) {
                 $.each(townships, function (index, township) {
                     lstNRCTownshipInitials.append($('<option/>',
