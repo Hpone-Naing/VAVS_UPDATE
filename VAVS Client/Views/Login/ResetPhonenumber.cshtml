@@ -1,0 +1,144 @@
+﻿@model VAVS_Client.Classes.ResetPhonenumber
+
+@{
+    Layout = "_AuthLayout";
+}
+<link rel="stylesheet" href="~/css/authcode.css" asp-append-version="true" />
+
+<!--Register -->
+<div class="authentication-inner" style="max-width:700px;">
+    <div class="card">
+        <div class="card-header">
+            <div class="d-flex align-item-end justify-content-end">
+                <span class="me-2" onclick="setLanguage('en')" style="cursor: pointer;"><img width="20px;" src="~/Content/images/united-states.png"></span>
+                <span onclick="setLanguage('my')" style="cursor: pointer;"><img src="~/Content/images/myanmar.png" width="20px;"></span>
+            </div>
+        </div>
+        <div class="card-body">
+            @if (TempData.ContainsKey("Message") && TempData.ContainsKey("CssColor"))
+            {
+                @if (TempData.ContainsKey("Option"))
+                {
+                    @if (TempData["Option"] != null && TempData["Option"].Equals("true"))
+                    {
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                var myModal = new bootstrap.Modal(document.getElementById('alertModel'));
+                                myModal.show();
+                            });
+                        </script>
+                    }
+                    else
+                    {
+                        <div class="alert @TempData["CssColor"] text-center alert-msg" role="alert">
+                            @TempData["Message"]
+                        </div>
+                    }
+                }
+            }
+
+            <div class="d-flex justify-content-center align-item-center">
+                <h4>Welcome To</h4>
+            </div>
+            <!-- Logo -->
+            <div class="d-flex align-item-center justify-content-center">
+                <a asp-controller="Login" asp-action="Index" class="app-brand-link gap-2">
+                    <span class="app-brand-text demo text-body fw-bolder">VAVS Client</span>
+                </a>
+            </div>
+            <div class="app-brand justify-content-center">
+                <a asp-controller="Login" asp-action="Index" class="app-brand-link gap-2">
+                    <span class="app-brand-logo demo">
+                        <img src="~/Content/images/MADBIMG.jpg" width="90px;" />
+                    </span>
+                </a>
+            </div>
+            <!-- /Logo -->
+            <p class="mb-2 ms-4 text-primary">Please Fill Information:</p>
+            <form class="mb-3" method="post" action="@Url.Action("CheckTaxedUser", "Login")">
+                <div class="mb-3">
+                    <div id="otpContainer" class="container mb-4">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="form-group mt-2">
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label class="control-label fw-bold" data-translate="Global_Nrc"> Nrc Number: </label>
+                                        </div>
+                                        <div class="col">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <select id="lstNRCTownshipNumberId" class="form-control" asp-for="NRCTownshipNumber" onchange="FilterNRCTownshipInitial(this, 'lstNRCTownshipInitial')" required>
+                                                        <option value="">?</option>
+                                                        <option value="၁">၁/</option>
+                                                        <option value="၂">၂/</option>
+                                                        <option value="၃">၃/</option>
+                                                        <option value="၄">၄/</option>
+                                                        <option value="၅">၅/</option>
+                                                        <option value="၆">၆/</option>
+                                                        <option value="၇">၇/</option>
+                                                        <option value="၈">၈/</option>
+                                                        <option value="၉">၉/</option>
+                                                        <option value="၁၀">၁၀/</option>
+                                                        <option value="၁၁">၁၁/</option>
+                                                        <option value="၁၂">၁၂/</option>
+                                                        <option value="၁၃">၁၃/</option>
+                                                        <option value="၁၄">၁၄/</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col">
+                                                    <select id="lstNRCTownshipInitial" class="form-control" asp-for="NRCTownshipInitial" required>
+                                                        <option value="">?</option>
+                                                        <option value="ဥကတ">ဥကတ</option>
+                                                        <option value="လသယ">လသယ</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col">
+                                                    <select class="form-control" asp-for="NRCType" required>
+                                                        <option value="">?</option>
+                                                        <option value="(နိုင်)">(နိုင်)</option>
+                                                        <option value="(ဧည့်)">(ဧည့်)</option>
+                                                        <option value="(ဝတ်)">(ဝတ်)</option>
+                                                        <option value="(ပြု)">(ပြု)</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col">
+                                                    <input class="form-control" asp-for="NRCNumber" pattern="\d{5,6}" title="NRC number must contain only 5 to 6 english digits" maxlength="6" required />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <label class="control-label fw-bold" data-translate="Global_OldPhone">ဖုန်းနံပါတ်အဟောင်း</label>
+                            </div>
+                            <div class="col">
+                                <input class="form-control phone" asp-for="OldPhonenumber" placeholder="ဆက်သွယ်ရန်ဖုန်း (09--------)" maxlength="17" pattern="^09\d{5,15}$" title="Phone number must be 09 followed by 5 to 15 number." required />
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <label class="control-label fw-bold" data-translate="Global_NewPhone">ဖုန်ံးနံပါတ်အသစ်</label>
+                            </div>
+                            <div class="col">
+                                <input class="form-control phone" asp-for="NewPhonenumber" placeholder="ဆက်သွယ်ရန်ဖုန်း (09--------)" maxlength="17" pattern="^09\d{5,15}$" title="Phone number must be 09 followed by 5 to 15 number." required />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="signinBtnDiv" class="container mb-3">
+                        <div class="d-flex align-item-center justify-content-center">
+                            <button class="btn btn-primary d-grid w-10" type="submit">Submit</button>
+                            <a class="btn btn-secondry ms-3" href="@Url.Action("LoginUser", "Login")">Back</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- /Register -->

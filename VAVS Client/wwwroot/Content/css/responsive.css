@@ -1,0 +1,9 @@
+﻿
+
+@media (min-width: 576px) {
+    .card {
+        background: red;
+        width: 100%;
+    }
+}
+

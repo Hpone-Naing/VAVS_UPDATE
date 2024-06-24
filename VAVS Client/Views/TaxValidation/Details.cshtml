@@ -1,0 +1,311 @@
+﻿@inject IConfiguration Configuration
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@using Newtonsoft.Json
+@using VAVS_Client.Classes
+
+@model VAVS_Client.Models.TaxValidation
+@{
+    Layout = "_Layout";
+}
+
+@{
+    ViewData["Title"] = "Detail";
+}
+
+<div id="spinner-container">
+    <img id="spinner" decoding="async" src="~/image/loading/spinner.gif" asp-append-version="true" />
+</div>
+
+
+<div style="background-color: #0f3cbd;;" class="row mt-3 border border-dark">
+    <div class="d-flex justify-content-center align-item-center p-1">
+        <label class="text-white" data-translate="TaxValidationDetail_Title"> အသေးစိတ် အချက်အလက်များ </label>
+    </div>
+</div>
+
+<div class="row mt-1" style="background-color: #d7eafe78;">
+    <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="row p-3 text-white" style="background-color: #0f3cbd;;">
+            <label class="fw-bold control-label" data-translate="TaxValidationDetail_TitleForOwner">ယာဥ်ပိုင်ရှင် အချက်အလက်</label>
+        </div>
+        <div class="row p-3" >
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-3 col-6">
+                    <label class="fw-bold  control-label" data-translate="TaxValidationDetail_Name">Owner Name</label>
+                </div>
+                <div class="col p-1 border border-primary">
+                    @{
+                        var name = "";
+                        var loginUserInfoJson = HttpContextAccessor.HttpContext.Session.GetString("LoginUserInfo");
+                        if (!string.IsNullOrEmpty(loginUserInfoJson))
+                        {
+                            var loginUserInfo = JsonConvert.DeserializeObject<TaxpayerInfo>(loginUserInfoJson);
+                            if (loginUserInfo != null)
+                            {
+                                name = loginUserInfo.Name;
+                            }
+                        }
+                    }
+                    @name
+                </div>
+            </div>
+        </div>
+        <div class="row p-3" >
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-3 col-6">
+                    <label class="fw-bold  control-label" data-translate="Global_Nrc">NRC</label>
+                </div>
+                <div class="col p-1  border border-primary">
+                    @Model.PersonNRC
+                </div>
+            </div>
+        </div>
+        <div class="row p-3">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-3 col-6">
+                    <label class="fw-bold  control-label" data-translate="Reg_StateDivision">State/Division</label>
+                </div>
+                <div class="col p-1  border border-primary">
+                    @Model.PersonalDetail.Township.StateDivision.StateDivisionName
+                </div>
+            </div>
+        </div>
+        <div class="row p-3">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-3 col-6">
+                    <label class="fw-bold  control-label" data-translate="Reg_Township">Township</label>
+                </div>
+                <div class="col p-1  border border-primary">
+                    @Model.PersonalDetail.Township.TownshipName
+                </div>
+            </div>
+        </div>
+        <div class="row p-3" >
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-3 col-6">
+                    <label class="fw-bold  control-label" data-translate="TaxValidationDetail_Address">Address</label>
+                </div>
+                <div class="col p-1  border border-primary">
+                    @Model.PersonalDetail.HousingNumber @Model.PersonalDetail.Quarter @Model.PersonalDetail.Street
+                </div>
+            </div>
+        </div>
+        <div class="row p-3" >
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-3 col-6">
+                    <label class="fw-bold  control-label" data-translate="Global_PhoneNo">Phone No</label>
+                </div>
+                <div class="col p-1 border border-primary p-1" style="font-size: 14px;">
+                    @Model.PersonalDetail.PhoneNumber
+                </div>
+            </div>
+        </div>
+        <div class="row p-3" >
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-3 col-6">
+                    <label class="fw-bold  control-label" data-translate="Reg_Email" >Pemail Address</label>
+                </div>
+                <div class="col p-1 border border-primary p-1" style="font-size: 14px;">
+                    @Model.PersonalDetail.Email
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="row p-3 text-white me-2 ms-2" style="background-color: #0f3cbd;;">
+            <label class="fw-bold control-label" data-translate="TaxValidationDetail_TitleForVehicle">မော်တော်ယာဥ်အချက်အလက်</label>
+        </div>
+        <div class="row p-3">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-3 col-6">
+                    <label class="fw-bold  control-label" data-translate="CalculateTax_PlateNo">Plate No</label>
+                </div>
+                <div class="col p-1 border border-primary">
+                    @Model.VehicleNumber
+                </div>
+            </div>
+        </div>
+        <div class="row p-3">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-3 col-6">
+                    <label class="fw-bold  control-label" data-translate="CalculateTax_MakeModel">Make Model</label>
+                </div>
+                <div class="col p-1 border border-primary">
+                    @Model.VehicleBrand
+                </div>
+            </div>
+        </div>
+        <div class="row p-3">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-3 col-6">
+                    <label class="fw-bold  control-label" data-translate="VehicleDetail_BuildType">Build Type</label>
+                </div>
+                <div class="col p-1 border border-primary">
+                    @Model.BuildType
+                </div>
+            </div>
+        </div>
+        <div class="row p-3">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-3 col-6">
+                    <label class="fw-bold  control-label" data-translate="VehicleDetail_EnginePower">Engine Power</label>
+                </div>
+                <div class="col p-1 border border-primary">
+                    @Model.EnginePower
+                </div>
+            </div>
+        </div>
+        <div class="row p-3" >
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-3 col-6">
+                    <label class="fw-bold  control-label" data-translate="CalculateTax_MakeYear">Model Year</label>
+                </div>
+                <div class="col p-1 border border-primary">
+                    @Model.ModelYear
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-12 col-sm-12">
+        <div class="row p-3 text-white" style="background-color: #0f3cbd;">
+            <label class="fw-bold control-label" data-translate="TaxValidationDetail_Tax">အခွန်ဆိုင်ရာ အချက်အလက်</label>
+        </div>
+        <div class="row p-3" >
+            <div class="row">
+                <div class="col-lg-6 col-md-3 col-sm-3 col-6">
+                    <label class="fw-bold  control-label" data-translate="TaxValidationDetail_BaseValue">Base Value</label>
+                </div>
+                <div class="col p-1 border border-primary">
+                    @{
+                        var value = Model.ContractValue > Model.StandardValue ? Model.ContractValue : Model.StandardValue;
+                    }
+                    @value
+                </div>
+            </div>
+        </div>
+        <div class="row p-3" >
+            <div class="row">
+                <div class="col-lg-6 col-md-3 col-sm-3 col-6">
+                    <label class="fw-bold  control-label" data-translate="CalculateTax_IncomeTax">Income Tax</label>
+                </div>
+                <div class="col p-1 border border-primary">
+                    @Model.TaxAmount
+                </div>
+            </div>
+        </div>
+        <div class="row p-3">
+            <div class="row">
+                <div class="col-lg-6 col-md-3 col-sm-3 col-6">
+                    <label class="fw-bold  control-label" data-translate="TaxValidationDetail_TaxPaid">Tax Paid</label>
+                </div>
+                <div class="col p-1 border border-primary">
+                    @Model.TaxAmount
+                </div>
+            </div>
+        </div>
+        <div class="row p-3">
+            <div class="row">
+                <div class="col-lg-6 col-md-3 col-sm-3 col-6">
+                    <label class="fw-bold  control-label" data-translate="TaxValidationDetail_TranactionID">Transaction ID</label>
+                </div>
+                <div class="col p-1 border border-primary">
+                    -
+                </div>
+            </div>
+        </div>
+        <div class="row p-3" >
+            <div class="row">
+                <div class="col-lg-6 col-md-3 col-sm-3 col-6">
+                    <label class="fw-bold  control-label" data-translate="TaxValidationDetail_TranactionDate">Transaction Date</label>
+                </div>
+                <div class="col p-1 border border-primary">
+                    @String.Format("{0:dd/MM/yyyy}", DateTime.Now)
+                </div>
+            </div>
+        </div>
+        <div class="row p-3" >
+            <div class="row">
+                <div class="col-lg-6 col-md-3 col-sm-3 col-6">
+                    <label class="fw-bold  control-label" data-translate="TaxValidationDetail_FormNo">Form No</label>
+                </div>
+                <div class="col-lg-6 col-md-3 col-sm-3 col-6 border border-primary">
+                    -
+                </div>
+            </div>
+        </div>
+        <div class="row p-3" >
+            <div class="row">
+                <div class="col-lg-6 col-md-3 col-sm-3 col-6">
+                    <label class="fw-bold  control-label" data-translate="TaxValidationDetail_QRNo">QR CodeNumber</label>
+                </div>
+                <div class="col p-1 border border-primary">
+                    @Model.QRCodeNumber
+                </div>
+            </div>
+        </div>
+        <div class="row p-3">
+            <div class="row">
+                <div class="col-lg-6 col-md-3 col-sm-3 col-6">
+                    <label class="fw-bold  control-label" data-translate="TaxValidationDetail_DemandNo">Demand Number</label>
+                </div>
+                <div class="col p-1 border border-primary">
+                    @Model.DemandNumber
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@*<div style="background-color: #e1e135ed;" class="row mt-3 border border-dark">
+    <div class="d-flex justify-content-center align-item-center p-1">
+        <label class="text-black"> YBS Company အချက်အလက်စာရင်း </label>
+    </div>
+</div>
+<div class="row mt-1 border border-dark p-3">
+    <label asp-for="YBSCompany" class="fw-bold col-lg-3 col-md-3 col-sm-4 control-label"></label>
+    <div class="col-lg-6 col-md-6 col-sm-8">
+        @Model.YBSCompany.YBSCompanyName
+    </div>
+</div>
+
+<div style="background-color: #e1e135ed;" class="row mt-3 border border-dark">
+    <div class="d-flex justify-content-center align-item-center p-1">
+        <label class="text-black"> ယာဥ်အမျိုးအမည် အချက်အလက်စာရင်း </label>
+    </div>
+</div>
+<div class="row mt-1 border border-dark p-3">
+    <label asp-for="YBSType" class="fw-bold col-lg-3 col-md-3 col-sm-4 control-label"></label>
+    <div class="col-lg-6 col-md-6 col-sm-8">
+        @Model.YBSType.YBSTypeName
+    </div>
+</div>
+
+<div style="background-color: #e1e135ed;" class="row mt-3 border border-dark">
+    <div class="d-flex justify-content-center align-item-center p-1">
+        <label class="text-black"> ာယာဥ်အမျိုးအစား အချက်အလက်စာရင်း </label>
+    </div>
+</div>
+<div class="row mt-1 border border-dark p-3">
+    <label asp-for="Manufacturer" class="fw-bold col-lg-3 col-md-3 col-sm-4 control-label"></label>
+    <div class="col-lg-6 col-md-6 col-sm-8">
+        @Model.Manufacturer.ManufacturerName
+    </div>
+</div>
+
+<div style="background-color: #e1e135ed;" class="row mt-3 border border-dark">
+    <div class="d-flex justify-content-center align-item-center p-1">
+        <label class="text-black"> စက်သုံးဆီ အချက်အလက်စာရင်း </label>
+    </div>
+</div>
+<div class="row mt-1 border border-dark p-3">
+    <label asp-for= "FuelType" class="fw-bold col-lg-3 col-md-3 col-sm-4 control-label"></label>
+    <div class="col-lg-6 col-md-6 col-sm-8">
+        @Model.FuelType.FuelTypeName
+    </div>
+</div>*@
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

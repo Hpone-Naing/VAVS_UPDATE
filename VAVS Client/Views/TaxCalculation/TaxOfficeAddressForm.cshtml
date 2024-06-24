@@ -1,0 +1,62 @@
+﻿@model VAVS_Client.Classes.TaxCalculation.TaxInfo
+
+@{
+    Layout = "_Layout";
+}
+
+<div class="card" style="border-radius: 20px;">
+    <div class="card-body">
+        <p class="mb-3 fw-bold" style="font-size: clamp(12px, 2vw, 16px);">စည်းကြပ်ခံယူမည့်ရုံးမှာ‌အောက်ပါအတိုင်းဖြစ်ပါသည်</p>
+
+        <form class="mb-2" action="@Url.Action("Payment", "Payment")" method="post">
+            <div class="row mb-3">
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="form-group mt-2">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-3 col-5">
+                                <label class="control-label fw-bold" data-translate="Reg_StateDivision">State/Division</label>
+                            </div>
+                            <div class="col">
+                                @*<select class="form-control" id="lstStateDivisionId" asp-for="StateDivisionPkid" onchange="FilterStateDivision(this, 'lstTownship')" required="">
+                                        <option value="">ရွေးချယ်ရန်</option>
+                                        <option value="01">ကချင်</option>
+                                        <option value="02">ကယား</option>
+                                        <option value="03">ကရင်</option>
+                                        <option value="04">ချင်း</option>
+                                        <option value="05">စစ်ကိုင်း</option>
+                                        <option value="06">တနင်္သာရီ</option>
+                                        <option value="07">ပဲခူး</option>
+                                        <option value="08">မကွေး</option>
+                                        <option value="09">မန္တလေး</option>
+                                        <option value="10">မွန်</option>
+                                        <option value="11">ရခိုင်</option>
+                                        <option value="12">ရန်ကုန်</option>
+                                        <option value="13">ရှမ်း</option>
+                                        <option value="14">ဧရာဝတီ</option>
+                                        <option value="15">နေပြည်တော်</option>
+                                </select>*@
+                                <label class="control-label">@ViewBag.RegisteredStateDivisionName</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="form-group mt-2">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-3 col-5">
+                                <label class="control-label fw-bold" data-translate="Reg_Township">Township</label>
+                            </div>
+                            <div class="col">
+                                @*<select class="form-control" id="lstTownship" asp-for="TownshipPkid" asp-items="ViewBag.Townships" required></select>*@
+                                <label class="control-label">@ViewBag.RegisteredTownshipName</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-2 mt-2 d-flex justify-content-center align-item-center">
+                <button class="btn btn-outline-primary d-grid" type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,254 @@
+﻿@inject IConfiguration Configuration
+@model VAVS_Client.Paging.PagingList<VAVS_Client.Models.TaxValidation>
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@using Newtonsoft.Json
+@using VAVS_Client.Classes
+
+@{
+    ViewData["Title"] = "List";
+}
+
+<div id="spinner-container">
+    <img id="spinner" decoding="async" src="~/image/loading/spinner.gif" asp-append-version="true" />
+</div>
+
+<div class="d-flex justify-content-center align-item-center mb-2">
+    <label class="text-primary h4" style="font-size: clamp(14px, 4vw, 20px);"> Pending List </label>
+</div>
+@if (TempData.ContainsKey("Message") && TempData.ContainsKey("CssColor"))
+{
+    <div class="alert @TempData["CssColor"] alert-msg"> @TempData["Message"] </div>
+}
+
+
+@*<div class="row mt-3 search-container">
+    <div class="col-lg-9 col-sm-12">
+        <form class="input-group" method="get" action="@Url.Action("List", "VehicleData")">
+            <div class="col">
+                <input type="text" class="form-control" name="SearchString" placeholder="[Enter Keywords to Search]" style="border-top-left-radius:50px; border-bottom-left-radius:50px;">
+            </div>
+            <div class="input-group-append">
+                <input class="btn btn-outline-primary btn-md advance-search-btn" type="button" data-bs-toggle="modal" data-bs-target="#advanceSearchModel" value="Advance Search" style="border-top-right-radius:50px; border-bottom-right-radius:50px;" />
+                <div class="btn btn-outline-primary btn-md advance-search-btn-swl-510" data-bs-toggle="modal" data-bs-target="#advanceSearchModel" style="border-top-right-radius: 50px;border-bottom-right-radius: 50px;">
+                    <i class="fa fa-search"></i>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-4 col-sm-4 col-md-4 advance-search-btn">
+    <input class="btn btn-primary btn-md" type="button" data-bs-toggle="modal" data-bs-target="#advanceSearchModel" value="Advance Search" />
+    </div>
+
+    <div class="col-1 col-sm-1 col-md-1 mt-1 advance-search-btn-swl-510 justify-content-center align-self-center me-2">
+    <i class="fa fa-solid fa-magnifying-glass-plus me-3 fa-xl" data-bs-toggle="modal" data-bs-target="#advanceSearchModel" style="color: #367fa9;/*! width: 300px; *//*! height: 300px; */" class="fa fa-solid fa-magnifying-glass-plus advance-search-btn-swl-510 me-3 fa-xl"></i>
+    </div>
+</div>*@
+
+@*<div class="row justify-content-between mt-2">
+    <div class="col-5">
+        <form method="get" action="@Url.Action("List", "VehicleData")">
+            <input type="hidden" name="export" value="excel">
+            <input type="hidden" name="SearchString" value="@ViewBag.SearchString">
+            <input type="hidden" name="CctvInstalled" value="@ViewBag.CctvInstalled">
+            <input type="hidden" name="POSInstalled" value="@ViewBag.POSInstalled">
+            <input type="hidden" name="TelematicDeviceInstalled" value="@ViewBag.TelematicDeviceInstalled">
+            <input type="hidden" name="pageNo" asp-for="@(Model.PageIndex)">
+            <div class="p-2 bd-highlight">
+                All
+                <input class="form-check-input" type="checkbox" value="true" name="ExportAll">
+                <button id="exportButton" type="submit" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Export Excel File"><i class="far fa-file-excel fa-lg"></i></button>
+            </div>
+        </form>
+    </div>
+    <div class="col-7 mt-2">
+        <div class="col-md-12">
+            <form class="d-flex" method="post" asp-controller="VehicleData" asp-action="ImportFromExcel"
+                  enctype="multipart/form-data">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <input type="file" name="file" class="form-control" accept=".xlsx,.xls" id="fileInput" />
+                <button type="submit" id="uploadBtn" name="Upload" class="btn btn-primary" style="display: none;">Upload</button>
+            </form>
+        </div>
+    </div>
+
+</div>*@
+<div class="d-flex bd-highlight">
+    <form method="get" action="@Url.Action("PendingList", "TaxValidation")">
+        <input type="hidden" name="export" value="excel">
+        <input type="hidden" name="pageNo" asp-for="@(Model.PageIndex)">
+        <div class="p-1 bd-highlight">
+            <button id="exportButton" type="submit" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Export Excel File"><i class="far fa-file-excel fa-lg"></i></button>
+        </div>
+    </form>
+</div>
+<div class="table-responsive mt-2 rounded">
+    <table class="table table-bordered  table-striped">
+        <thead style="background-color: #0f3cbd;">
+            <tr>
+                <th class="text-white">
+                    <label class="mb-2">စဥ်</label>
+                </th>
+                <th class="text-white">
+                    စာရင်း<br />သွင်းသည့်နေ့
+                </th>
+                <th class="text-white">
+                    အခွန်ထမ်း<br />မှတ်ပုံတင်အမှတ်
+                </th>
+
+                <th class="text-white">
+                    <label class="mb-2">အခွန်ထမ်းအမည်</label>
+                </th>
+                <th class="text-white">
+                    <label class="mb-2">မှတ်ပုံတင်အမှတ်</label>
+                </th>
+                <th class="text-white">
+                    <label class="mb-2">လိပ်စာ</label>
+                </th>
+                <th class="text-white">
+                    <label class="mb-2">မော်တော်ယာဥ်အချက်အလက်</label>
+                </th>
+                <th class="text-white">
+                    <label class="mb-2">စည်းကြပ်တန်ဖိုး</label>
+                </th>
+                <th class="text-white">
+                    <label class="mb-2">ကျသင့်အခွန်</label>
+                </th>
+                <th class="text-white">လုပ်ဆောင်ချက်များ</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Count > 0)
+            {
+                int i = 0;
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @{
+                                i++;
+                            }
+                            @i
+                        </td>
+                        <td>
+                            @String.Format("{0:dd/MM/yyyy}", item.EntryDate)
+                        </td>
+                        <td>
+                            -
+                        </td>
+                        <td>
+                            @{
+                                var name = "";
+                                var loginUserInfoJson = HttpContextAccessor.HttpContext.Session.GetString("LoginUserInfo");
+                                if (!string.IsNullOrEmpty(loginUserInfoJson))
+                                {
+                                    var loginUserInfo = JsonConvert.DeserializeObject<TaxpayerInfo>(loginUserInfoJson);
+                                    if (loginUserInfo != null)
+                                    {
+                                        name = loginUserInfo.Name;
+                                    }
+                                }                        
+                             }
+                            @name
+                        </td>
+                        <td>
+                            @*@{
+                                string personNRC = item.PersonNRC;
+                                string formattedPersonNRC = string.IsNullOrEmpty(personNRC) ? personNRC : personNRC.Replace(")", ")<br />");
+                            }
+                            @Html.Raw(formattedPersonNRC)*@
+                            @item.PersonNRC
+                        </td>
+                        <td class="address">
+                            @ViewBag.Address
+                        </td>
+                        <td class="address">
+                            @Html.Raw((item.VehicleNumber != null ? item.VehicleNumber + ", " : "")  + item.VehicleBrand + "<br> " + item.BuildType)
+
+                        </td>
+                        <td>
+                            @{
+                                string standardValue = item.StandardValue.ToString();
+                                string formatStandardValue = string.IsNullOrEmpty(standardValue)
+                                ? standardValue
+                                : standardValue.Split('.')[0] + "<br />";
+                            }
+                            <label class="d-flex align-item-end justify-content-end">@Html.Raw(formatStandardValue)</label>
+                        </td>
+                        <td>
+                            @{
+                                string taxAmt = item.TaxAmount.ToString();
+                                string formatTaxAmt = string.IsNullOrEmpty(taxAmt)
+                                ? taxAmt
+                                : taxAmt.Split('.')[0] + "<br />";
+                            }
+                            <label class="d-flex align-item-end justify-content-end"> @Html.Raw(formatTaxAmt)</label>
+                        </td>
+                        <td>
+                            <a class="" data-toggle="tooltip" data-placement="top" title="Detail" asp-action="Details" asp-route-id="@item.TaxValidationPkid" style="color:blue">Details</a>
+                            @*<button class="btn btn-outline" type="button" data-toggle="tooltip" data-placement="top" title="Delete" data-bs-toggle="modal" data-bs-target=" @("#deleteModel" + @item.TaxValidationPkid)"><i class="fas fa-regular fa-trash fa-lg text-danger"></i></button>*@
+                        </td>
+                    </tr>
+                    <!-- Delete Modal -->
+                    @*<div class="modal fade" id="@("deleteModel" + @item.VehicleDataPkid)" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div id="spinner-container">
+                                <img id="spinner" decoding="async" src="~/image/loading/spinner.gif" asp-append-version="true" />
+                            </div>
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Are you sure want to delete this Vehicle?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                        Close
+                                    </button>
+                                    <form id="form" asp-action="Delete">
+                                        <input type="hidden" name="Id" asp-for="@item.VehicleDataPkid" />
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                </div>*@
+                    <!--/ Delete Modal -->
+                }
+               }            
+        </tbody>
+    </table>
+
+    <br />
+    @if (Model != null && Model.Any())
+    {
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+        var totalPageNo = Model.TotalPageNo;
+        var currentPageNo = Model.PageIndex;
+        var searchString = ViewBag.SearchString ?? null;
+
+        <a asp-action="PendingList"
+           asp-route-pageNo="@(Model.PageIndex - 1)"
+           asp-route-SearchString="@searchString"
+           class="link btn btn-primary btn-sm @prevDisabled">
+            Previous
+        </a>
+        <a asp-action="PendingList"
+           asp-route-pageNo="@(Model.PageIndex + 1)"
+           asp-route-SearchString="@searchString"
+           class="link btn btn-primary btn-sm @nextDisabled">
+            Next
+        </a>
+        <span>
+            Page No : @currentPageNo of @totalPageNo
+        </span>
+    }
+    else
+    {
+        <span>No data available</span>
+        <a asp-controller="TaxValidation" asp-action="PendingList" class="fas far fa-sync fa-xl"></a>
+    }
+
+</div>

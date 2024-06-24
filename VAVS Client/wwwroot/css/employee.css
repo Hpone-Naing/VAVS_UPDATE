@@ -1,0 +1,32 @@
+﻿.file-input {
+    /* position: absolute; */
+    background-image: url("../Image/not-avail.jpg");
+    display: inline-block;
+    cursor: pointer;
+    overflow: hidden;
+    width: 130px;
+    height: 130px;
+    top: 0px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(26, 31, 32, 0.72);
+    text-align: center;
+}
+
+.file-input-label {
+    display: block;
+    margin-top: 50px;
+}
+
+/* Hide the actual file input */
+.file-input input[type="file"] {
+    position: relative;
+    left: -9999px;
+}
+
+#preview {
+    width: 130px;
+    height: 130px;
+    position: relative;
+    left: 0px;
+    top: -80px;
+}

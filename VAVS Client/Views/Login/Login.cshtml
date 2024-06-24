@@ -1,0 +1,492 @@
+﻿@model VAVS_Client.ViewModels.LoginView
+@{
+    Layout = "_AuthLayout";
+}
+<!--Register -->
+<div class="card">
+    <div class="card-header">
+        <div class="d-flex align-item-end justify-content-end">
+            <span class="me-2" onclick="setLanguage('en')" style="cursor: pointer;"><img width="20px;" src="~/Content/images/united-states.png"></span>
+            <span onclick="setLanguage('my')" style="cursor: pointer;"><img src="~/Content/images/myanmar.png" width="20px;"></span>
+        </div>
+    </div>
+    <div class="card-body">
+
+        @if (TempData.ContainsKey("Message") && TempData.ContainsKey("CssColor"))
+        {
+            @if (TempData.ContainsKey("Option"))
+            {
+                @if (TempData["Option"] != null && TempData["Option"].Equals("true"))
+                {
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            var myModal = new bootstrap.Modal(document.getElementById('alertModel'));
+                            myModal.show();
+                        });
+                    </script>
+                }
+                else if (TempData["Option"] != null && TempData["Option"].Equals("createForm"))
+                {
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            var myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'));
+                            myModal.show();
+                        });
+                    </script>
+                }
+                else
+                {
+                    <div class="alert @TempData["CssColor"] text-center alert-msg" role="alert">
+                        @TempData["Message"]
+                    </div>
+                }
+            }
+        }
+
+        <div class="d-flex justify-content-center align-item-center">
+            <h4>Welcome To</h4>
+        </div>
+        <!-- Logo -->
+        <div class="d-flex align-item-center justify-content-center">
+            <a asp-controller="Login" asp-action="Index" class="app-brand-link gap-2">
+                <span class="app-brand-text demo text-body fw-bolder">VAVS Client</span>
+            </a>
+        </div>
+        <div class="app-brand justify-content-center">
+            <a asp-controller="Login" asp-action="Index" class="app-brand-link gap-2">
+                <span class="app-brand-logo demo">
+                    <img src="~/Content/images/MADBIMG.jpg" width="90px;" />
+                </span>
+            </a>
+        </div>
+        <!-- /Logo -->
+        @{
+            bool rememberMe = ViewBag.IsRememberMe ?? false;
+        }
+        @if (rememberMe)
+        {
+            <p class="mb-4">Tab picture to Login</p>
+            <div class="app-brand justify-content-center">
+                <a asp-controller="VehicleData" asp-action="List" class="app-brand-link gap-2">
+                    <span class="app-brand-logo demo">
+                        <img src="~/Content/images/MADBIMG.jpg" class="img-thumbnail" width="110px" />
+                    </span>
+                </a>
+            </div>
+            <div>
+                <a class="btn btn-outline-primary d-flex justify-content-center align-item-center" asp-controller="Login" asp-action="RemoveOneTapLogin">Remove one tap Login</a>
+            </div>
+        }
+        else
+        {
+            <p class="mb-2" data-translate="Login_Label">Please sign-in to your account</p>
+
+            <form class="mb-3" action="@Url.Action("CheckLoginAuthentication", "Login")" method="post">
+                <div class="form-group mt-2 mb-3">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-2 col-sm-3">
+                            <label class="control-label fw-bold mt-2" data-translate="Global_Nrc"> Nrc Number: </label>
+                        </div>
+                        <div class="col">
+                            <div class="row mt-2">
+                                <div class="col">
+                                    <select class="form-control" id="lstNRCTownshipNumberId" name="NRCTownshipNumber" onchange="FilterNRCTownshipInitial(this, 'lstNRCTownshipInitial')" required>
+                                        <option value="">?</option>
+                                        <option value="၁">၁/</option>
+                                        <option value="၂">၂/</option>
+                                        <option value="၃">၃/</option>
+                                        <option value="၄">၄/</option>
+                                        <option value="၅">၅/</option>
+                                        <option value="၆">၆/</option>
+                                        <option value="၇">၇/</option>
+                                        <option value="၈">၈/</option>
+                                        <option value="၉">၉/</option>
+                                        <option value="၁၀">၁၀/</option>
+                                        <option value="၁၁">၁၁/</option>
+                                        <option value="၁၂">၁၂/</option>
+                                        <option value="၁၃">၁၃/</option>
+                                        <option value="၁၄">၁၄/</option>
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <select class="form-control" id="lstNRCTownshipInitial" name="NRCTownshipInitial" required>
+                                        <option value="">?</option>
+                                        <option value="လသယ">လသယ</option>
+                                        <option value="ဥကတ">ဥကတ</option>
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <select class="form-control" name="NRCType" required>
+                                        <option value="">?</option>
+                                        <option value="(နိုင်)">(နိုင်)</option>
+                                        <option value="(ဧည့်)">(ဧည့်)</option>
+                                        <option value="(ဝတ်)">(ဝတ်)</option>
+                                        <option value="(ပြု)">(ပြု)</option>
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <input class="form-control" name="NRCNumber" pattern="\d{5,6}" title="NRC number must contain only 5 to 6 digits" maxlength="6" required />
+                                </div>
+                                <span class="text-danger" asp-validation-for="PersonalDetail.NRCTownshipNumber"></span>
+                                <span class="text-danger" asp-validation-for="PersonalDetail.NRCTownshipInitial"></span>
+                                <span class="text-danger" asp-validation-for="PersonalDetail.NRCType"></span>
+                                <span class="text-danger" asp-validation-for="PersonalDetail.NRCNumber"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="d-flex align-item-center justify-content-center">
+                        <button class="btn btn-primary d-grid w-10" type="submit">Sign in</button>
+                    </div>
+                </div>
+            </form>
+        }
+        <p class="text-center">
+            <span>New on our platform?</span>
+            <!-- Button trigger modal-->
+            <a data-bs-toggle="modal" data-bs-target="#register" style="cursor:pointer;">
+                <span class="text-primary" data-translate="Login_NewAccount">Create an account</span>
+            </a> 
+        </p>
+        <p class="text-center">
+            <!-- Button trigger modal-->
+            <a href="@Url.Action("ResetPhonenumber", "Login")" style="cursor:pointer;">
+                <span class="text-primary" data-translate="Login_ChangePhone">Change Phone Number</span>
+            </a> 
+        </p>
+    </div>
+</div>
+<!-- /Register -->
+<!-- Alert model -->
+<div class="modal fade" id="alertModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title text-white" id="staticBackdropLabel" style="font-size: 20px;font-weight: bold;">Message</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert @TempData["CssColor"] text-center" role="alert">
+                    @TempData["Message"]
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Create model-->
+<div class="modal fade" id="register" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div id="registerModel" class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title text-white" id="staticBackdropLabel" style="font-size: 20px;font-weight: bold;">Register Here</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body py-0 px-3">
+                <form method="post" class="mb-1" action="@Url.Action("CheckRegisterAuthentication", "RegistrationAuthCode")" enctype="multipart/form-data">
+                    <div class="row mt-1">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group mt-3">
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-12">
+                                        <label class="control-label fw-bold" data-translate="Reg_Name"></label>
+                                    </div>
+                                    <div class="mt-1 col">
+                                        <input class="form-control" asp-for="PersonalDetail.Name" placeholder="အမည်" required />
+                                        <span class="text-danger" asp-validation-for="PersonalDetail.Name"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mt-3">
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-12">
+                                        <label class="control-label fw-bold" data-translate="Global_Nrc"> Nrc Number: </label>
+                                    </div>
+                                    <div class="mt-1 col">
+                                        <div class="d-flex">
+                                                <select id="lstNRCTownshipNumberId1" class="form-control me-1" asp-for="PersonalDetail.NRCTownshipNumber" onchange="FilterNRCTownshipInitial1(this, 'lstNRCTownshipInitial1')" required>
+                                                    <option value="">?</option>
+                                                    <option value="၁">၁/</option>
+                                                    <option value="၂">၂/</option>
+                                                    <option value="၃">၃/</option>
+                                                    <option value="၄">၄/</option>
+                                                    <option value="၅">၅/</option>
+                                                    <option value="၆">၆/</option>
+                                                    <option value="၇">၇/</option>
+                                                    <option value="၈">၈/</option>
+                                                    <option value="၉">၉/</option>
+                                                    <option value="၁၀">၁၀/</option>
+                                                    <option value="၁၁">၁၁/</option>
+                                                    <option value="၁၂">၁၂/</option>
+                                                    <option value="၁၃">၁၃/</option>
+                                                    <option value="၁၄">၁၄/</option>
+                                                </select>
+                                            
+                                                <select class="form-control me-1" id="lstNRCTownshipInitial1" asp-for="PersonalDetail.NRCTownshipInitial" required>
+                                                    <option value="">?</option>
+                                                    <option value="ဥကတ">ဥကတ</option>
+                                                    <option value="လသယ">လသယ</option>
+                                                </select>
+                                            
+                                                <select class="form-control me-1" asp-for="PersonalDetail.NRCType" required>
+                                                    <option value="">?</option>
+                                                    <option value="(နိုင်)">(နိုင်)</option>
+                                                    <option value="(ဧည့်)">(ဧည့်)</option>
+                                                    <option value="(ဝတ်)">(ဝတ်)</option>
+                                                    <option value="(ပြု)">(ပြု)</option>
+                                                </select>
+                                            
+                                                <input class="form-control" asp-for="PersonalDetail.NRCNumber" pattern="\d{5,6}" title="NRC number must contain only 5 to 6 digits" maxlength="6" required />
+                                            <span class="text-danger" asp-validation-for="PersonalDetail.NRCTownshipNumber"></span>
+                                            <span class="text-danger" asp-validation-for="PersonalDetail.NRCTownshipInitial"></span>
+                                            <span class="text-danger" asp-validation-for="PersonalDetail.NRCType"></span>
+                                            <span class="text-danger" asp-validation-for="PersonalDetail.NRCNumber"></span>
+                                        </div>
+                                        @*<div class="row">
+                                            <div class="col-2">
+                                                <select id="lstNRCTownshipNumberId1" class="form-control" asp-for="PersonalDetail.NRCTownshipNumber" onchange="FilterNRCTownshipInitial1(this, 'lstNRCTownshipInitial1')" required>
+                                                    <option value="">?</option>
+                                                    <option value="၁">၁/</option>
+                                                    <option value="၂">၂/</option>
+                                                    <option value="၃">၃/</option>
+                                                    <option value="၄">၄/</option>
+                                                    <option value="၅">၅/</option>
+                                                    <option value="၆">၆/</option>
+                                                    <option value="၇">၇/</option>
+                                                    <option value="၈">၈/</option>
+                                                    <option value="၉">၉/</option>
+                                                    <option value="၁၀">၁၀/</option>
+                                                    <option value="၁၁">၁၁/</option>
+                                                    <option value="၁၂">၁၂/</option>
+                                                    <option value="၁၃">၁၃/</option>
+                                                    <option value="၁၄">၁၄/</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-2">
+                                                <select class="form-control" id="lstNRCTownshipInitial1" asp-for="PersonalDetail.NRCTownshipInitial" required>
+                                                    <option value="">?</option>
+                                                    <option value="ဥကတ">ဥကတ</option>
+                                                    <option value="လသယ">လသယ</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-2">
+                                                <select class="form-control" asp-for="PersonalDetail.NRCType" required>
+                                                    <option value="">?</option>
+                                                    <option value="(နိုင်)">(နိုင်)</option>
+                                                    <option value="(ဧည့်)">(ဧည့်)</option>
+                                                    <option value="(ဝတ်)">(ဝတ်)</option>
+                                                    <option value="(ပြု)">(ပြု)</option>
+                                                </select>
+                                            </div>
+                                            <div class="col">
+                                                <input class="form-control" asp-for="PersonalDetail.NRCNumber" pattern="\d{5,6}" title="NRC number must contain only 5 to 6 digits" maxlength="6" required />
+                                            </div>
+                                            <span class="text-danger" asp-validation-for="PersonalDetail.NRCTownshipNumber"></span>
+                                            <span class="text-danger" asp-validation-for="PersonalDetail.NRCTownshipInitial"></span>
+                                            <span class="text-danger" asp-validation-for="PersonalDetail.NRCType"></span>
+                                            <span class="text-danger" asp-validation-for="PersonalDetail.NRCNumber"></span>
+                                        </div>*@
+                                    </div>
+                                </div>
+                            </div>
+                            @*<div class="form-group mt-3">
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-12">
+                                        <label class="control-label fw-bold" data-translate="Reg_Name" asp-for="PersonalDetail.EntryDate"></label>
+                                    </div>
+                                    <div class="mt-1 col">
+                                        <input class="form-control" type="date" id="entryDate" asp-for="PersonalDetail.EntryDate" placeholder="Entry Date" />
+                                        <span class="text-danger" asp-validation-for="PersonalDetail.EntryDate"></span>
+                                    </div>
+                                </div>
+                            </div>*@
+                            <div class="form-group mt-3">
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-12">
+                                        <label class="control-label fw-bold" data-translate="Reg_StateDivision">State/Division</label>
+                                    </div>
+                                    <div class="mt-1 col">
+                                        <select class="form-control" id="lstStateDivisionId" asp-for="PersonalDetail.StateDivisionPkid" onchange="FilterStateDivision(this, 'lstTownship')" required>
+                                            <option value="">ရွေးချယ်ရန်</option>
+                                            <option value="01">ကချင်</option>
+                                            <option value="02">ကယား</option>
+                                            <option value="03">ကရင်</option>
+                                            <option value="04">ချင်း</option>
+                                            <option value="05">စစ်ကိုင်း</option>
+                                            <option value="06">တနင်္သာရီ</option>
+                                            <option value="07">ပဲခူး</option>
+                                            <option value="08">မကွေး</option>
+                                            <option value="09">မန္တလေး</option>
+                                            <option value="10">မွန်</option>
+                                            <option value="11">ရခိုင်</option>
+                                            <option value="12">ရန်ကုန်</option>
+                                            <option value="13">ရှမ်း</option>
+                                            <option value="14">ဧရာဝတီ</option>
+                                            <option value="15">နေပြည်တော်</option>
+                                        </select>
+                                        <span class="text-danger" asp-validation-for="PersonalDetail.StateDivisionPkid"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mt-3">
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-12">
+                                        <label class="control-label fw-bold" data-translate="Reg_Township"></label>
+                                    </div>
+                                    <div class="mt-1 col">
+                                        <select class="form-control" id="lstTownship" asp-for="PersonalDetail.TownshipPkid" asp-items="ViewBag.Townships" required>
+
+                                        </select>
+                                        <span class="text-danger" asp-validation-for="PersonalDetail.TownshipPkid"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mt-3">
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-12">
+                                        <label class="control-label fw-bold" data-translate="Reg_Quarter"></label>
+                                    </div>
+                                    <div class="mt-1 col">
+                                        <input class="form-control" asp-for="PersonalDetail.Quarter" placeholder="ရပ်ကွက်" required />
+                                        <span class="text-danger" asp-validation-for="PersonalDetail.Quarter"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mt-3">
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-12">
+                                        <label class="control-label fw-bold" data-translate="Reg_HousingNumber"></label>
+                                    </div>
+                                    <div class="mt-1 col">
+                                        <input class="form-control" asp-for="PersonalDetail.HousingNumber" placeholder="အိမ်အမှတ်" required />
+                                        <span class="text-danger" asp-validation-for="PersonalDetail.HousingNumber"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mt-3">
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-12">
+                                        <label class="control-label fw-bold" data-translate="Reg_Street"></label>
+                                    </div>
+                                    <div class="mt-1 col">
+                                        <input class="form-control" asp-for="PersonalDetail.Street" placeholder="လမ်းအမှတ်" required />
+                                        <span class="text-danger" asp-validation-for="PersonalDetail.Street"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <!--<div class="form-group mt-3">
+                                <label class="control-label" asp-for="PersonalDetail.PersonTINNumber"></label>
+                                <input class="form-control" asp-for="PersonalDetail.PersonTINNumber" placeholder="အခွန်ထမ်းအှတ်ပုံတင်အမှတ်" required />
+                                <span class="text-danger" asp-validation-for="PersonalDetail.PersonTINNumber"></span>
+                            </div>-->
+                            <div class="form-group mt-3">
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-12">
+                                        <label class="control-label fw-bold" data-translate="Reg_Email"></label>
+                                    </div>
+                                    <div class="mt-1 col">
+                                        <input class="form-control" asp-for="PersonalDetail.Email" placeholder="Email" required />
+                                        <span class="text-danger" asp-validation-for="PersonalDetail.Email"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mt-3">
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-12">
+                                        <label class="control-label fw-bold" data-translate="Global_PhoneNo">Phone Number</label>
+                                    </div>
+                                    <div class="mt-1 col">
+                                        <input class="form-control phone" asp-for="PersonalDetail.PhoneNumber" placeholder="ဆက်သွယ်ရန်ဖုန်း (09--------)" maxlength="17" pattern="^09\d{5,15}$" title="Phone number must be 09 followed by 5 to 15 number." required />
+                                        <span class="text-danger" asp-validation-for="PersonalDetail.PhoneNumber"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            <div class="row mt-3">
+                                <div class="col-lg-6 col-md-12 col-sm-12">
+                                    <div class="row">
+                                        <div class="col-lg-5 col-md-5 col-sm-5">
+                                        <label class="control-label fw-bold mt-5" data-translate="Reg_NRCBack"></label>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <label class="file-input mt-2" style="width:200px; height:100px">
+                                                <span class="file-input-label">Choose Image</span>
+                                                <input asp-for="PersonalDetail.NrcBackImageFile" onchange="hi(event, 'backPreview');" required />
+                                                <div class="preview" id="backPreview" style="width:200px; height:100px">
+                                                    <img class="image-fluid" decoding="async" asp-append-version="true" style="height: 130px;" />
+                                                </div>
+                                            </label>
+                                            <span asp-validation-for="PersonalDetail.NrcBackImageFile" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12">
+                                    <div class="row mt-2">
+                                    <div class="col-lg-5 col-md-5 col-sm-5">
+                                        <label class="control-label fw-bold mt-5" data-translate="Reg_NRCFront"></label>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <label class="file-input mt-2" style="width:200px; height:100px">
+                                            <span class="file-input-label">Choose Image</span>
+                                            <input asp-for="PersonalDetail.NrcFrontImageFile" onchange="hi(event, 'frontPreview');" required />
+                                            <div class="preview" id="frontPreview" style="width:200px; height:100px">
+                                                <img class="image-fluid" decoding="async" asp-append-version="true" style="height: 130px;" />
+                                            </div>
+                                        </label>
+                                        <span asp-validation-for="PersonalDetail.NrcFrontImageFile" class="text-danger"></span>
+                                    </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        <div class="d-flex justify-content-center align-item-center mt-3 mb-2">
+                            <input type="submit" value="Create" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Create -->
+<!-- Check Real User Model -->
+<div class="modal fade" id="search" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title text-white" id="staticBackdropLabel" style="font-size: 20px;font-weight: bold;">Auth</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" onsubmit="CheckRealUser(); return false;">
+                    <div class="row mt-1 border border-dark">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="row">
+                            <div class="form-group mt-2 ms-2">
+                                <label class="control-label mt-2">ကားနံပါတ်</label>
+                                <input class="form-control mt-1" id="vehicleNumber" placeholder="ကားနံပါတ်" required />
+                                <span class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group mt-2 ms-2">
+                                <label class="control-label">Chassis Number</label>
+                                <input class="form-control mt-1 mb-3" id="chassisNumber" placeholder="Chassis Number" required />
+                                <span class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center align-item-center mt-3 mb-2">
+                        <input type="submit" value="Search" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Check Real User Model -->

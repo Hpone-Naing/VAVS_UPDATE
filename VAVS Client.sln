@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VAVS Client", "VAVS Client\VAVS Client.csproj", "{CEC9A78B-B70C-4984-839A-D2796F9DD5C5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CEC9A78B-B70C-4984-839A-D2796F9DD5C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEC9A78B-B70C-4984-839A-D2796F9DD5C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEC9A78B-B70C-4984-839A-D2796F9DD5C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEC9A78B-B70C-4984-839A-D2796F9DD5C5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A02B8254-F75D-4CFE-8FEC-BAA850549C52}
+	EndGlobalSection
+EndGlobal

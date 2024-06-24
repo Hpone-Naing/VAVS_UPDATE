@@ -1,0 +1,76 @@
+﻿@{
+    Layout = "_AuthLayout";
+}
+<link rel="stylesheet" href="~/css/authcode.css" asp-append-version="true" />
+
+<!--Register -->
+<div class="card">
+    <div class="card-body">
+        @if (TempData.ContainsKey("Message") && TempData.ContainsKey("CssColor"))
+        {
+            @if (TempData.ContainsKey("Option"))
+            {
+                @if (TempData["Option"] != null && TempData["Option"].Equals("true"))
+                {
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            var myModal = new bootstrap.Modal(document.getElementById('alertModel'));
+                            myModal.show();
+                        });
+                    </script>
+                }
+                else
+                {
+                    <div class="alert @TempData["CssColor"] text-center alert-msg" role="alert">
+                        @TempData["Message"]
+                    </div>
+                }
+            }
+        }
+
+        <div class="d-flex justify-content-center align-item-center">
+            <h4>Welcome To</h4>
+        </div>
+        <!-- Logo -->
+        <div class="d-flex align-item-center justify-content-center">
+            <a asp-controller="Login" asp-action="Index" class="app-brand-link gap-2">
+                <span class="app-brand-text demo text-body fw-bolder">VAVS Client</span>
+            </a>
+        </div>
+        <div class="app-brand justify-content-center">
+            <a asp-controller="Login" asp-action="Index" class="app-brand-link gap-2">
+                <span class="app-brand-logo demo">
+                    <img src="~/Content/images/MADBIMG.jpg" width="90px;" />
+                </span>
+            </a>
+        </div>
+        <!-- /Logo -->
+        <p class="mb-4">We have sent OTP code to Phone number: {@ViewData["phoneNumber"]}</p>
+        <form class="mb-3" method="post" action="@Url.Action("CheckLoginOTPCode", "Login")">
+            <div class="mb-3">
+                <div id="otpContainer" class="container mb-4">
+                    <div id="inputs" class="inputs ms-4">
+                        <input class="input" name="digit1" type="text" inputmode="numeric" maxlength="1" />
+                        <input class="input" name="digit2" type="text" inputmode="numeric" maxlength="1" />
+                        <input class="input" name="digit3" type="text" inputmode="numeric" maxlength="1" />
+                        <input class="input" name="digit4" type="text" inputmode="numeric" maxlength="1" />
+                        <input class="input" name="digit5" type="text" inputmode="numeric" maxlength="1" />
+                        <input class="input" name="digit6" type="text" inputmode="numeric" maxlength="1" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">Time left:</div>
+                    <div class="col-3"><p id="remainingTime" data-expire-time="@ViewData["ExpireTime"]"></p></div>
+                    <div class="col" id="resendCode" style="display:none">
+                        <input type="hidden" name="resend" value="true" />
+                        <button type="submit" class="btn btn-primary btn-sm">Resend</button>
+                    </div>
+                </div>
+            </div>
+            <div id="signinBtnDiv" class="mb-3">
+                <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- /Register -->

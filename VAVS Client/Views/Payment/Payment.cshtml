@@ -1,0 +1,134 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+@{
+    ViewData["Title"] = "Payment";
+}
+
+<form action="@Url.Action("SaveTaxTransaction", "TaxCalculation")" method="post">
+    <div class="form-group">
+        <label class="control-label fw-bold mb-3">Payment Method</label>
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-5 col-6">
+                <div class="card" style="background-color: #2457d2;">
+                    <div class="card-body">
+                        <div class="row">
+                            <img class="card-img-top" alt="KBZPay" style="width: 80px;height: 50px;" src="https://play-lh.googleusercontent.com/cnKJYzzHFAE5ZRepCsGVhv7ZnoDfK8Wu5z6lMefeT-45fTNfUblK_gF3JyW5VZsjFc4">
+                        </div>
+                        <div class="mt-2">
+                            <input type="radio" name="PaymentMethod" value="KBZPay" id="kbzpay" class="form-check-input">
+                            <label for="kbzpay" class="form-check-label text-black fw-bold" style="font-size: clamp(11px, 2vw, 16px);">Select KPay</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-5 col-6">
+                <div class="card" style="background-color: #c13d3d;">
+                    <div class="card-body">
+                        <div class="row">
+                            <img class="card-img-top" alt="KBZPay" style="width: 80px;height: 50px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0yz7j-fGrH6neCGBaGN4T4fxuDC0ylHnMsA&amp;s">
+                        </div>
+                        <div class="mt-2">
+                            <input type="radio" name="PaymentMethod" value="KBZPay" id="ayaPay" class="form-check-input">
+                            <label for="kbzpay" class="form-check-label text-black fw-bold" style="font-size: clamp(11px, 2vw, 16px);">Select AyaPay</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-5 col-6 sw-576">
+                <div class="card" style="background-color: #289ade;">
+                    <div class="card-body">
+                        <div class="row">
+                            <img class="card-img-top" alt="CBPay" style="width: 80px;height: 50px;" src="https://play-lh.googleusercontent.com/z-wRjDo9L-3c1-39ZH-VyKwofSHsmI79VH3T_pSqlj_fRhZSpc7zbDlFKS4hle0bLOk">
+                        </div>
+                        <div class="mt-2">
+                            <input type="radio" name="PaymentMethod" value="CBPay" id="cbPay" class="form-check-input">
+                            <label for="kbzpay" class="form-check-label text-black fw-bold" style="font-size: clamp(11px, 2vw, 16px);">Select CBPay</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-5 col-6 sw-576">
+                <div class="card" style="background-color: #e1e15a;">
+                    <div class="card-body">
+                        <div class="row">
+                            <img class="card-img-top" alt="KBZPay" style="width: 80px;height: 50px;" src="https://play-lh.googleusercontent.com/rPq4GMCZy12WhwTlanEu7RzxihYCgYevQHVHLNha1VcY5SU1uLKHMd060b4VEV1r-OQ">
+                        </div>
+                        <div class="mt-2">
+                            <input type="radio" name="PaymentMethod" value="WavePay" id="wavePay" class="form-check-input">
+                            <label for="kbzpay" class="form-check-label text-black fw-bold" style="font-size: clamp(11px, 2vw, 16px);">Select WavePay</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group mt-3">
+        <label class="control-label fw-bold mb-1">Billing User Information</label>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                <div class="row p-3">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-3">
+                        <label class="control-label">Name</label>
+                    </div>
+                    <div class="col">
+                        <label class="control-label">@ViewBag.Name</label>
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-3">
+                        <label class="control-label">NRC</label>
+                    </div>
+                    <div class="col">
+                        <label class="control-label">@ViewBag.NRC</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                <div class="row p-3">
+                    <div class="col-lg-4 col-md-5 col-sm-3 col-3">
+                        <label class="control-label">Phone Number</label>
+                    </div>
+                    <div class="col">
+                        <label class="control-label">@ViewBag.PhoneNumber</label>
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="col-lg-4 col-md-5 col-sm-3 col-3">
+                        <label class="control-label">Address</label>
+                    </div>
+                    <div class="col">
+                        <label class="control-label">@ViewBag.Address</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-lg-2 col-md-2 col-sm-3 col-5">
+            <label class="control-label">Card Number</label>
+        </div>
+        <div class="col">
+            <input name="cardNumber" class="form-control" />
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-lg-2 col-md-2 col-sm-3 col-5">
+            <label class="control-label mt-2">Amount</label>
+        </div>
+        <div class="col">
+            <input name="Amount" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group mt-2">
+        <div class="d-flex align-item-center justify-content-center">
+            <button type="submit" class="btn btn-success">Pay</button>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
