@@ -48,7 +48,11 @@ namespace VAVS_Client.Services.Impl
                 sanitizedSubDirectoryName = Path.Combine(sanitizedSubDirectoryName, vehicleNumber);
                 subdirectoryPath = GetCustomSubdirectoryPath(wwwRootPath, "nrc", sanitizedSubDirectoryName);
             }
-
+            else
+            {
+                sanitizedSubDirectoryName = Path.Combine(sanitizedSubDirectoryName, sanitizedSubDirectoryName);
+                subdirectoryPath = GetCustomSubdirectoryPath(wwwRootPath, "nrc", sanitizedSubDirectoryName);
+            }
             try
             {
                 if (!Directory.Exists(subdirectoryPath))
