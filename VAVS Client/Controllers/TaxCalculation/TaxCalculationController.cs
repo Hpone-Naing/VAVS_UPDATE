@@ -123,7 +123,7 @@ namespace VAVS_Client.Controllers.TaxCalculation
                          (VehicleFileName, vehicleStandardValue.VehicleImageFile),
                     };
                 string savePath = loginTaxPayerInfo.NRC;
-                fileService.SaveFile(Utility.ConcatNRCSemiComa(savePath), files);
+                fileService.SaveFile(Utility.ConcatNRCSemiComa(savePath), vehicleStandardValue.VehicleNumber, files);
             }
             string nrc = loginTaxPayerInfo.NRC;
             PersonalDetail personalInformation = await _serviceFactory.CreatePersonalDetailService().GetPersonalInformationByNRCInDBAndAPI(nrc);//await _serviceFactory.CreatePersonalDetailService().GetPersonalInformationByNRC(nrc);

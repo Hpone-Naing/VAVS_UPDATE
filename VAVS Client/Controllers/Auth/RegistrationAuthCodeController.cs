@@ -113,7 +113,7 @@ namespace VAVS_Client.Controllers.Auth
                     };
                     personalDetail.NRCFrontImagePath = frontFileName;
                     personalDetail.NRCBackImagePath = backFileName;
-                    fileService.SaveFile(personalDetail.MakeNrc(), files);
+                    fileService.SaveFile(personalDetail.MakeNrc(), null, files, false);
                 }
                 /*
                  * Check User's deviceInfo null or not

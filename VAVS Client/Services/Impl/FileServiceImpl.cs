@@ -1,4 +1,6 @@
-﻿namespace VAVS_Client.Services.Impl
+﻿using System.Text.RegularExpressions;
+
+namespace VAVS_Client.Services.Impl
 {
     public class FileServiceImpl : FileService
     {
@@ -34,18 +36,36 @@
             return subdirectoryPath;
         }
 
-        public async void SaveFile(string subDirectoryName, List<(string fileName, IFormFile file)> files)
+        public async void SaveFile(string subDirectoryName, string? vehicleNumber, List<(string fileName, IFormFile file)> files, bool IsTaxedVehicle = true)
         {
             string wwwRootPath = _hostEnvironment.WebRootPath;
             string sanitizedSubDirectoryName = subDirectoryName.Replace(";", "_").Replace("/", "");
             string subdirectoryPath = GetCustomSubdirectoryPath(wwwRootPath, "nrc", sanitizedSubDirectoryName);
+
+            if (!string.IsNullOrEmpty(vehicleNumber))
+            {
+                vehicleNumber = Regex.Replace(vehicleNumber, @"[\/\-\(\)\s]", "_");
+                sanitizedSubDirectoryName = Path.Combine(sanitizedSubDirectoryName, vehicleNumber);
+                subdirectoryPath = GetCustomSubdirectoryPath(wwwRootPath, "nrc", sanitizedSubDirectoryName);
+            }
+
             try
             {
                 if (!Directory.Exists(subdirectoryPath))
                 {
                     Directory.CreateDirectory(subdirectoryPath);
                 }
-                
+                else
+                {
+                    if (IsTaxedVehicle)
+                    {
+                        DirectoryInfo directoryInfo = new DirectoryInfo(subdirectoryPath);
+                        foreach (FileInfo file in directoryInfo.GetFiles())
+                        {
+                            file.Delete();
+                        }
+                    }
+                }
                 foreach (var (fileName, ImageFile) in files)
                 {
                     string filePath = Path.Combine(subdirectoryPath, fileName);
