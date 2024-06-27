@@ -15,7 +15,7 @@ namespace VAVS_Client.Models
         public string? PersonNRC { get; set; }
 
 
-        [StringLength(10)]
+        [StringLength(50)]
         public string? VehicleNumber { get; set; }
 
         [StringLength(200)]

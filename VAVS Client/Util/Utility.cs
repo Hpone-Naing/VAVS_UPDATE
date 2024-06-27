@@ -27,6 +27,12 @@ namespace VAVS_Client.Util
         public static string ResetPhonenumberAuth_FIREBASE_PATH = "resetPhoneNumberAuth/";
         public static string TOKEN = "Heo2fgUj2IajZp4Qvbr0wzV9rnygp5GdvnrmOsdT";
         public static string RESET_PHONE_TOKEN = "a591a6d40bf420404a011733cfb7b190d62c65bf0bcda32b57b277d9ad9f146e";
+
+        /*
+         * images url 
+         */
+        public static string IMAGE_URL = "D:\\VAVA_Client\\wwwroot\\nrc\\";
+
         /*
          * API KEYS
          */
@@ -63,7 +69,21 @@ namespace VAVS_Client.Util
             
         }
 
+        public static string MakeImageUrl(string nrc, string vehicleNumber, string fileName)
+        {
+            return string.Concat(IMAGE_URL, MakeNrcWithUnderScore(nrc), "\\", MakeVehicleNumberWithUnderScore(vehicleNumber), "\\", fileName);
+        }
 
+        public static string MakeVehicleNumberWithUnderScore(string vehicleNumber)
+        {
+            return Regex.Replace(vehicleNumber, @"[\/\-\(\)\s]", "_");
+        }
+
+        public static string MakeNrcWithUnderScore(string nrc)
+        {
+            
+            return ConcatNRCSemiComa(nrc).Replace(";", "_").Replace("/", "");
+        }
 
         public static IFirebaseConfig GetFirebaseConfig()
         {

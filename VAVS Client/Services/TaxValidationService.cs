@@ -5,7 +5,7 @@ namespace VAVS_Client.Services
 {
     public interface TaxValidationService
     {
-        bool IsTaxedVehicle(string vehicleNumber);
+        bool IsTaxedVehicle(string nrc, string vehicleNumber);
         TaxValidation FindTaxValidationByNrc(string nrc);
         public TaxValidation FindTaxValidationByIdEgerLoad(int id);
         PagingList<TaxValidation> GetTaxValidationPendigListPagin(HttpContext httpContext, int? pageNo, int PageSize);

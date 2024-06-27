@@ -23,6 +23,7 @@ namespace VAVS_Client.Controllers.TaxCalculation
         public IActionResult ShowCalculateTaxForm(VehicleStandardValue vehicleStandardValue)
         {
             SessionService sessionService = _serviceFactory.CreateSessionServiceService();
+            TaxpayerInfo taxPayerInfo = sessionService.GetLoginUserInfo(HttpContext);
             if (!sessionService.IsActiveSession(HttpContext))
             {
                 Utility.AlertMessage(this, "You haven't login yet.", "alert-danger");
@@ -30,7 +31,7 @@ namespace VAVS_Client.Controllers.TaxCalculation
             }
             if (vehicleStandardValue.VehicleNumber != null)
             {
-                bool IsTaxed = _serviceFactory.CreateTaxValidationService().IsTaxedVehicle(vehicleStandardValue.VehicleNumber);
+                bool IsTaxed = _serviceFactory.CreateTaxValidationService().IsTaxedVehicle(taxPayerInfo.NRC, vehicleStandardValue.VehicleNumber);
                 if(IsTaxed)
                 {
                     Utility.AlertMessage(this, "This vehicle has already taxed.", "alert-info");
@@ -95,13 +96,16 @@ namespace VAVS_Client.Controllers.TaxCalculation
             
             if (vehicleStandardValue.VehicleNumber != null)
             {
-                bool IsTaxed = _serviceFactory.CreateTaxValidationService().IsTaxedVehicle(vehicleStandardValue.VehicleNumber);
+                bool IsTaxed = _serviceFactory.CreateTaxValidationService().IsTaxedVehicle(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber);
                 if (IsTaxed)
                 {
                     Utility.AlertMessage(this, "This vehicle has already taxed.", "alert-info");
                     return RedirectToAction("SearchVehicleStandardValue", "VehicleStandardValue");
                 }
             }
+
+            string nrc = loginTaxPayerInfo.NRC;
+            PersonalDetail personalInformation = await _serviceFactory.CreatePersonalDetailService().GetPersonalInformationByNRCInDBAndAPI(nrc);//await _serviceFactory.CreatePersonalDetailService().GetPersonalInformationByNRC(nrc);
             /*
              * Save Image Files
              */
@@ -124,9 +128,51 @@ namespace VAVS_Client.Controllers.TaxCalculation
                     };
                 string savePath = loginTaxPayerInfo.NRC;
                 fileService.SaveFile(Utility.ConcatNRCSemiComa(savePath), vehicleStandardValue.VehicleNumber, files);
+
+                TaxPersonImage taxPersonImage = _serviceFactory.CreateTaxPersonImageService().GetTaxPersonImageByPersonalDetailPkIdAndCarNumber(personalInformation.PersonalPkid, vehicleStandardValue.VehicleNumber);
+                if (taxPersonImage != null)
+                {
+                    Console.WriteLine("here not null..........................................");
+                    taxPersonImage.NrcImagePath = NrcFileName;
+                    taxPersonImage.CensusImagePath = CensusFileName;
+                    taxPersonImage.TransactionContractImagePath = TransactionContractFileName;
+                    taxPersonImage.OwnerBookImagePath = OwnerBookFileName;
+                    taxPersonImage.WheelTagImagePath = WheelTabFileName;
+                    taxPersonImage.VehicleImagePath = VehicleFileName;
+                    taxPersonImage.NrcImageUrl = Utility.MakeImageUrl(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber, NrcFileName);
+                    taxPersonImage.CensusImageUrl = Utility.MakeImageUrl(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber, CensusFileName);
+                    taxPersonImage.TransactionContractImageUrl = Utility.MakeImageUrl(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber, TransactionContractFileName);
+                    taxPersonImage.OwnerBookImageUrl = Utility.MakeImageUrl(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber, OwnerBookFileName);
+                    taxPersonImage.WheelTagImageUrl = Utility.MakeImageUrl(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber, WheelTabFileName);
+                    taxPersonImage.VehicleImageUrl = Utility.MakeImageUrl(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber, VehicleFileName);
+                    _serviceFactory.CreateTaxPersonImageService().UpdateTaxPersonImage(taxPersonImage);
+                }
+                else
+                {
+                    Console.WriteLine("here null..........................................");
+
+                    _serviceFactory.CreateTaxPersonImageService().SaveTaxPersonImage(
+                        new TaxPersonImage()
+                        {
+                            NrcImagePath = NrcFileName,
+                            CensusImagePath = CensusFileName,
+                            TransactionContractImagePath = TransactionContractFileName, 
+                            OwnerBookImagePath = OwnerBookFileName,
+                            WheelTagImagePath = WheelTabFileName,
+                            VehicleImagePath = VehicleFileName,
+                            NrcImageUrl = Utility.MakeImageUrl(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber, NrcFileName),
+                            CensusImageUrl = Utility.MakeImageUrl(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber, CensusFileName),
+                            TransactionContractImageUrl = Utility.MakeImageUrl(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber, TransactionContractFileName),
+                            OwnerBookImageUrl = Utility.MakeImageUrl(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber, OwnerBookFileName),
+                            WheelTagImageUrl = Utility.MakeImageUrl(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber, WheelTabFileName),
+                            VehicleImageUrl = Utility.MakeImageUrl(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber, VehicleFileName),
+                            CarNumber = vehicleStandardValue.VehicleNumber,
+                            PersonalDetail = personalInformation
+                        }    
+                    );
+                }
             }
-            string nrc = loginTaxPayerInfo.NRC;
-            PersonalDetail personalInformation = await _serviceFactory.CreatePersonalDetailService().GetPersonalInformationByNRCInDBAndAPI(nrc);//await _serviceFactory.CreatePersonalDetailService().GetPersonalInformationByNRC(nrc);
+            
             string contractPriceString = Request.Form["ContractPrice"];
             long ContractPrice = Utility.MakeDigit(contractPriceString);
             long AssetValue = Utility.MakeDigit(vehicleStandardValue.StandardValue);

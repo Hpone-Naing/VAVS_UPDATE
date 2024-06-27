@@ -138,5 +138,11 @@ namespace VAVS_Client.Factories.Impl
             ILogger<NRCANDTownshipServiceImpl> nrcAndTownshipLogger = new Logger<NRCANDTownshipServiceImpl>(_loggerFactory);
             return new NRCANDTownshipServiceImpl(_context, nrcAndTownshipLogger);
         }
+
+        public TaxPersonImageService CreateTaxPersonImageService()
+        {
+            ILogger<TaxPersonImageServiceImpl> TaxPersonImageServiceImplLogger = new Logger<TaxPersonImageServiceImpl>(_loggerFactory);
+            return new TaxPersonImageServiceImpl(_context, TaxPersonImageServiceImplLogger);
+        }
     }
 }

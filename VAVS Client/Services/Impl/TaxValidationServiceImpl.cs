@@ -19,13 +19,13 @@ namespace VAVS_Client.Services.Impl
             _taxPayerInfoService = taxPayerInfoService;
             _sessionService = sessionService;
         }
-        public bool IsTaxedVehicle(string vehicleNumber)
+        public bool IsTaxedVehicle(string nrc, string vehicleNumber)
         {
             _logger.LogInformation(">>>>>>>>>> [TaxValidationServiceImpl][IsTaxedVehicle] Find Taxed Vehicle by VehicleNumber. <<<<<<<<<<");
 
             try
             {
-                TaxValidation taxValidation = FindByString("VehicleNumber", vehicleNumber);
+                TaxValidation taxValidation = _context.TaxValidations.FirstOrDefault(taxValidation => taxValidation.PersonNRC == nrc && taxValidation.VehicleNumber == vehicleNumber);//FindByString("VehicleNumber", vehicleNumber);
                 if (taxValidation != null)
                 {
                     return true;

@@ -24,6 +24,7 @@ namespace VAVS_Client.Factories
         SessionService CreateSessionServiceService();
         FinancialYearService CreateFinancialYearService();
         NRCANDTownshipService CreateNRCANDTownshipService();
+        TaxPersonImageService CreateTaxPersonImageService();
 
     }
 }

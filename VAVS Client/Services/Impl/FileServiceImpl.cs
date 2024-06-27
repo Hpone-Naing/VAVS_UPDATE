@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using VAVS_Client.Util;
 
 namespace VAVS_Client.Services.Impl
 {
@@ -44,7 +45,7 @@ namespace VAVS_Client.Services.Impl
 
             if (!string.IsNullOrEmpty(vehicleNumber))
             {
-                vehicleNumber = Regex.Replace(vehicleNumber, @"[\/\-\(\)\s]", "_");
+                vehicleNumber = Utility.MakeVehicleNumberWithUnderScore(vehicleNumber);//Regex.Replace(vehicleNumber, @"[\/\-\(\)\s]", "_");
                 sanitizedSubDirectoryName = Path.Combine(sanitizedSubDirectoryName, vehicleNumber);
                 subdirectoryPath = GetCustomSubdirectoryPath(wwwRootPath, "nrc", sanitizedSubDirectoryName);
             }
