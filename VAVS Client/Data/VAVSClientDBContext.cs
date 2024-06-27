@@ -21,6 +21,7 @@
         public virtual DbSet<DeviceInfo> DeviceInfos { get; set; }
         public virtual DbSet<LoginAuth> LoginAuths { get; set; }
         public virtual DbSet<LoginUserInfo> LoginUserInfos { get; set; }
+        public virtual DbSet<TaxPersonImage> TaxPersonImages { get; set; }
 
 
     }
