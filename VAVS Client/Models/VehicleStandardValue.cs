@@ -32,6 +32,9 @@ namespace VAVS_Client.Models
         [StringLength(10)]
         public string? VehicleNumber { get; set; }
 
+        [NotMapped]
+        public string? Grade { get; set; }
+
         [StringLength(50)]
         public string? OfficeLetterNo { get; set; }
 

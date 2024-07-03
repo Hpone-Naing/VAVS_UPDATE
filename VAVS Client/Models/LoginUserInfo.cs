@@ -44,6 +44,9 @@ namespace VAVS_Client.Models
         [StringLength(200)]
         public string? TaxAmount { get; set; }
 
+        [StringLength(200)]
+        public string? Grade { get; set; }
+
         public DateTime? LoggedInTime { get; set; }
         public bool? RememberMe { get; set; }
 

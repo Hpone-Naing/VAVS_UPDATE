@@ -215,6 +215,10 @@ namespace VAVS_Client.Services.Impl
                 {
                     vehicleStandardValue = await _vehicleStandardValueAPIService.GetVehicleValueByVehicleNumber(carNumber);
                 }
+                if(vehicleStandardValue != null)
+                {
+                    vehicleStandardValue.VehicleNumber = carNumber;
+                }
                 return vehicleStandardValue;
             }
             catch (HttpRequestException e)

@@ -32,14 +32,26 @@
             <div class="row p-2" style="background-color: #c0c0c052;">
                 <div class="row">
                     <div class="col-lg-5 col-md-3 col-sm-3 col-5">
-                        <label class="fw-bold control-label" data-translate="VehicleDetail_VehicleBrand"></label>
+                        <label class="fw-bold control-label" data-translate="VehicleDetail_CarManufacturer">Car Manufacturer</label>
+                    </div>
+                    <div class="col-7">
+                        <input type="text" asp-for="Manufacturer" value="@Model.Manufacturer" readonly="" style="background-color: inherit;border: none;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row p-2">
+                <div class="row">
+                    <div class="col-lg-5 col-md-3 col-sm-3 col-5">
+                        <label class="fw-bold control-label" data-translate="VehicleDetail_VehicleBrand">Car Brand</label>
                     </div>
                     <div class="col-7">
                         <input type="text" asp-for="VehicleBrand" value="@Model.VehicleBrand" readonly="" style="background-color: inherit;border: none;">
                     </div>
                 </div>
             </div>
-            <div class="row p-2">
+
+            <div class="row p-2" style="background-color: #c0c0c052;">
                 <div class="row">
                     <div class="col-lg-5 col-md-3 col-sm-3 col-5">
                         <label class="fw-bold control-label" data-translate="VehicleDetail_BuildType"></label>
@@ -49,7 +61,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row p-2" style="background-color: #c0c0c052;">
+            <div class="row p-2">
                 <div class="row">
                     <div class="col-lg-5 col-md-3 col-sm-3 col-5">
                         <label class="fw-bold control-label" data-translate="VehicleDetail_EnginePower"></label>
@@ -59,7 +71,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row p-2">
+            <div class="row p-2" style="background-color: #c0c0c052;">
                 <div class="row">
                     <div class="col-lg-5 col-md-3 col-sm-3 col-5">
                         <label class="fw-bold control-label" data-translate="VehicleDetail_ModelYear"></label>
@@ -81,8 +93,18 @@
                         </div>
                     </div>
                 </div>
+            <div class="row p-2" >
+                <div class="row">
+                    <div class="col-lg-5 col-md-3 col-sm-3 col-5">
+                        <label class="fw-bold control-label" data-translate="VehicleDetail_Grade">Grade</label>
+                    </div>
+                    <div class="col-7">
+                        <input type="text" asp-for="Grade" value="@Model.Grade" readonly="" style="background-color: inherit;border: none;">
+                    </div>
+                </div>
+            </div>
            
-            <div class="row p-2">
+            <div class="row p-2" style="background-color: #c0c0c052;">
                 <div class="row">
                     <div class="col-lg-5 col-md-3 col-sm-3 col-5">
                         <label class="fw-bold control-label" data-translate="VehicleDetail_StandardValue"></label>
@@ -95,7 +117,7 @@
 
             @if (Model.VehicleNumber != null)
             {
-                <div class="row p-2" style="background-color: #c0c0c052;">
+                <div class="row p-2">
                     <div class="row">
                         <div class="col-lg-5 col-md-3 col-sm-3 col-5">
                             <label class="fw-bold control-label" data-translate="VehicleDetail_VehicleNumber"></label>

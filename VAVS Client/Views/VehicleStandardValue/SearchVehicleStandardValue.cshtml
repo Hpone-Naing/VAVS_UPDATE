@@ -55,9 +55,9 @@
         <div class="row mt-1 border border-dark rounded shadow-lg p-2 mb-2 bg-body">
             <div class="col-lg-6 col-md-6 col-sm-12" style="background-color:white">
                 <div class="row p-2">
-                    <label class="fw-bold col-lg-6 col-md-6 col-sm-4 control-label">Made Model</label>
+                    <label class="fw-bold col-lg-6 col-md-6 col-sm-4 control-label">Car Manufacturer</label>
                     <div class="col-lg-6 col-md-6 col-sm-8">
-                        @Html.DisplayFor(modelItem => item.VehicleBrand)
+                        @Html.DisplayFor(modelItem => item.Manufacturer)
                     </div>
                 </div>
             </div>
@@ -228,7 +228,7 @@ else
                     <div class="row" style="background-color: #ececec;">
                         <div class="col-lg-6 col-md-6 col-sm-6  mt-3 mb-3">
                             <div class="form-group">
-                                <label class="control-label"> Make Model </label>
+                                <label class="control-label"> Car Manufacturer </label>
                                 <select id="madeModel" name="MadeModel" class="selectpicker" data-live-search="true">
                                     
                                 </select>

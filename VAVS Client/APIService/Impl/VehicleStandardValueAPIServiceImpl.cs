@@ -34,16 +34,17 @@ namespace VAVS_Client.APIService.Impl
                 JsonElement root = doc.RootElement;
                 return new VehicleStandardValue()
                 {
-                    Manufacturer = root.GetProperty("manufacturer").GetString(),
-                    BuildType = root.GetProperty("buildType").GetString(),
-                    VehicleBrand = root.GetProperty("vehicleBrand").GetString(),
+                    Manufacturer = root.GetProperty("carManufacturer").GetString(),
+                    VehicleBrand = root.GetProperty("carBrand").GetString(),
+                    Grade = root.GetProperty("grade").GetString(),
                     ModelYear = root.GetProperty("modelYear").GetString(),
-                    EnginePower = root.GetProperty("enginePower").GetString(),
-                    VehicleNumber = root.GetProperty("carNumber").GetString(),
                     StandardValue =  root.GetProperty("standardValue").GetString(),
+                    BuildType = root.GetProperty("builtType").GetString(),
+                    EnginePower = root.GetProperty("enginePower").GetString(),
+                    //VehicleNumber = root.GetProperty("carNumber").GetString(),
                     Fuel = new Fuel()
                     {
-                        FuelType = root.GetProperty("fuelTypeID").GetString()
+                        FuelType = root.GetProperty("fuelType").GetString()
                     }
                 };
             }
@@ -169,19 +170,18 @@ namespace VAVS_Client.APIService.Impl
                         {
                             var vehicle = new VehicleStandardValue
                             {
-                                VehicleStandardValuePkid = element.GetProperty("vehiclePkid").GetInt32(),
-                                VehicleBrand = element.GetProperty("made_Model").GetString(),
-                                BuildType = element.GetProperty("type").GetString(),
-                                EnginePower = element.GetProperty("ep").GetString(),
-                                ModelYear = element.GetProperty("made_Year").GetString(),
-                                StandardValue = element.GetProperty("standard_Value").GetString(),
-                                Fuel = new Fuel()
+                                VehicleStandardValuePkid = element.GetProperty("carMasterPkid").GetInt32(),
+                                Manufacturer = element.GetProperty("carManufacturer").GetString(),
+                                VehicleBrand = element.GetProperty("carBrand").GetString(),
+                                Grade = element.GetProperty("grade").GetString(),
+                                ModelYear = element.GetProperty("modelYear").GetString(),
+                                StandardValue = element.GetProperty("standardValue").GetString(),
+                                BuildType = element.GetProperty("builtType").GetString(),
+                                EnginePower = element.GetProperty("enginePower").GetString(),
+                                Fuel =  new Fuel()
                                 {
-                                   FuelType = element.GetProperty("f_Id").GetString(),
-                                },
-
-                                Remarks = element.GetProperty("remark").GetString(),
-                                IsDeleted = element.GetProperty("isDeleted").GetBoolean()
+                                   FuelType = element.GetProperty("fuelType").GetString()
+                                }
                             };
 
                             vehicleModels.Add(vehicle);

@@ -49,6 +49,7 @@ namespace VAVS_Client.Controllers.TaxCalculation
                     CountryOfMade = vehicleStandardValue?.CountryOfMade,
                     EnginePower = vehicleStandardValue?.EnginePower,
                     VehicleBrand = vehicleStandardValue?.VehicleBrand,
+                    Grade = vehicleStandardValue?.Grade,
             };
             LoginUserInfo existingLoginUserInfo = _serviceFactory.CreateLoginUserInfoDBService().GetLoginUserByHashedToken(SessionUtil.GetToken(HttpContext));
             if (existingLoginUserInfo != null)
@@ -62,6 +63,7 @@ namespace VAVS_Client.Controllers.TaxCalculation
                 existingLoginUserInfo.CountryOfMade = vehicleStandardValue?.CountryOfMade;
                 existingLoginUserInfo.EnginePower = vehicleStandardValue?.EnginePower;
                 existingLoginUserInfo.VehicleBrand = vehicleStandardValue?.VehicleBrand;
+                existingLoginUserInfo.Grade = vehicleStandardValue?.Grade;
                 _serviceFactory.CreateLoginUserInfoDBService().UpdateLoginUserInfo(existingLoginUserInfo);
 
             }

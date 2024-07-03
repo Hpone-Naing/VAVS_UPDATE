@@ -65,15 +65,27 @@
             </div>
         </div>
         <div class="row p-2 ">
-            <label asp-for="VehicleStandardValue.VehicleBrand" class="fw-bold col-lg-6 col-md-6 col-sm-4 col-4 control-label" data-translate="VehicleDetail_VehicleBrand"></label>
+            <label asp-for="VehicleStandardValue.Manufacturer" class="fw-bold col-lg-6 col-md-6 col-sm-4 col-4 control-label" data-translate="VehicleDetail_CarManufacturer"></label>
             <div class="col-lg-4 col-md-6 col-sm-4 col-8">
-                <input type="text" asp-for="VehicleStandardValue.VehicleBrand" value="@Model.VehicleStandardValue.VehicleBrand" readonly="" style="background-color: inherit;border: none;">
+                <input type="text" asp-for="VehicleStandardValue.Manufacturer" value="@Model.VehicleStandardValue.Manufacturer" readonly="" style="background-color: inherit;border: none;">
             </div>
         </div>
         <div class="row p-2 " style="background-color: #c0c0c052;">
             <label asp-for="VehicleStandardValue.BuildType" class="fw-bold col-lg-6 col-md-6 col-sm-4 col-4 control-label" data-translate="VehicleDetail_BuildType"></label>
             <div class="col-lg-4 col-md-6 col-sm-4 col-8">
                 <input type="text" asp-for="VehicleStandardValue.BuildType" value="@Model.VehicleStandardValue.BuildType" readonly="" style="background-color: inherit;border: none;">
+            </div>
+        </div>
+        <div class="row p-2 ">
+            <label asp-for="VehicleStandardValue.VehicleBrand" class="fw-bold col-lg-6 col-md-6 col-sm-4 col-4 control-label" data-translate="VehicleDetail_VehicleBrand"></label>
+            <div class="col-lg-4 col-md-6 col-sm-4 col-8">
+                <input type="text" asp-for="VehicleStandardValue.VehicleBrand" value="@Model.VehicleStandardValue.VehicleBrand" readonly="" style="background-color: inherit;border: none;">
+            </div>
+        </div>
+        <div class="row p-2 " style="background-color: #c0c0c052;">
+            <label asp-for="VehicleStandardValue.Grade" class="fw-bold col-lg-6 col-md-6 col-sm-4 col-4 control-label" data-translate="VehicleDetail_Grade"></label>
+            <div class="col-lg-4 col-md-6 col-sm-4 col-8">
+                <input type="text" asp-for="VehicleStandardValue.Grade" value="@Model.VehicleStandardValue.Grade" readonly="" style="background-color: inherit;border: none;">
             </div>
         </div>
         <div class="row p-2 ">
