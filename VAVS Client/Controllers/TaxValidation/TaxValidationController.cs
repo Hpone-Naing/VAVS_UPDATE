@@ -94,7 +94,8 @@ namespace VAVS_Client.Controllers.TaxValidationController
                 {
                     PersonalDetail personalDetail = _serviceFactory.CreatePersonalDetailService().FindPersonalDetailByNrc(Utility.ConcatNRCSemiComa(loginTaxPayerInfo.NRC));
                     ViewBag.Address = personalDetail.HousingNumber + "၊" + personalDetail.Quarter + "၊" + personalDetail.Street;
-                    
+                    ViewBag.GIR = string.IsNullOrEmpty(personalDetail.GIR) ? "" : personalDetail.GIR;
+
                 }
                 PagingList<TaxValidation> taxValidations = _serviceFactory.CreateTaxValidationService().GetTaxValidationPendigListPagin(HttpContext, pageNo, pageSize);
                 if (Request.Query["export"] == "excel")
