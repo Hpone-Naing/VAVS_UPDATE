@@ -17,9 +17,9 @@ namespace VAVS_Client.Util
         public static int MAXIMUM_RESEND_CODE_TIME = 3;
         public static int OTP_EXPIRE_MINUTE = 0;
         public static int OTP_EXPIRE_SECOND = 120;
-        public static int NEXT_RESENDCODE_TIME_IN_MINUTE = 5; 
+        public static int NEXT_RESENDCODE_TIME_IN_MINUTE = 7; 
         public static int NEXT_RESENDCODE_TIME_IN_SECOND = 0;
-        public static int NEXT_REGISTER_TIME_IN_MINUTE = 5;
+        public static int NEXT_REGISTER_TIME_IN_MINUTE = 30;
         public static int NEXT_REGISTER_TIME_IN_SECOND = 0;
         public static string REGISTRATION_AUTH_FIREBASE_PATH = "DeviceInfos/";
         public static string LOGIN_AUTH_FIREBASE_PATH = "LoginAuths/";
@@ -71,6 +71,10 @@ namespace VAVS_Client.Util
 
         public static string MakeImageUrl(string nrc, string vehicleNumber, string fileName)
         {
+            if(vehicleNumber == null)
+            {
+                return string.Concat(IMAGE_URL, MakeNrcWithUnderScore(nrc), "\\", MakeNrcWithUnderScore(nrc), "\\", fileName);
+            }
             return string.Concat(IMAGE_URL, MakeNrcWithUnderScore(nrc), "\\", MakeVehicleNumberWithUnderScore(vehicleNumber), "\\", fileName);
         }
 

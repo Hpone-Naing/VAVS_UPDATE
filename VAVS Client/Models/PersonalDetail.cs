@@ -36,12 +36,18 @@ namespace VAVS_Client.Models
         [MaxLength(200)]
         public string? NRCFrontImagePath { get; set; }
 
+        [MaxLength(200)]
+        public string? NRCFrontImageUrl { get; set; }
+
         [NotMapped]
         [DisplayName("မှတ်ပုံတင်‌ရှေ့ပိုင်းပုံထည့်ရန်")]
         public IFormFile? NrcFrontImageFile { get; set; }
 
         [MaxLength(200)]
-        public string NRCBackImagePath { get; set; }
+        public string? NRCBackImagePath { get; set; }
+
+        [MaxLength(200)]
+        public string? NRCBackImageUrl { get; set; }
 
         [NotMapped]
         [DisplayName("မှတ်ပုံတင်‌နောက်ပိုင်းပုံထည့်ရန်")]

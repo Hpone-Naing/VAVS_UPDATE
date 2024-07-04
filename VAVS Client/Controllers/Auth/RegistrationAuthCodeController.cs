@@ -6,6 +6,7 @@ using Tesseract;
 using System.Drawing;
 using System.Drawing.Imaging;
 using DeviceInfo = VAVS_Client.Models.DeviceInfo;
+using VAVS_Client.Models;
 
 namespace VAVS_Client.Controllers.Auth
 {
@@ -75,7 +76,8 @@ namespace VAVS_Client.Controllers.Auth
                 /* 
                  * Check user already register or not by nrc 
                  */
-                if (await _serviceFactory.CreatePersonalDetailService().GetPersonalInformationByNRCInDBAndAPI(Utility.MakeNRC(personalDetail.NRCTownshipNumber+"/", personalDetail.NRCTownshipInitial, personalDetail.NRCType, personalDetail.NRCNumber)) != null)
+                string nrc = Utility.MakeNRC(personalDetail.NRCTownshipNumber + "/", personalDetail.NRCTownshipInitial, personalDetail.NRCType, personalDetail.NRCNumber);
+                if (await _serviceFactory.CreatePersonalDetailService().GetPersonalInformationByNRCInDBAndAPI(nrc) != null)
                 {
                     Console.WriteLine("here nrc in db and api not null");
                     MakeViewBag();
@@ -114,6 +116,8 @@ namespace VAVS_Client.Controllers.Auth
                     personalDetail.NRCFrontImagePath = frontFileName;
                     personalDetail.NRCBackImagePath = backFileName;
                     fileService.SaveFile(personalDetail.MakeNrc(), null, files, false);
+                    personalDetail.NRCFrontImageUrl = Utility.MakeImageUrl(nrc, null, frontFileName);
+                    personalDetail.NRCBackImageUrl = Utility.MakeImageUrl(nrc, null, backFileName);
                 }
                 /*
                  * Check User's deviceInfo null or not
