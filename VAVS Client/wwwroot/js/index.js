@@ -1,6 +1,7 @@
 ﻿$(document).ready(function () {
     $('.selectpicker').selectpicker();
-    $('.bs-searchbox input').attr('placeholder', 'ယာဥ်အမျိုးအစား ထည့်ပါ');
+    $('.bs-searchbox input').attr('placeholder', 'ထုတ်လုပ်သည့်ကုမ္ပဏီထည့်ပါ');
+    $('.dropdown').addClass("col-12");
     $('.bs-searchbox input').on('input', function () {
         var searchValue = $(this).val();
         var result = null;
