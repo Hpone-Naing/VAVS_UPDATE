@@ -126,6 +126,39 @@ namespace VAVS_Client.Controllers.VehicleStandardValueController
             }
         }
 
+        public async Task<IActionResult> GetVehicleValueByModelAndBrandAndYear(string MadeModel, string brand, string makeModelYear, int? pageNo)
+        {
+            try
+            {
+                if (!_serviceFactory.CreateSessionServiceService().IsActiveSession(HttpContext))
+                {
+                    Utility.AlertMessage(this, "You haven't login yet.", "alert-danger");
+                    return RedirectToAction("Index", "Login");
+                }
+                List<VehicleStandardValue> vehicleStandardValues = await _serviceFactory.CreateVehicleStandardValueService().GetVehicleStandardValueByModelAndBrandAndYear(MadeModel, brand, makeModelYear);
+                int pageSize = Utility.DEFAULT_PAGINATION_NUMBER;
+                PagingList<VehicleStandardValue> pageVehicleStandardValues = PagingList<VehicleStandardValue>.CreateAsync(vehicleStandardValues.AsQueryable<VehicleStandardValue>(), pageNo ?? 1, pageSize);
+
+                if (vehicleStandardValues.Count == 1)
+                {
+                    Console.WriteLine("Here cont 1..................");
+                    return View("Details", vehicleStandardValues[0]);
+                }
+                Console.WriteLine("Here cont > 1..................");
+                Console.WriteLine("brand........................." + brand);
+                ViewBag.MadeModel = MadeModel;
+                ViewBag.MadeYear = makeModelYear;
+                ViewBag.Brand = brand;
+                return View("SearchVehicleStandardValue", pageVehicleStandardValues);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception...." + e);
+                Utility.AlertMessage(this, "Server Error encounter. Fail to view detail page.", "alert-danger");
+                return RedirectToAction(nameof(SearchVehicleStandardValue));
+            }
+        }
+
         public async Task<IActionResult> Details(int Id, int pkId, string madeModel, string modelYear)
         {
 
@@ -168,10 +201,26 @@ namespace VAVS_Client.Controllers.VehicleStandardValueController
             return Json(models);
         }
 
+        public async Task<JsonResult> GetBrandNames(string madeModel)
+        {
+            Console.WriteLine("here GetBrandNames api call............................." + madeModel);
+            List<string> brands = await _serviceFactory.CreateVehicleStandardValueService().GetBrandNames(madeModel);
+            brands = brands.OrderBy(m => m).ToList();
+            return Json(brands);
+        }
+
         public async Task<JsonResult> GetMadeModelYear(string madeModel)
         {
             Console.WriteLine("here year api call............................."+madeModel);
             List<string> models = await _serviceFactory.CreateVehicleStandardValueService().GetModelYear(madeModel);
+            models = models.OrderBy(m => m).ToList();
+            return Json(models);
+        }
+
+        public async Task<JsonResult> GetMadeModelYearByManufacturerAndBrand(string madeModel, string brandName)
+        {
+            Console.WriteLine("here year api call............................." + madeModel);
+            List<string> models = await _serviceFactory.CreateVehicleStandardValueService().GetModelYear(madeModel, brandName);
             models = models.OrderBy(m => m).ToList();
             return Json(models);
         }

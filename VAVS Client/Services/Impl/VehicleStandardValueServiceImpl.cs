@@ -285,11 +285,51 @@ namespace VAVS_Client.Services.Impl
             }
         }
 
+        public async Task<List<string>> GetModelYear(string madeModel, string brandName)
+        {
+            try
+            {
+                List<string> years = await _vehicleStandardValueAPIService.GetModelYears(madeModel, brandName);
+                return years;
+            }
+            catch (HttpRequestException e)
+            {
+                throw new HttpRequestException($"Failed to send message. Status code: {e.StatusCode}");
+            }
+        }
+        public async Task<List<string>> GetBrandNames(string madeModel)
+        {
+            try
+            {
+                List<string> brands = await _vehicleStandardValueAPIService.GetBrandNames(madeModel);
+                return brands;
+            }
+            catch (HttpRequestException e)
+            {
+                throw new HttpRequestException($"Failed to send message. Status code: {e.StatusCode}");
+            }
+        }
+
         public async Task<List<VehicleStandardValue>>  GetVehicleStandardValueByModelAndYear(string madeModel, string modelYear)
         {
             try
             {
+                Console.WriteLine("here GetVehicleStandardValueByModelAndYear");
                 List<VehicleStandardValue> vehicleStandardValues = await _vehicleStandardValueAPIService.GetVehicleStandardValueByModelAndYear(madeModel, modelYear);
+                return vehicleStandardValues;
+            }
+            catch (HttpRequestException e)
+            {
+                throw new HttpRequestException($"Failed to send message. Status code: {e.StatusCode}");
+            }
+        }
+
+        public async Task<List<VehicleStandardValue>> GetVehicleStandardValueByModelAndBrandAndYear(string madeModel, string brand, string modelYear)
+        {
+            try
+            {
+                Console.WriteLine("here GetVehicleStandardValueByModelAndYear");
+                List<VehicleStandardValue> vehicleStandardValues = await _vehicleStandardValueAPIService.GetVehicleStandardValueByModelAndBrandAndYear(madeModel, brand, modelYear);
                 return vehicleStandardValues;
             }
             catch (HttpRequestException e)
