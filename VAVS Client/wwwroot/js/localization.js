@@ -124,7 +124,7 @@
 
         VehicleDetail_CarManufacturer: "ထုတ်လုပ်သည့်ကုမ္ပဏီ",
         VehicleDetail_Grade: "အဆင့်သတ်မှတ်ချက်",
-        VehicleDetail_FuelType: "လောင်စာအမျိုးအစား",
+        VehicleDetail_FuelType: "လောင်စာဆီအမျိုးအစား",
         VehicleDetail_VehicleBrand: "ထုတ်လုပ်သည့်အမျိုးအစား",
         VehicleDetail_MakeModel: "ကားမော်ဒယ်",
         VehicleDetail_BuildType: "ယာဥ်ဖွဲ့စည်းမှု",
@@ -147,7 +147,7 @@
         CalculateTax_IncomeTax: "ကျသင့်အခွန်",
 
         CalculatedTax_BaseValue: "အခွန်တွက်ချက်ခဲ့သောတန်ဖိုး",
-        CalculatedTax_TotalTax: "ကျသင့်ငွေခွန်စုစုပေါင်း",
+        CalculatedTax_TotalTax: "ကျသင့်အခွန်ငွေစုစုပေါင်း",
 
         TaxValidationDetail_Title: "အသေးစိတ် အချက်အလက်များ",
         TaxValidationDetail_TitleForOwner: "ယာဥ်ပိုင်ရှင် အချက်အလက်",

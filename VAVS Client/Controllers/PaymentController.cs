@@ -18,7 +18,7 @@ namespace VAVS_Client.Controllers
             ViewBag.Name = personalDetail.Name;
             ViewBag.NRC = Utility.MakeNRC(personalDetail.NRCTownshipNumber, personalDetail.NRCTownshipInitial, personalDetail.NRCType, personalDetail.NRCNumber);
             ViewBag.PhoneNumber = personalDetail.PhoneNumber;
-            ViewBag.Address = string.Concat("အမှတ်("+personalDetail.HousingNumber+")", personalDetail.Street, personalDetail.Quarter, personalDetail.Township.TownshipName, personalDetail.Township.StateDivision.StateDivisionName);
+            ViewBag.Address = string.Concat("အမှတ်("+personalDetail.HousingNumber+")၊", personalDetail.Street, "၊", personalDetail.Quarter, "၊", personalDetail.Township.TownshipName, "၊", personalDetail.Township.StateDivision.StateDivisionName);
         }
 
         public async Task<IActionResult> Payment()
