@@ -168,7 +168,8 @@
                         </td>
                         <td>
                             @{
-                                string standardValue = item.StandardValue.ToString();
+                                decimal? maxValue = item.StandardValue >= item.ContractValue ? item.StandardValue : item.ContractValue;
+                                string standardValue = maxValue.ToString();
                                 string formatStandardValue = string.IsNullOrEmpty(standardValue)
                                 ? standardValue
                                 : standardValue.Split('.')[0] + "<br />";

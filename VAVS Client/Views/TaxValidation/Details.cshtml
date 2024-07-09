@@ -198,8 +198,9 @@
                 <div class="col p-1 border border-primary">
                     @{
                         var value = Model.ContractValue > Model.StandardValue ? Model.ContractValue : Model.StandardValue;
+                        string result = value.ToString().Split(".")[0];
                     }
-                    @value
+                    @result
                 </div>
             </div>
         </div>
@@ -209,7 +210,11 @@
                     <label class="fw-bold  control-label" data-translate="CalculateTax_IncomeTax">Income Tax</label>
                 </div>
                 <div class="col p-1 border border-primary">
-                    @Model.TaxAmount
+                    @{
+                        var taxAmt = Model.TaxAmount.ToString();
+                        string res = taxAmt.Split('.')[0];
+                    }
+                    @res
                 </div>
             </div>
         </div>
@@ -219,7 +224,11 @@
                     <label class="fw-bold  control-label" data-translate="TaxValidationDetail_TaxPaid">Tax Paid</label>
                 </div>
                 <div class="col p-1 border border-primary">
-                    @Model.TaxAmount
+                    @{
+                        var taxAmt1 = Model.TaxAmount.ToString();
+                        string res1 = taxAmt1.Split('.')[0];
+                    }
+                    @res1
                 </div>
             </div>
         </div>
