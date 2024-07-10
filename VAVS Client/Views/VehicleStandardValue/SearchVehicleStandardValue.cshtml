@@ -261,7 +261,7 @@ else
                                     <label class="control-label"> Brand Name</label>
                                 </div>
                                 <div class="col-lg-8 col-6">
-                                    <select id="carBrand" name="brand" class="form-control" onmousedown="if(this.options.length>10){this.size=10;}" onchange='this.size=0;getModelYearByManufacturerAndBrands()' onblur="this.size=0;" required>
+                                    <select id="carBrand" name="brand" class="form-select" onchange='getModelYearByManufacturerAndBrands()' required>
                                         <option value="">Select Brand</option>
                                     </select>
                                 </div>
@@ -273,7 +273,7 @@ else
                                     <label class="control-label"> Model Year</label>
                                 </div>
                                 <div class="col-lg-8 col-6">
-                                    <select id="modelYear" name="makeModelYear" class="form-control" onmousedown="if(this.options.length>10){this.size=10;}" onchange='this.size=0;' onblur="this.size=0;" required>
+                                    <select id="modelYear" name="makeModelYear" class="form-select"  required>
                                         <option value="">Select Year</option>
                                     </select>
                                 </div>

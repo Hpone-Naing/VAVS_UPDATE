@@ -55,7 +55,7 @@
                 <div class="col-lg-6 col-md-6 col-sm-3 col-6">
                     <label class="fw-bold  control-label" data-translate="Global_Nrc">NRC</label>
                 </div>
-                <div class="col p-1  border border-primary">
+                <div class="col p-1  border border-primary d-flex align-items-end justify-content-end">
                     @Model.PersonNRC
                 </div>
             </div>
@@ -65,7 +65,7 @@
                 <div class="col-lg-6 col-md-6 col-sm-3 col-6">
                     <label class="fw-bold  control-label" data-translate="Reg_StateDivision">State/Division</label>
                 </div>
-                <div class="col p-1  border border-primary">
+                <div class="col p-1  border border-primary d-flex align-items-end justify-content-end">
                     @Model.PersonalDetail.Township.StateDivision.StateDivisionName
                 </div>
             </div>
@@ -105,7 +105,7 @@
                 <div class="col-lg-6 col-md-6 col-sm-3 col-6">
                     <label class="fw-bold  control-label" data-translate="Reg_Email" >Pemail Address</label>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-3 col-6 p-1 border border-primary p-1" style="font-size: 14px;">
+                <div class="col-lg-6 col-md-6 col-sm-3 col-6 p-1 border border-primary" style="font-size: 14px;">
                     @Model.PersonalDetail.Email
                 </div>
             </div>
@@ -195,7 +195,7 @@
                 <div class="col-lg-6 col-md-3 col-sm-3 col-6">
                     <label class="fw-bold  control-label" data-translate="TaxValidationDetail_BaseValue">Base Value</label>
                 </div>
-                <div class="col p-1 border border-primary">
+                <div class="col p-1 border border-primary d-flex align-items-end justify-content-end">
                     @{
                         var value = Model.ContractValue > Model.StandardValue ? Model.ContractValue : Model.StandardValue;
                         string result = value.ToString().Split(".")[0];
@@ -209,7 +209,7 @@
                 <div class="col-lg-6 col-md-3 col-sm-3 col-6">
                     <label class="fw-bold  control-label" data-translate="CalculateTax_IncomeTax">Income Tax</label>
                 </div>
-                <div class="col p-1 border border-primary">
+                <div class="col p-1 border border-primary d-flex align-items-end justify-content-end">
                     @{
                         var taxAmt = Model.TaxAmount.ToString();
                         string res = taxAmt.Split('.')[0];
@@ -223,7 +223,7 @@
                 <div class="col-lg-6 col-md-3 col-sm-3 col-6">
                     <label class="fw-bold  control-label" data-translate="TaxValidationDetail_TaxPaid">Tax Paid</label>
                 </div>
-                <div class="col p-1 border border-primary">
+                <div class="col p-1 border border-primary d-flex align-items-end justify-content-end">
                     @{
                         var taxAmt1 = Model.TaxAmount.ToString();
                         string res1 = taxAmt1.Split('.')[0];

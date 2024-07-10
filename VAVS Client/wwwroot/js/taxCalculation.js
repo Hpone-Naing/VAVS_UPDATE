@@ -32,7 +32,7 @@ function calcTax(event) {
     const price = parseFloat(document.getElementById("price").value.replace(/,/g, '')) || 0;
     const valueToCalculate = price > standardValue ? price : standardValue;
     const tax = calculateFormula(valueToCalculate);
-    document.getElementById("totalTax").value = tax.toFixed(2);
+    document.getElementById("totalTax").value = Math.round(tax).toString();
 };
 
 document.addEventListener("DOMContentLoaded", function () {

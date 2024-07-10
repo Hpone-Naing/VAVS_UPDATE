@@ -82,7 +82,7 @@
                 <input type="text" asp-for="VehicleStandardValue.BuildType" value="@Model.VehicleStandardValue.BuildType" readonly="" style="background-color: inherit;border: none;">
             </div>
         </div>
-        @if(string.IsNullOrEmpty(Model.VehicleStandardValue.Grade))
+        @if(!string.IsNullOrEmpty(Model.VehicleStandardValue.Grade))
         {
             <div class="row p-2 " style="background-color: #c0c0c052;">
                 <label asp-for="VehicleStandardValue.Grade" class="fw-bold col-lg-6 col-md-6 col-sm-4 col-4 control-label" data-translate="VehicleDetail_Grade"></label>

@@ -5,7 +5,7 @@
     $('.bs-searchbox input').on('input', function () {
         var searchValue = $(this).val();
         var result = null;
-        if (searchValue != null && searchValue != '' && searchValue.length >= 3) {
+        if (searchValue != null && searchValue != '') {
             $.getJSON("/IRD_VAVS_Client/VehicleStandardValue/GetMadeModel", { searchString: searchValue }, function (models) {
                 if (models != null && !jQuery.isEmptyObject(models)) {
                     $('.selectpicker').empty(); 
@@ -17,14 +17,15 @@
                 }
             });
         }
-        result = $('.dropdown-menu .active .text').text();
-        console.log("Selected Option Text1: " + result);
+        
         result = $('.filter-option-inner-inner').text();
         console.log("Selected Option Text3: " + result);
 
         result = $('.selectpicker').find("option:selected").text();
         console.log("Selected Option Text4: " + result);
         console.log("result null..................................." + (result !== null) + " / " + (result !== 'undefined') + "/" + (result !== ""))
+        result = $('.dropdown-menu .active .text').text();
+        console.log("Selected Option Text1: " + result);
         if (result !== null && result !== "" && result !== "undefined") {
             $.getJSON("/IRD_VAVS_Client/VehicleStandardValue/GetBrandNames", { madeModel: result }, function (brands) {
                 console.log("here1 .............................................");
