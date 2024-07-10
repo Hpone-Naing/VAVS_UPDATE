@@ -44,6 +44,7 @@ namespace VAVS_Client.Controllers.VehicleStandardValueController
                     ViewBag.CurrentPage = "SearchVehicleStandardValue";
                     return View("SearchVehicleStandardValue");
                 }
+                ViewBag.ChessisNumber = await _serviceFactory.CreateVehicleStandardValueService().GetVehicleChessisNumber(searchString);
                 return View("Details", vehicleStandardValue);
             }
             catch(Exception e)

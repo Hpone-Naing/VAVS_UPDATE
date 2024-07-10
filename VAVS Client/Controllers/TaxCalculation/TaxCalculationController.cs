@@ -40,16 +40,17 @@ namespace VAVS_Client.Controllers.TaxCalculation
             }
             LoginUserInfo loginUserInfo = new LoginUserInfo()
             {
-                    StandardValue = vehicleStandardValue?.StandardValue,
-                    VehicleNumber = vehicleStandardValue?.VehicleNumber,
-                    Manufacturer = vehicleStandardValue?.Manufacturer,
-                    BuildType = vehicleStandardValue?.BuildType,
-                    FuelType = vehicleStandardValue?.Fuel?.FuelType,
-                    ModelYear = vehicleStandardValue?.ModelYear,
-                    CountryOfMade = vehicleStandardValue?.CountryOfMade,
-                    EnginePower = vehicleStandardValue?.EnginePower,
-                    VehicleBrand = vehicleStandardValue?.VehicleBrand,
-                    Grade = vehicleStandardValue?.Grade,
+                StandardValue = vehicleStandardValue?.StandardValue,
+                VehicleNumber = vehicleStandardValue?.VehicleNumber,
+                Manufacturer = vehicleStandardValue?.Manufacturer,
+                BuildType = vehicleStandardValue?.BuildType,
+                FuelType = vehicleStandardValue?.Fuel?.FuelType,
+                ModelYear = vehicleStandardValue?.ModelYear,
+                CountryOfMade = vehicleStandardValue?.CountryOfMade,
+                EnginePower = vehicleStandardValue?.EnginePower,
+                VehicleBrand = vehicleStandardValue?.VehicleBrand,
+                Grade = vehicleStandardValue?.Grade,
+                ChessisNumber = vehicleStandardValue?.ChessisNumber
             };
             LoginUserInfo existingLoginUserInfo = _serviceFactory.CreateLoginUserInfoDBService().GetLoginUserByHashedToken(SessionUtil.GetToken(HttpContext));
             if (existingLoginUserInfo != null)
@@ -64,6 +65,7 @@ namespace VAVS_Client.Controllers.TaxCalculation
                 existingLoginUserInfo.EnginePower = vehicleStandardValue?.EnginePower;
                 existingLoginUserInfo.VehicleBrand = vehicleStandardValue?.VehicleBrand;
                 existingLoginUserInfo.Grade = vehicleStandardValue?.Grade;
+                existingLoginUserInfo.ChessisNumber = vehicleStandardValue?.ChessisNumber;
                 _serviceFactory.CreateLoginUserInfoDBService().UpdateLoginUserInfo(existingLoginUserInfo);
 
             }

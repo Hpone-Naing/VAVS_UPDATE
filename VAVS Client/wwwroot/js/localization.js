@@ -51,7 +51,7 @@
         VehicleDetail_VehicleNumber: "Vehicle Number",
         VehicleDetail_CalcTaxBtn: "Calculate",
 
-        CalculateTax_PlateNo: "Plate No",
+        CalculateTax_PlateNo: "Car Number",
         CalculateTax_CarManufacturer: "Manufacturer",
         CalculateTax_MakeModel: "Make Model",
         CalculateTax_Grade: "Grade",

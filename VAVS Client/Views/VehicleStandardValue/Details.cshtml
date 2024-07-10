@@ -28,7 +28,7 @@
 
 <form method="post" action="@Url.Action("ShowCalculateTaxForm", "TaxCalculation")">
     <div class="row mt-1 " style="border-radius: 20px;">
-        <div class="col-lg-6 col-md-12 col-sm-12">
+        <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="row p-2" style="background-color: #c0c0c052;">
                 <div class="row">
                     <div class="col-lg-5 col-md-3 col-sm-3 col-5">
@@ -82,8 +82,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-6 col-md-12 col-sm-12">
-                <div class="row p-2" style="background-color: #c0c0c052;">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="row p-2">
                     <div class="row">
                         <div class="col-lg-5 col-md-3 col-sm-3 col-5">
                             <label class="fw-bold control-label" data-translate="VehicleDetail_FuelType"></label>
@@ -96,7 +96,7 @@
 
             @if(!string.IsNullOrEmpty(Model.Grade))
             {
-                <div class="row p-2">
+                <div class="row p-2" style="background-color: #c0c0c052;">
                     <div class="row">
                         <div class="col-lg-5 col-md-3 col-sm-3 col-5">
                             <label class="fw-bold control-label" data-translate="VehicleDetail_Grade">Grade</label>
@@ -106,22 +106,10 @@
                         </div>
                     </div>
                 </div>
-            }           
-           
-            <div class="row p-2" style="background-color: #c0c0c052;">
-                <div class="row">
-                    <div class="col-lg-5 col-md-3 col-sm-3 col-5">
-                        <label class="fw-bold control-label" data-translate="VehicleDetail_StandardValue"></label>
-                    </div>
-                    <div class="col-7">
-                        <input type="text" asp-for="StandardValue" value="@(Model.StandardValue == "NULL" || Model.StandardValue == "0" ? "0" : string.Concat(Model.StandardValue, "00000"))" readonly="" style="background-color: inherit;border: none;">
-                    </div>
-                </div>
-            </div>
-
+            }
             @if (Model.VehicleNumber != null)
             {
-                <div class="row p-2">
+                <div class="row p-2" style="background-color: #c0c0c052;">
                     <div class="row">
                         <div class="col-lg-5 col-md-3 col-sm-3 col-5">
                             <label class="fw-bold control-label" data-translate="VehicleDetail_VehicleNumber"></label>
@@ -132,6 +120,29 @@
                     </div>
                 </div>
             }
+            @if (ViewBag.ChessisNumber != null)
+            {
+                <div class="row p-2">
+                    <div class="row">
+                        <div class="col-lg-5 col-md-3 col-sm-3 col-5">
+                            <label class="fw-bold control-label">Chessis Number</label>
+                        </div>
+                        <div class="col-7">
+                            <input type="text" asp-for="ChessisNumber" value="@ViewBag.ChessisNumber" readonly="" style="background-color: inherit;border: none;">
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="row p-2" style="background-color: #c0c0c052;">
+                <div class="row">
+                    <div class="col-lg-5 col-md-3 col-sm-3 col-5">
+                        <label class="fw-bold control-label" data-translate="VehicleDetail_StandardValue"></label>
+                    </div>
+                    <div class="col-7">
+                        <input type="text" asp-for="StandardValue" value="@(Model.StandardValue == "NULL" || Model.StandardValue == "0" ? "0" : string.Concat(Model.StandardValue, "00000"))" readonly="" style="background-color: inherit;border: none;">
+                    </div>
+                </div>
+            </div>
             
         </div>
     </div>

@@ -81,6 +81,9 @@ namespace VAVS_Client.Models
         [NotMapped]
         public IFormFile? VehicleImageFile { get; set; }
 
+        [NotMapped]
+        public string? ChessisNumber { get; set; }
+
         public bool IsImageFilesNotNull()
         {
             return CensusImageFile != null && TransactionContractImageFile != null && OwnerBookImageFile != null && WheelTagImageFile != null && VehicleImageFile != null;

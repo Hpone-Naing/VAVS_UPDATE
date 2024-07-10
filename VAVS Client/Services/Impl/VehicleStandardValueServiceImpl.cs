@@ -227,6 +227,21 @@ namespace VAVS_Client.Services.Impl
             }
         }
 
+        public async Task<string> GetVehicleChessisNumber(string carNumber)
+        {
+            try
+            {
+
+                string chessisNumber = await _vehicleStandardValueAPIService.GetVehicleChessisNumber(carNumber);
+                
+                return chessisNumber;
+            }
+            catch (HttpRequestException e)
+            {
+                throw new HttpRequestException($"Failed to send message. Status code: {e.StatusCode}");
+            }
+        }
+
         public async Task<VehicleStandardValue> GetVehicleValue(string manufacturer, string buildType, string fuelType, string vehicleBrand, string modelYear, string enginePower)
         {
             try

@@ -15,6 +15,9 @@ namespace VAVS_Client.Models
         public string? VehicleNumber { get; set; }
 
         [StringLength(200)]
+        public string? ChessisNumber { get; set; }
+
+        [StringLength(200)]
         public string? Manufacturer { get; set; }
 
         [StringLength(200)]
