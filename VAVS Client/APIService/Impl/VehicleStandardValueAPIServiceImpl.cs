@@ -59,6 +59,10 @@ namespace VAVS_Client.APIService.Impl
         public async Task<string> GetVehicleChessisNumber(string carNumber)
         {
             var response = await _httpClient.GetAsync($"https://stamplabel.ird.gov.mm/ids_vavs_webapi/api/GetChassisNumber/{carNumber}");
+            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return null;
+            }
             response.EnsureSuccessStatusCode();
             var chessisNumber = await response.Content.ReadAsStringAsync();
             return chessisNumber.Replace("\"", "");
