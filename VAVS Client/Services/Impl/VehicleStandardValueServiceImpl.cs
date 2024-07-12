@@ -232,9 +232,26 @@ namespace VAVS_Client.Services.Impl
             try
             {
 
+                Console.WriteLine("carnumber.........................." + carNumber);
                 string chessisNumber = await _vehicleStandardValueAPIService.GetVehicleChessisNumber(carNumber);
-                
+                Console.WriteLine("chessisno>................................" + chessisNumber);
                 return chessisNumber;
+            }
+            catch (HttpRequestException e)
+            {
+                throw new HttpRequestException($"Failed to send message. Status code: {e.StatusCode}");
+            }
+        }
+
+        public async Task<bool> UpdateChessisNumber(string carNumber, string chessisNumber)
+        {
+            try
+            {
+
+                Console.WriteLine("carnumber.........................." + carNumber);
+                bool res = await _vehicleStandardValueAPIService.UpdateChessisNumber(carNumber, chessisNumber);
+                Console.WriteLine("chessisno>................................" + chessisNumber);
+                return res;
             }
             catch (HttpRequestException e)
             {

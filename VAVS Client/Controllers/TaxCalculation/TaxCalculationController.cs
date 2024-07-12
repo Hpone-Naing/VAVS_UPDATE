@@ -38,6 +38,8 @@ namespace VAVS_Client.Controllers.TaxCalculation
                     return RedirectToAction("SearchVehicleStandardValue", "VehicleStandardValue");
                 }
             }
+
+            Console.WriteLine("Chessis no....................." + vehicleStandardValue.ChessisNumber);
             LoginUserInfo loginUserInfo = new LoginUserInfo()
             {
                 StandardValue = vehicleStandardValue?.StandardValue,
@@ -193,6 +195,7 @@ namespace VAVS_Client.Controllers.TaxCalculation
             loginUserInfo.VehicleNumber = vehicleStandardValue?.VehicleNumber;
             loginUserInfo.TaxAmount = totalTax.ToString();
             loginUserInfo.ContractValue = ContractPrice.ToString();
+            loginUserInfo.ChessisNumber = vehicleStandardValue.ChessisNumber;
             _serviceFactory.CreateLoginUserInfoDBService().UpdateLoginUserInfo(loginUserInfo);
             ViewBag.BaseValue = AssetValue > ContractPrice ? AssetValue.ToString() : ContractPrice.ToString();
             return View("CalculatedTax", taxValidation);

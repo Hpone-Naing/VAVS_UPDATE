@@ -94,8 +94,12 @@ namespace VAVS_Client.Services.Impl
                     CreatedDate = DateTime.Now,
                     //VehicleStandardValue = vehicleStandardValue
                 };
-                return Create(taxValidation);
-
+                bool res = await _vehicleStandardValueService.UpdateChessisNumber(loginTaxPayerInfo.VehicleNumber, loginTaxPayerInfo.ChessisNumber);
+                if(res)
+                {
+                    return Create(taxValidation);
+                }
+                return false;
             }
             catch (Exception e)
             {

@@ -2,6 +2,9 @@
 using System.Text.Json;
 using VAVS_Client.Util;
 using Newtonsoft.Json.Linq;
+using System.Text;
+using Newtonsoft.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace VAVS_Client.APIService.Impl
 {
@@ -66,6 +69,40 @@ namespace VAVS_Client.APIService.Impl
             response.EnsureSuccessStatusCode();
             var chessisNumber = await response.Content.ReadAsStringAsync();
             return chessisNumber.Replace("\"", "");
+        }
+
+        public async Task<bool> UpdateChessisNumber(string carNumber, string chessisNumber)
+        {
+            _logger.LogInformation(">>>>>>>>>> [PersonalDetailAPIServiceImpl][GetPersonalInformationByNRC] Get personal information by nrc. <<<<<<<<<<");
+            try
+            {
+                string apiKey = Utility.SEARCH_VEHICLE_STANDARD_VALUE_API_KEY;
+                string baseUrl = "http://203.81.89.218:99/VehicleStandardAPI/api/VehicleClient/UpdateVehicleChassisNoByCarNumber";
+                string url = $"{baseUrl}?carnumber={carNumber}&chassisno={chessisNumber}&apiKey={apiKey}";
+
+                HttpResponseMessage response = await _httpClient.PutAsync(url, null);
+                Console.WriteLine("Success status code: " + response.StatusCode);
+
+                if (response.StatusCode == HttpStatusCode.NotFound)
+                    return false;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    if(responseBody.Equals("ChassisNo updated successfully!"))
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+                Console.WriteLine($"Failed to send message. Status code: {response.StatusCode}");
+                throw new HttpRequestException($"Failed to send message. Status code: {response.StatusCode}");
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(">>>>>>>>>> Error occur when finding person by nrc. <<<<<<<<<<" + e);
+                return false;// throw;
+            }
         }
 
         public async Task<List<string>> GetVehicleByMadeModel(string searchString)
