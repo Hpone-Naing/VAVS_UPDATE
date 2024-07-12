@@ -226,5 +226,23 @@ namespace VAVS_Client.Services.Impl
                 throw;
             }
         }
+
+        public bool HardDelete(T t)
+        {
+            _logger.LogInformation(">>>>>>>>>> [AbstractServiceImpl][HardDelete] Hard delete object. <<<<<<<<<<");
+            try
+            {
+                _context.Entry(t).State = EntityState.Deleted;
+                _context.SaveChanges();
+                _logger.LogInformation(">>>>>>>>>> Hard Delete Success. <<<<<<<<<<");
+                return true;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, ">>>>>>>>>> Hard Delete Failed. <<<<<<<<<<");
+                throw;
+            }
+        }
+
     }
 }

@@ -34,6 +34,20 @@ namespace VAVS_Client.Services.Impl
             Update(taxPayerInfo);
         }
 
+        public bool HardDeleteTaxedPayerInfo(LoginUserInfo taxPayerInfo)
+        {
+            try
+            {
+                return HardDelete(taxPayerInfo);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError("Exception occur when hard delete: " + ex);
+                throw;
+            }
+            
+        }
+
         public void UpdateLoginUserInfo(LoginUserInfo taxVehicleInfo)
         {
             Update(taxVehicleInfo);

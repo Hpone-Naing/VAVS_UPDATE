@@ -6,5 +6,6 @@
         public LoginUserInfo GetLoginUserByHashedToken(string token);
         public void UpdateTaxedPayerInfo(string token, LoginUserInfo taxPayerInfo);
         public void UpdateLoginUserInfo(LoginUserInfo taxVehicleInfo);
+        public bool HardDeleteTaxedPayerInfo(LoginUserInfo taxPayerInfo);
     }
 }

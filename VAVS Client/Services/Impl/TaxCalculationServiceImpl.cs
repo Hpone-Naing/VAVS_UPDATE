@@ -97,14 +97,17 @@ namespace VAVS_Client.Services.Impl
                 bool res = await _vehicleStandardValueService.UpdateChessisNumber(loginTaxPayerInfo.VehicleNumber, loginTaxPayerInfo.ChessisNumber);
                 if(res)
                 {
-                    return Create(taxValidation);
+                    if(Create(taxValidation))
+                    {
+                        return _taxPayerInfoService.HardDeleteTaxedPayerInfo(loginTaxPayerInfo);
+                    }
                 }
                 return false;
             }
             catch (Exception e)
             {
                 Console.WriteLine("Error occur when saving taxvalidation: " + e);
-                return false;
+                throw;
             }
         }
     }

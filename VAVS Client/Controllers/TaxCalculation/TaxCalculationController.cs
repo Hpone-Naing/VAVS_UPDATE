@@ -228,10 +228,15 @@ namespace VAVS_Client.Controllers.TaxCalculation
                 TaxpayerInfo taxPayerinfo = sessionService.GetLoginUserInfo(HttpContext);
                 PersonalDetail personalInformation = await _serviceFactory.CreatePersonalDetailService().GetPersonalInformationByNRCInDBAndAPI(taxPayerinfo.NRC);//await factoryBuilder.CreatePersonalDetailService().GetPersonalInformationByNRC(loginUserInfo.NRC);
                 LoginUserInfo loginUserInfo = _serviceFactory.CreateLoginUserInfoDBService().GetLoginUserByHashedToken(SessionUtil.GetToken(HttpContext));
-                await _serviceFactory.CreateTaxCalculationService().SaveTaxValidation(HttpContext, taxInfo);
-                await _serviceFactory.CreateSMSVerificationService().SendSMSOTP(personalInformation.PhoneNumber, "လူကြီးမင်း၏မော်တော်ယာဉ်အမှတ်["+loginUserInfo.VehicleNumber+"]အခွန်စည်းကြပ်မှုအတွက် ကျသင့်အခွန်ငွေ("+loginUserInfo.TaxAmount+") ကျပ် ပေးသွင်းမှုအောင်မြင်ပြီးဖြစ်ပါ၍"+personalInformation.Township.TownshipName+"မြို့နယ်အခွန်ရုံးတွင်ဤအထောက်အထားအားပြသ၍အခွန်ကင်းရှင်းကြောင်းထောက်ခံချက်ပုံစံ(၁)အခွန်စိမ်းကိုလူကြီးမင်းအဆင်ပြေသည့်နေ့ရုံးချိန်အတွင်းသွားရောက်ထုတ်ယူနိုင်ပါသည်။");
-                Utility.AlertMessage(this, "Success. Please wait for admin response", "alert-success");
-                return RedirectToAction("PendingList", "TaxValidation");
+                if(await _serviceFactory.CreateTaxCalculationService().SaveTaxValidation(HttpContext, taxInfo))
+                {
+                    await _serviceFactory.CreateSMSVerificationService().SendSMSOTP(personalInformation.PhoneNumber, "လူကြီးမင်း၏မော်တော်ယာဉ်အမှတ်["+loginUserInfo.VehicleNumber+"]အခွန်စည်းကြပ်မှုအတွက် ကျသင့်အခွန်ငွေ("+loginUserInfo.TaxAmount+") ကျပ် ပေးသွင်းမှုအောင်မြင်ပြီးဖြစ်ပါ၍"+personalInformation.Township.TownshipName+"မြို့နယ်အခွန်ရုံးတွင်ဤအထောက်အထားအားပြသ၍အခွန်ကင်းရှင်းကြောင်းထောက်ခံချက်ပုံစံ(၁)အခွန်စိမ်းကိုလူကြီးမင်းအဆင်ပြေသည့်နေ့ရုံးချိန်အတွင်းသွားရောက်ထုတ်ယူနိုင်ပါသည်။");
+                    Utility.AlertMessage(this, "Success. Please wait for admin response", "alert-success");
+                    return RedirectToAction("PendingList", "TaxValidation");
+                }
+
+                Utility.AlertMessage(this, "Internal server error.", "alert-danger");
+                return RedirectToAction("SearchVehicleStandardValue", "VehicleStandardValue");
             }
             catch (Exception e)
             {

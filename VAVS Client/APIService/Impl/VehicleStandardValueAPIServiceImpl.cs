@@ -21,7 +21,7 @@ namespace VAVS_Client.APIService.Impl
         public async Task<VehicleStandardValue> GetVehicleValueByVehicleNumber(string carNumber)
         {
             string apiKey = Utility.SEARCH_VEHICLE_STANDARD_VALUE_API_KEY;
-            string baseUrl = "http://203.81.89.218:99/VehicleStandardAPI/api/VehicleStandard/GetVehicleByCarNumber";
+            string baseUrl = "http://203.81.89.218:99/VehicleStandardAPI/api/VehicleClient/GetVehicleByCarNumber";
             string url = $"{baseUrl}?carNumber={carNumber}&apiKey={apiKey}";
 
             HttpResponseMessage response = await _httpClient.GetAsync(url);
@@ -44,6 +44,7 @@ namespace VAVS_Client.APIService.Impl
                     StandardValue =  root.GetProperty("standardValue").GetString(),
                     BuildType = root.GetProperty("builtType").GetString(),
                     EnginePower = root.GetProperty("enginePower").GetString(),
+                    ChessisNumber = root.GetProperty("chassisNo").GetString(),
                     //VehicleNumber = root.GetProperty("carNumber").GetString(),
                     Fuel = new Fuel()
                     {
