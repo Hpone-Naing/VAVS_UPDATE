@@ -73,6 +73,7 @@ namespace VAVS_Client.Services.Impl
                     .Include(taxValidation => taxValidation.Township)
                     .Include(taxValidation => taxValidation.Township.StateDivision)
                     .FirstOrDefault();
+                Console.WriteLine("person nrc..........................." + (taxValidation==null));
                 return taxValidation;
             }
             catch (Exception e)

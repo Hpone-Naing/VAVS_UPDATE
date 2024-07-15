@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using VAVS_Client.Classes;
 using VAVS_Client.Factories;
+using VAVS_Client.Models;
 using VAVS_Client.Paging;
+using VAVS_Client.Services;
 using VAVS_Client.Util;
 using VAVS_Client.ViewModels;
 
@@ -15,6 +17,17 @@ namespace VAVS_Client.Controllers.VehicleStandardValueController
         {
             _serviceFactory = serviceFactory;
         }
+
+        private SearchLimit InitializeSearchLimit(string nrc)
+        {
+            return new SearchLimit()
+            {
+                Nrc = nrc,
+                SearchCount = 0,
+                ReSearchTime = null,
+            };
+        }
+
         public async Task<IActionResult> SearchVehicleStandardValue()
         {
             try
@@ -25,26 +38,70 @@ namespace VAVS_Client.Controllers.VehicleStandardValueController
                     Utility.AlertMessage(this, "You haven't login yet.", "alert-danger");
                     return RedirectToAction("Index", "Login");
                 }*/
-                if(!_serviceFactory.CreateSessionServiceService().IsActiveSession(HttpContext))
+                SessionService sessionService = _serviceFactory.CreateSessionServiceService();
+                if(!sessionService.IsActiveSession(HttpContext))
                 {
                     Utility.AlertMessage(this, "You haven't login yet.", "alert-danger");
                     return RedirectToAction("Index", "Login");
                 }
-
-                string searchString = Request.Query["SearchString"];
+                string nrc = sessionService.GetLoginUserInfo(HttpContext).NRC;
+                SearchLimitService searchLimitSerice = _serviceFactory.CreateSearchLimitService();
+                SearchLimit searchLimit = searchLimitSerice.GetSearchLimitByNrc(nrc);
+                string searchString;
+                VehicleStandardValue vehicleStandardValue;
+                if(searchLimit == null)
+                {
+                    searchLimitSerice.CreateSearchLimit(InitializeSearchLimit(nrc));
+                }
+                if(searchLimit.IsExceedMaximunSearch())
+                {
+                    if(searchLimit.ReSearchTime == null)
+                    {
+                        searchLimitSerice.UpdateSearchLimit(nrc);
+                        ViewBag.SearchLimit = searchLimit.ReSearchTime;
+                        return View("LimitSearch");
+                    }
+                    if(!searchLimit.AllowNextTimeRegiste())
+                    {
+                        ViewBag.SearchLimit = searchLimit.ReSearchTime;
+                        return View("LimitSearch");
+                    }
+                    
+                    searchString = Request.Query["SearchString"];
+                    ViewBag.SearchString = searchString;
+                    if (string.IsNullOrEmpty(searchString))
+                        return View();
+                    searchLimitSerice.UpdateSearchLimit(nrc);
+                    vehicleStandardValue = await _serviceFactory.CreateVehicleStandardValueService().GetVehicleValueByVehicleNumberInDBAndAPI(searchString);//await _serviceFactory.CreateVehicleStandardValueService().GetVehicleValueByVehicleNumber(searchString);
+                    if (vehicleStandardValue == null)
+                    {
+                        ViewBag.SearchString = "Not Found";
+                        ViewBag.CurrentPage = "SearchVehicleStandardValue";
+                        return View("SearchVehicleStandardValue");
+                    }
+                    if (string.IsNullOrEmpty(vehicleStandardValue.ChessisNumber))
+                    {
+                        vehicleStandardValue.ChessisNumber = await _serviceFactory.CreateVehicleStandardValueService().GetVehicleChessisNumber(searchString);
+                    }
+                    return View("Details", vehicleStandardValue);
+                }
+                searchString = Request.Query["SearchString"];
                 ViewBag.SearchString = searchString;
 
                 if (string.IsNullOrEmpty(searchString))
                     return View();
-
-                VehicleStandardValue vehicleStandardValue = await _serviceFactory.CreateVehicleStandardValueService().GetVehicleValueByVehicleNumberInDBAndAPI(searchString);//await _serviceFactory.CreateVehicleStandardValueService().GetVehicleValueByVehicleNumber(searchString);
+                searchLimitSerice.UpdateSearchLimit(nrc);
+                vehicleStandardValue = await _serviceFactory.CreateVehicleStandardValueService().GetVehicleValueByVehicleNumberInDBAndAPI(searchString);//await _serviceFactory.CreateVehicleStandardValueService().GetVehicleValueByVehicleNumber(searchString);
                 if (vehicleStandardValue == null)
                 {
                     ViewBag.SearchString = "Not Found";
                     ViewBag.CurrentPage = "SearchVehicleStandardValue";
                     return View("SearchVehicleStandardValue");
                 }
-                ViewBag.ChessisNumber = await _serviceFactory.CreateVehicleStandardValueService().GetVehicleChessisNumber(searchString);
+                if(string.IsNullOrEmpty(vehicleStandardValue.ChessisNumber))
+                {
+                     vehicleStandardValue.ChessisNumber = await _serviceFactory.CreateVehicleStandardValueService().GetVehicleChessisNumber(searchString);
+                }
                 return View("Details", vehicleStandardValue);
             }
             catch(Exception e)
@@ -131,22 +188,58 @@ namespace VAVS_Client.Controllers.VehicleStandardValueController
         {
             try
             {
-                if (!_serviceFactory.CreateSessionServiceService().IsActiveSession(HttpContext))
+                SessionService sessionService = _serviceFactory.CreateSessionServiceService();
+                if (!sessionService.IsActiveSession(HttpContext))
                 {
                     Utility.AlertMessage(this, "You haven't login yet.", "alert-danger");
                     return RedirectToAction("Index", "Login");
                 }
-                List<VehicleStandardValue> vehicleStandardValues = await _serviceFactory.CreateVehicleStandardValueService().GetVehicleStandardValueByModelAndBrandAndYear(MadeModel, brand, makeModelYear);
-                int pageSize = Utility.DEFAULT_PAGINATION_NUMBER;
-                PagingList<VehicleStandardValue> pageVehicleStandardValues = PagingList<VehicleStandardValue>.CreateAsync(vehicleStandardValues.AsQueryable<VehicleStandardValue>(), pageNo ?? 1, pageSize);
+                string nrc = sessionService.GetLoginUserInfo(HttpContext).NRC;
+                SearchLimitService searchLimitSerice = _serviceFactory.CreateSearchLimitService();
+                SearchLimit searchLimit = searchLimitSerice.GetSearchLimitByNrc(nrc);
+                List<VehicleStandardValue> vehicleStandardValues;
+                PagingList<VehicleStandardValue> pageVehicleStandardValues;
+                int pageSize;
+                if (searchLimit == null)
+                {
+                    searchLimitSerice.CreateSearchLimit(InitializeSearchLimit(nrc));
+                }
+                if (searchLimit.IsExceedMaximunSearch())
+                {
+                    if (searchLimit.ReSearchTime == null)
+                    {
+                        searchLimitSerice.UpdateSearchLimit(nrc);
+                        ViewBag.SearchLimit = searchLimit.ReSearchTime;
+                        return View("LimitSearch");
+                    }
+                    if (!searchLimit.AllowNextTimeRegiste())
+                    {
+                        ViewBag.SearchLimit = searchLimit.ReSearchTime;
+                        return View("LimitSearch");
+                    }
+                    searchLimitSerice.UpdateSearchLimit(nrc);
+                    vehicleStandardValues = await _serviceFactory.CreateVehicleStandardValueService().GetVehicleStandardValueByModelAndBrandAndYear(MadeModel, brand, makeModelYear);
+                    pageSize = Utility.DEFAULT_PAGINATION_NUMBER;
+                    pageVehicleStandardValues = PagingList<VehicleStandardValue>.CreateAsync(vehicleStandardValues.AsQueryable<VehicleStandardValue>(), pageNo ?? 1, pageSize);
+
+                    if (vehicleStandardValues.Count == 1)
+                    {
+                        return View("Details", vehicleStandardValues[0]);
+                    }
+                    ViewBag.MadeModel = MadeModel;
+                    ViewBag.MadeYear = makeModelYear;
+                    ViewBag.Brand = brand;
+                    return View("SearchVehicleStandardValue", pageVehicleStandardValues);
+                }
+                searchLimitSerice.UpdateSearchLimit(nrc);
+                vehicleStandardValues = await _serviceFactory.CreateVehicleStandardValueService().GetVehicleStandardValueByModelAndBrandAndYear(MadeModel, brand, makeModelYear);
+                pageSize = Utility.DEFAULT_PAGINATION_NUMBER;
+                pageVehicleStandardValues = PagingList<VehicleStandardValue>.CreateAsync(vehicleStandardValues.AsQueryable<VehicleStandardValue>(), pageNo ?? 1, pageSize);
 
                 if (vehicleStandardValues.Count == 1)
                 {
-                    Console.WriteLine("Here cont 1..................");
                     return View("Details", vehicleStandardValues[0]);
                 }
-                Console.WriteLine("Here cont > 1..................");
-                Console.WriteLine("brand........................." + brand);
                 ViewBag.MadeModel = MadeModel;
                 ViewBag.MadeYear = makeModelYear;
                 ViewBag.Brand = brand;

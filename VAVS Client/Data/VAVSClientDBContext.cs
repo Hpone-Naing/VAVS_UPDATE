@@ -22,7 +22,6 @@
         public virtual DbSet<LoginAuth> LoginAuths { get; set; }
         public virtual DbSet<LoginUserInfo> LoginUserInfos { get; set; }
         public virtual DbSet<TaxPersonImage> TaxPersonImages { get; set; }
-
-
+        public virtual DbSet<SearchLimit> SearchLimits { get; set; }
     }
 }

@@ -120,19 +120,19 @@
                     </div>
                 </div>
             }
-            @if (ViewBag.ChessisNumber != null)
-            {
+            @*@if (Model.ChessisNumber != null)
+            {*@
                 <div class="row p-2">
                     <div class="row">
                         <div class="col-lg-4 col-md-3 col-sm-3 col-5">
                             <label class="fw-bold control-label">Chessis Number</label>
                         </div>
                         <div class="col-7">
-                            <input type="text" asp-for="ChessisNumber" value="@ViewBag.ChessisNumber" readonly="" style="background-color: inherit;border: none;">
+                            <input type="text" asp-for="ChessisNumber" value="@Model.ChessisNumber" readonly="" style="background-color: inherit;border: none;">
                         </div>
                     </div>
                 </div>
-            }
+            @*}*@
             <div class="row p-2" style="background-color: #c0c0c052;">
                 <div class="row">
                     <div class="col-lg-4 col-md-3 col-sm-3 col-5">

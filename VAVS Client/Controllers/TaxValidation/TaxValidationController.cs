@@ -162,6 +162,7 @@ namespace VAVS_Client.Controllers.TaxValidationController
             }
             Console.WriteLine("id: ..................." + id);
             TaxValidation taxValidation = _serviceFactory.CreateTaxValidationService().FindTaxValidationByIdEgerLoad(id);
+            Console.WriteLine("person nrc......................" + (taxValidation==null));
             return View(taxValidation);
         }
     }

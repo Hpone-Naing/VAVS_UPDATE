@@ -144,5 +144,10 @@ namespace VAVS_Client.Factories.Impl
             ILogger<TaxPersonImageServiceImpl> TaxPersonImageServiceImplLogger = new Logger<TaxPersonImageServiceImpl>(_loggerFactory);
             return new TaxPersonImageServiceImpl(_context, TaxPersonImageServiceImplLogger);
         }
+        public SearchLimitService CreateSearchLimitService()
+        {
+            ILogger<SearchLimitServiceImpl> SerchLimitServiceImplLogger = new Logger<SearchLimitServiceImpl>(_loggerFactory);
+            return new SearchLimitServiceImpl(_context, SerchLimitServiceImplLogger);
+        }
     }
 }
