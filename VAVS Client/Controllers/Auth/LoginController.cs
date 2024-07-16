@@ -14,10 +14,14 @@ namespace VAVS_Client.Controllers.Auth
     public class LoginController : Controller
     {
         public ServiceFactory factoryBuilder;
+        private readonly ILoggerFactory _loggerFactory;
 
-        public LoginController(ServiceFactory serviceFactory)
+        ILogger<LoginController> loginControllerLogger;
+        public LoginController(ServiceFactory serviceFactory, ILoggerFactory loggerFactory)
         {
             factoryBuilder = serviceFactory;
+            _loggerFactory = loggerFactory;
+            loginControllerLogger = new Logger<LoginController>(_loggerFactory);
         }
 
         private LoginView MakeLoginView()
@@ -70,11 +74,13 @@ namespace VAVS_Client.Controllers.Auth
                 MakeLoginView();
                 MakeViewBag();
                 Utility.AlertMessage(this, "Phone number haven't registered yet.", "alert-danger");
+                loginControllerLogger.LogInformation("Login view success..............................");
                 return View("Login");
             }
             catch (Exception e)
             {
                 Utility.AlertMessage(this, "SQl Connection Error.Please refresh browser.", "alert-danger");
+                loginControllerLogger.LogError("Error when return login view..................." + e);
                 return RedirectToAction("Index", "Login");
             }
         }
@@ -140,10 +146,12 @@ namespace VAVS_Client.Controllers.Auth
                         NRC = nrc
                     }
                     );
+                    loginControllerLogger.LogInformation("Login with Nrc view success...............");
                     return RedirectToAction("CheckLoginOTPCode", "Login");
                 }
                 MakeViewBag();
                 Utility.AlertMessage(this, "You haven't registered yet!. Please register", "alert-danger", "true");
+                loginControllerLogger.LogInformation("Login with Nrc view success...............");
                 return RedirectToAction("LoginUser", "Login");
             }
             catch (Exception e)
@@ -151,6 +159,7 @@ namespace VAVS_Client.Controllers.Auth
                 Console.WriteLine(e);
                 MakeViewBag();
                 Utility.AlertMessage(this, "Internal Server error.", "alert-danger");
+                loginControllerLogger.LogError("Error occur when Login with nrc view ..............................." + e);
                 return RedirectToAction("Index", "Login");
             }
         }
@@ -177,10 +186,10 @@ namespace VAVS_Client.Controllers.Auth
                 {
                     MakeViewBag();
                     Utility.AlertMessage(this, "You haven't login yet.", "alert-danger");
+                    loginControllerLogger.LogInformation("Check login or not...............");
                     return RedirectToAction("Index", "Login");
                 }
                 TaxpayerInfo loginUserInfo = sessionService.GetLoginUserInfo(HttpContext);
-                Console.WriteLine("1 login userinfo null........................" + (loginUserInfo == null));
                 PersonalDetail personalInformation = await factoryBuilder.CreatePersonalDetailService().GetPersonalInformationByNRCInDBAndAPI(loginUserInfo.NRC);//await factoryBuilder.CreatePersonalDetailService().GetPersonalInformationByNRC(loginUserInfo.NRC);
                 
 
@@ -204,6 +213,7 @@ namespace VAVS_Client.Controllers.Auth
                     HttpContext.Session.SetString("ExpireTime", expireTime.ToString("yyyy-MM-ddTHH:mm:ss"));
                     ViewData["ExpireTime"] = HttpContext.Session.GetString("ExpireTime");
                     ViewData["phoneNumber"] = personalInformation.PhoneNumber;
+                    loginControllerLogger.LogInformation("OTP code view success.....................");
                     return View("LoginAuthCode");
                 }
                 /*
@@ -215,6 +225,8 @@ namespace VAVS_Client.Controllers.Auth
                     {
                         factoryBuilder.CreateLoginAuthDBService().UpdateResendCodeTime(loginUserInfo.NRC);
                         Utility.AlertMessage(this, "Try resend code after " + DateTime.Parse(existingUser.ReResendCodeTime).ToString(), "alert-danger");
+                        loginControllerLogger.LogInformation("resend code maximun.....................");
+
                         return RedirectToAction("Index", "Login");
                     }
                     if (existingUser.AllowNextTimeResendOTP())
@@ -230,6 +242,8 @@ namespace VAVS_Client.Controllers.Auth
                         HttpContext.Session.SetString("ExpireTime", expireTime.ToString("yyyy-MM-ddTHH:mm:ss"));
                         ViewData["phoneNumber"] = personalInformation.PhoneNumber;
                         ViewData["ExpireTime"] = HttpContext.Session.GetString("ExpireTime");
+                        loginControllerLogger.LogInformation("OTP code view success.....................");
+
                         return View("LoginAuthCode");
                     }
                 }
@@ -252,12 +266,13 @@ namespace VAVS_Client.Controllers.Auth
                     }
                     else
                     {
-                        Console.WriteLine("1 login userinfo null........................" + (loginUserInfo == null));
                         factoryBuilder.CreateLoginAuthDBService().UpdateOtp(loginUserInfo.NRC, HashUtil.ComputeSHA256Hash(otp));
                     }
                     HttpContext.Session.SetString("ExpireTime", expireTime.ToString("yyyy-MM-ddTHH:mm:ss"));
                     ViewData["ExpireTime"] = HttpContext.Session.GetString("ExpireTime");
                     ViewData["phoneNumber"] = personalInformation.PhoneNumber;
+                    loginControllerLogger.LogInformation("OTP code view success.....................");
+
                     return View("LoginAuthCode");
                 }
                 /*
@@ -278,17 +293,23 @@ namespace VAVS_Client.Controllers.Auth
                         existingUser.ResendOTPCount = 0;
                         factoryBuilder.CreateLoginAuthDBService().UpdateLoginAuth(existingUser);
                         HttpContext.Session.Remove("ExpireTime");
+                        loginControllerLogger.LogInformation("Valid otp and redirect to menu.....................");
+
                         return RedirectToAction("SearchVehicleStandardValue", "VehicleStandardValue");
                     }
                     ViewData["ExpireTime"] = HttpContext.Session.GetString("ExpireTime");
                     Utility.AlertMessage(this, "Incorrect OTP code.", "alert-danger");
                     ViewData["phoneNumber"] = personalInformation.PhoneNumber;
+                    loginControllerLogger.LogInformation("incorrect otp.....................");
+
                     return View("LoginAuthCode");
                 }
 
                 ViewData["ExpireTime"] = HttpContext.Session.GetString("ExpireTime");
                 ViewData["phoneNumber"] = personalInformation.PhoneNumber;
                 Utility.AlertMessage(this, "OTP code expire.", "alert-danger");
+                loginControllerLogger.LogInformation("OTP expire.....................");
+
                 return View("LoginAuthCode");
             }
             catch (Exception e)
@@ -296,6 +317,8 @@ namespace VAVS_Client.Controllers.Auth
                 Console.WriteLine(e);
                 MakeViewBag();
                 Utility.AlertMessage(this, "Internal Server error.", "alert-danger");
+                loginControllerLogger.LogInformation("Error occur when otp code view....................." + e);
+
                 return RedirectToAction("Index", "Login");
             }
         }
