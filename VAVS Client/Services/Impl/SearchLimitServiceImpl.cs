@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using VAVS_Client.Data;
+using VAVS_Client.Models;
 using VAVS_Client.Util;
 
 namespace VAVS_Client.Services.Impl
@@ -31,11 +32,16 @@ namespace VAVS_Client.Services.Impl
             Console.WriteLine("Nrc...................................//" + nrc);
             return FindByString("Nrc", nrc);
         }
-        public bool HardDeleteSearchLimit(SearchLimit searchLimit)
+        public bool HardDeleteSearchLimit(string nrc)
         {
             try
             {
-                return HardDelete(searchLimit);
+                SearchLimit searchlimit = GetSearchLimitByNrc(nrc);
+                if(searchlimit != null)
+                {
+                    return HardDelete(searchlimit);
+                }
+                return false;
             }
             catch (Exception ex)
             {

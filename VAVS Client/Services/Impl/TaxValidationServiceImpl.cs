@@ -92,7 +92,7 @@ namespace VAVS_Client.Services.Impl
                 {
                     TaxpayerInfo loginTaxPayerInfo = _sessionService.GetLoginUserInfo(httpContext);
 
-                    List<TaxValidation> taxValidationPendingList =  _context.TaxValidations.Where(taxValidation => taxValidation.PersonNRC == loginTaxPayerInfo.NRC && (taxValidation.QRCodeNumber == null && taxValidation.DemandNumber == null)).ToList();
+                    List<TaxValidation> taxValidationPendingList =  _context.TaxValidations.Where(taxValidation => taxValidation.PersonNRC == loginTaxPayerInfo.NRC && (taxValidation.QRCodeNumber == null && taxValidation.DemandNumber == null) && taxValidation.IsDeleted == false).ToList();
                     return GetAllWithPagin(taxValidationPendingList, pageNo, PageSize);
                 }
                 catch (Exception e)
@@ -116,7 +116,7 @@ namespace VAVS_Client.Services.Impl
                 {
                     TaxpayerInfo loginTaxPayerInfo = _sessionService.GetLoginUserInfo(httpContext);
 
-                    List<TaxValidation> taxValidationPendingList = _context.TaxValidations.Where(taxValidation => taxValidation.PersonNRC == loginTaxPayerInfo.NRC && (taxValidation.QRCodeNumber == null && taxValidation.DemandNumber == null))
+                    List<TaxValidation> taxValidationPendingList = _context.TaxValidations.Where(taxValidation => taxValidation.PersonNRC == loginTaxPayerInfo.NRC && (taxValidation.QRCodeNumber == null && taxValidation.DemandNumber == null) && taxValidation.IsDeleted == false)
                         .Include(taxValidation => taxValidation.PersonalDetail)
                         .Include(taxValidation => taxValidation.PersonalDetail.Township)
                         .Include(taxValidation => taxValidation.PersonalDetail.Township.StateDivision)
@@ -145,7 +145,7 @@ namespace VAVS_Client.Services.Impl
                 try
                 {
                     TaxpayerInfo loginTaxPayerInfo = _sessionService.GetLoginUserInfo(httpContext);
-                    List<TaxValidation> taxValidationPendingList = _context.TaxValidations.Where(taxValidation => taxValidation.PersonNRC == loginTaxPayerInfo.NRC && (taxValidation.QRCodeNumber != null || taxValidation.DemandNumber != null)).ToList();
+                    List<TaxValidation> taxValidationPendingList = _context.TaxValidations.Where(taxValidation => taxValidation.PersonNRC == loginTaxPayerInfo.NRC && (taxValidation.QRCodeNumber != null || taxValidation.DemandNumber != null) && taxValidation.IsDeleted == false).ToList();
                     return GetAllWithPagin(taxValidationPendingList, pageNo, PageSize);
                 }
                 catch (Exception e)
@@ -168,7 +168,7 @@ namespace VAVS_Client.Services.Impl
                 try
                 {
                     TaxpayerInfo loginTaxPayerInfo = _sessionService.GetLoginUserInfo(httpContext);
-                    List<TaxValidation> taxValidationApproveList = _context.TaxValidations.Where(taxValidation => taxValidation.PersonNRC == loginTaxPayerInfo.NRC && (taxValidation.QRCodeNumber != null || taxValidation.DemandNumber != null))
+                    List<TaxValidation> taxValidationApproveList = _context.TaxValidations.Where(taxValidation => taxValidation.PersonNRC == loginTaxPayerInfo.NRC && (taxValidation.QRCodeNumber != null || taxValidation.DemandNumber != null) && taxValidation.IsDeleted == false)
                         .Include(taxValidation => taxValidation.PersonalDetail)
                         .Include(taxValidation => taxValidation.PersonalDetail.Township)
                         .Include(taxValidation => taxValidation.PersonalDetail.Township.StateDivision)

@@ -21,7 +21,8 @@ namespace VAVS_Client.Services.Impl
         private readonly FuelTypeService _fuelTypeService;
         private readonly LoginUserInfoDBService _taxPayerInfoService;
         private readonly FinancialYearService _financialYearService;
-        public TaxCalculationServiceImpl(VAVSClientDBContext context, HttpClient httpClient, ILogger<TaxCalculationServiceImpl> logger, PersonalDetailService personalDetailService, TownshipService townshipService, StateDivisionService staetDivisionService, VehicleStandardValueService vehicleStandardValueService, FuelTypeService fuelTypeService, LoginUserInfoDBService taxPayerInfoService, FinancialYearService financialYearService) : base(context, logger)
+        private readonly SearchLimitService _searchLimitService;
+        public TaxCalculationServiceImpl(VAVSClientDBContext context, HttpClient httpClient, ILogger<TaxCalculationServiceImpl> logger, PersonalDetailService personalDetailService, TownshipService townshipService, StateDivisionService staetDivisionService, VehicleStandardValueService vehicleStandardValueService, FuelTypeService fuelTypeService, LoginUserInfoDBService taxPayerInfoService, FinancialYearService financialYearService, SearchLimitService searchLimitService) : base(context, logger)
         {
             _httpClient = httpClient;
             _logger = logger;
@@ -32,6 +33,7 @@ namespace VAVS_Client.Services.Impl
             _fuelTypeService = fuelTypeService;
             _taxPayerInfoService = taxPayerInfoService;
             _financialYearService = financialYearService;
+            _searchLimitService = searchLimitService;
         }
 
         public long CalculateTotalTax(long contractPrice, long assetValue)
@@ -94,13 +96,18 @@ namespace VAVS_Client.Services.Impl
                     CreatedDate = DateTime.Now,
                     //VehicleStandardValue = vehicleStandardValue
                 };
-                bool res = await _vehicleStandardValueService.UpdateChessisNumber(loginTaxPayerInfo.VehicleNumber, loginTaxPayerInfo.ChessisNumber);
-                if(res)
+                VehicleStandardValue vehicleStandardValue = await _vehicleStandardValueService.GetVehicleValueByVehicleNumber(loginTaxPayerInfo.VehicleNumber);
+                if(vehicleStandardValue != null)
                 {
-                    if(Create(taxValidation))
+                    bool res = await _vehicleStandardValueService.UpdateChessisNumber(loginTaxPayerInfo.VehicleNumber, loginTaxPayerInfo.ChessisNumber);
+                }
+                if (Create(taxValidation))
+                {
+                    if (_searchLimitService.HardDeleteSearchLimit(loginUserInfo.NRC))
                     {
                         return _taxPayerInfoService.HardDeleteTaxedPayerInfo(loginTaxPayerInfo);
                     }
+                    return false;
                 }
                 return false;
             }

@@ -110,7 +110,7 @@ namespace VAVS_Client.Factories.Impl
         public TaxCalculationService CreateTaxCalculationService()
         {
             ILogger<TaxCalculationServiceImpl> taxCalculationServiceLogger = new Logger<TaxCalculationServiceImpl>(_loggerFactory);
-            return new TaxCalculationServiceImpl(_context, _httpClient, taxCalculationServiceLogger, CreatePersonalDetailService(), CreateTownshipService(), CreateStateDivisionService(), CreateVehicleStandardValueService(), CreateFuelTypeService(), CreateLoginUserInfoDBService(), _financialYearService);
+            return new TaxCalculationServiceImpl(_context, _httpClient, taxCalculationServiceLogger, CreatePersonalDetailService(), CreateTownshipService(), CreateStateDivisionService(), CreateVehicleStandardValueService(), CreateFuelTypeService(), CreateLoginUserInfoDBService(), _financialYearService, CreateSearchLimitService());
         }
         public TaxValidationService CreateTaxValidationService()
         {

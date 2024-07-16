@@ -4,7 +4,7 @@
     {
         public bool CreateSearchLimit(SearchLimit searchLimit);
         public SearchLimit GetSearchLimitByNrc(string nrc);
-        public bool HardDeleteSearchLimit(SearchLimit searchLimit);
+        public bool HardDeleteSearchLimit(string nrc);
         public bool UpdateSearchLimit(string nrc);
     }
 }
