@@ -49,7 +49,7 @@ namespace VAVS_Client.Controllers.VehicleStandardValueController
                 SearchLimit searchLimit = searchLimitSerice.GetSearchLimitByNrc(nrc);
                 string searchString;
                 VehicleStandardValue vehicleStandardValue;
-                if(searchLimit == null)
+                /*if(searchLimit == null)
                 {
                     searchLimitSerice.CreateSearchLimit(InitializeSearchLimit(nrc));
                 }
@@ -84,13 +84,13 @@ namespace VAVS_Client.Controllers.VehicleStandardValueController
                         vehicleStandardValue.ChessisNumber = await _serviceFactory.CreateVehicleStandardValueService().GetVehicleChessisNumber(searchString);
                     }
                     return View("Details", vehicleStandardValue);
-                }
+                }*/
                 searchString = Request.Query["SearchString"];
                 ViewBag.SearchString = searchString;
 
                 if (string.IsNullOrEmpty(searchString))
                     return View();
-                searchLimitSerice.UpdateSearchLimit(nrc);
+                //searchLimitSerice.UpdateSearchLimit(nrc);
                 vehicleStandardValue = await _serviceFactory.CreateVehicleStandardValueService().GetVehicleValueByVehicleNumberInDBAndAPI(searchString);//await _serviceFactory.CreateVehicleStandardValueService().GetVehicleValueByVehicleNumber(searchString);
                 if (vehicleStandardValue == null)
                 {

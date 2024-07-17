@@ -300,7 +300,6 @@ namespace VAVS_Client.Controllers.Auth
                     Utility.AlertMessage(this, "Incorrect OTP code.", "alert-danger");
                     ViewData["phoneNumber"] = personalInformation.PhoneNumber;
                     //loginControllerLogger.LogInformation("incorrect otp.....................");
-
                     return View("LoginAuthCode");
                 }
 
@@ -317,7 +316,6 @@ namespace VAVS_Client.Controllers.Auth
                 MakeViewBag();
                 Utility.AlertMessage(this, "Internal Server error.", "alert-danger");
                 //loginControllerLogger.LogInformation("Error occur when otp code view....................." + e);
-
                 return RedirectToAction("Index", "Login");
             }
         }
