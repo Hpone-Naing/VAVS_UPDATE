@@ -22,7 +22,7 @@ namespace VAVS_Client.Util
         public static int NEXT_RESENDCODE_TIME_IN_SECOND = 0;
         public static int NEXT_REGISTER_TIME_IN_MINUTE = 30;
         public static int NEXT_REGISTER_TIME_IN_SECOND = 0;
-        public static int NEXT_SEARCH_TIME_IN_MINUTE = 2;
+        public static int NEXT_SEARCH_TIME_IN_MINUTE = 10;
         public static string REGISTRATION_AUTH_FIREBASE_PATH = "DeviceInfos/";
         public static string LOGIN_AUTH_FIREBASE_PATH = "LoginAuths/";
         public static string LoginUserInfo_FIREBASE_PATH = "LoginUserInfos/";

@@ -49,6 +49,22 @@ namespace VAVS_Client.Controllers.VehicleStandardValueController
                 SearchLimit searchLimit = searchLimitSerice.GetSearchLimitByNrc(nrc);
                 string searchString;
                 VehicleStandardValue vehicleStandardValue;
+                if(searchLimit == null)
+                {
+                    searchLimitSerice.CreateSearchLimit(InitializeSearchLimit(nrc));
+                }
+                if(searchLimit != null && searchLimit.ReSearchTime != null && !searchLimit.AllowNextTimeRegiste())
+                {
+                    ViewBag.SearchLimit = searchLimit.ReSearchTime;
+                    return View("LimitSearch");
+                }
+                if(searchLimit != null && searchLimit.IsExceedMaximunSearch() && searchLimit.ReSearchTime == null)
+                {
+                    searchLimitSerice.UpdateSearchLimit(nrc);
+                    ViewBag.SearchLimit = searchLimit.ReSearchTime;
+                    return View("LimitSearch");
+                }
+
                 /*if(searchLimit == null)
                 {
                     searchLimitSerice.CreateSearchLimit(InitializeSearchLimit(nrc));
@@ -90,7 +106,7 @@ namespace VAVS_Client.Controllers.VehicleStandardValueController
 
                 if (string.IsNullOrEmpty(searchString))
                     return View();
-                //searchLimitSerice.UpdateSearchLimit(nrc);
+                searchLimitSerice.UpdateSearchLimit(nrc);
                 vehicleStandardValue = await _serviceFactory.CreateVehicleStandardValueService().GetVehicleValueByVehicleNumberInDBAndAPI(searchString);//await _serviceFactory.CreateVehicleStandardValueService().GetVehicleValueByVehicleNumber(searchString);
                 if (vehicleStandardValue == null)
                 {
