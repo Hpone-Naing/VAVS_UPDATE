@@ -66,9 +66,25 @@
     </div>
 
     <div class="form-group mt-3">
-        <label class="control-label fw-bold mb-1">Billing User Information</label>
+        <label class="control-label fw-bold mb-1">Payment Summary</label>
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                <div class="row p-3">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-3">
+                        <label class="control-label">NRC</label>
+                    </div>
+                    <div class="col">
+                        <label class="control-label">@ViewBag.NRC</label>
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-3">
+                        <label class="control-label">Tax Office</label>
+                    </div>
+                    <div class="col">
+                        <label class="control-label">@ViewBag.TaxOffice</label>
+                    </div>
+                </div>
                 <div class="row p-3">
                     <div class="col-lg-3 col-md-3 col-sm-3 col-3">
                         <label class="control-label">Name</label>
@@ -79,28 +95,60 @@
                 </div>
                 <div class="row p-3">
                     <div class="col-lg-3 col-md-3 col-sm-3 col-3">
-                        <label class="control-label">NRC</label>
+                        <label class="control-label">Address</label>
                     </div>
                     <div class="col">
-                        <label class="control-label">@ViewBag.NRC</label>
+                        <label class="control-label">@ViewBag.Address</label>
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-3">
+                        <label class="control-label">Amount</label>
+                    </div>
+                    <div class="col">
+                        <label class="control-label">@ViewBag.TaxAmount</label>
                     </div>
                 </div>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-12 col-12">
                 <div class="row p-3">
                     <div class="col-lg-4 col-md-5 col-sm-3 col-3">
-                        <label class="control-label">Phone Number</label>
+                        <label class="control-label">Tax Type</label>
                     </div>
                     <div class="col">
-                        <label class="control-label">@ViewBag.PhoneNumber</label>
+                        <label class="control-label">Income Tax</label>
                     </div>
                 </div>
                 <div class="row p-3">
                     <div class="col-lg-4 col-md-5 col-sm-3 col-3">
-                        <label class="control-label">Address</label>
+                        <label class="control-label">Amount Title</label>
                     </div>
                     <div class="col">
-                        <label class="control-label">@ViewBag.Address</label>
+                        <label class="control-label">မော်တော်ယာဥ်ဝယ်ယူခြင်း</label>
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="col-lg-4 col-md-5 col-sm-3 col-3">
+                        <label class="control-label">Payment Type</label>
+                    </div>
+                    <div class="col">
+                        <label class="control-label">Balance Due with Return</label>
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="col-lg-4 col-md-5 col-sm-3 col-3">
+                        <label class="control-label">Income Year</label>
+                    </div>
+                    <div class="col">
+                        <label class="control-label">@ViewBag.TaxYear</label>
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="col-lg-4 col-md-5 col-sm-3 col-3">
+                        <label class="control-label">VAVS Payment Ref No</label>
+                    </div>
+                    <div class="col">
+                        <label class="control-label">10002*****333*****00000</label>
                     </div>
                 </div>
             </div>

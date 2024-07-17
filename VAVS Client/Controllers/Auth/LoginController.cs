@@ -198,14 +198,14 @@ namespace VAVS_Client.Controllers.Auth
                 LoginAuth existingUser = factoryBuilder.CreateLoginAuthDBService().GetLoginAuthByNrc(loginUserInfo.NRC);
                 if (existingUser == null)
                 {
-                    //string otp = Utility.GenerateOtp();
-                    string otp = "111111";
+                    string otp = Utility.GenerateOtp();
+                    //string otp = "111111";
 
                     Console.WriteLine("Otp 1 is: " + otp);
                     /*
                      * Send otp code via sms
                      */
-                    //await factoryBuilder.CreateSMSVerificationService().SendSMSOTP(personalInformation.PhoneNumber, Utility.MakeMessage("Your OTP code is: ", otp));
+                    await factoryBuilder.CreateSMSVerificationService().SendSMSOTP(personalInformation.PhoneNumber, Utility.MakeMessage("Your OTP code is: ", otp));
                     factoryBuilder.CreateLoginAuthDBService().CreateLoginAuth(InitializeLoginAuth(loginUserInfo.NRC, personalInformation.PhoneNumber, HashUtil.ComputeSHA256Hash(otp)));
                     HttpContext.Session.SetString("ExpireTime", expireTime.ToString("yyyy-MM-ddTHH:mm:ss"));
                     ViewData["ExpireTime"] = HttpContext.Session.GetString("ExpireTime");
@@ -228,14 +228,14 @@ namespace VAVS_Client.Controllers.Auth
                     }
                     if (existingUser.AllowNextTimeResendOTP())
                     {
-                        //string otp = Utility.GenerateOtp();
-                        string otp = "111111";
+                        string otp = Utility.GenerateOtp();
+                        //string otp = "111111";
 
                         Console.WriteLine("Otp 2 is: " + otp);
                         /*
                          * Send otp code via sms
                          */
-                        //await factoryBuilder.CreateSMSVerificationService().SendSMSOTP(personalInformation.PhoneNumber, Utility.MakeMessage("Your OTP code is: ", otp));
+                        await factoryBuilder.CreateSMSVerificationService().SendSMSOTP(personalInformation.PhoneNumber, Utility.MakeMessage("Your OTP code is: ", otp));
 
                         factoryBuilder.CreateLoginAuthDBService().UpdateResendCodeTime(loginUserInfo.NRC, HashUtil.ComputeSHA256Hash(otp));
                         HttpContext.Session.SetString("ExpireTime", expireTime.ToString("yyyy-MM-ddTHH:mm:ss"));
@@ -251,13 +251,13 @@ namespace VAVS_Client.Controllers.Auth
                  */
                 if ((string.IsNullOrEmpty(storedExpireTime) || (!string.IsNullOrEmpty(storedExpireTime) && currentTime > DateTime.Parse(storedExpireTime))))
                 {
-                    //string otp = Utility.GenerateOtp();
-                    string otp = "111111";
+                    string otp = Utility.GenerateOtp();
+                    //string otp = "111111";
                     Console.WriteLine("Otp 3 is: " + otp);
                     /*
                      * Send otp code via sms
                      */
-                    //await factoryBuilder.CreateSMSVerificationService().SendSMSOTP(personalInformation.PhoneNumber, Utility.MakeMessage("Your OTP code is: ", otp));
+                    await factoryBuilder.CreateSMSVerificationService().SendSMSOTP(personalInformation.PhoneNumber, Utility.MakeMessage("Your OTP code is: ", otp));
 
                     if (resend)
                     {
