@@ -27,7 +27,7 @@
         result = $('.dropdown-menu .active .text').text();
         console.log("Selected Option Text1: " + result);
         if (result !== null && result !== "" && result !== "undefined") {
-            $.getJSON("/VehicleStandardValue/GetBrandNames", { madeModel: result }, function (brands) {
+            $.getJSON("/IRD_VAVS_Client/VehicleStandardValue/GetBrandNames", { madeModel: result }, function (brands) {
                 console.log("here1 .............................................");
                 if (brands != null && !jQuery.isEmptyObject(brands)) {
                     $('#carBrand').empty();
@@ -50,7 +50,7 @@
             console.log("result1 null..................................." + (result1 !== null) + " / " + (result1 !== 'undefined') + "/" + (result1 !== ""))
 
             if (result1 !== null && result1 !== "" && result1 !== "undefined") {
-                $.getJSON("/VehicleStandardValue/GetBrandNames", { madeModel: result1 }, function (brands) {
+                $.getJSON("/IRD_VAVS_Client/VehicleStandardValue/GetBrandNames", { madeModel: result1 }, function (brands) {
                     console.log("here2 .............................................");
 
                     if (brands != null && !jQuery.isEmptyObject(brands)) {
@@ -77,7 +77,7 @@ function getModelYearByManufacturerAndBrands() {
     console.log("brand.................." + brand);
 
     if (manufacturer !== null && manufacturer !== "" && manufacturer !== "undefined") {
-        $.getJSON("/VehicleStandardValue/GetMadeModelYearByManufacturerAndBrand", { madeModel: manufacturer, brandName: brand }, function (years) {
+        $.getJSON("/IRD_VAVS_Client/VehicleStandardValue/GetMadeModelYearByManufacturerAndBrand", { madeModel: manufacturer, brandName: brand }, function (years) {
             console.log("here2 .............................................");
 
             if (years != null && !jQuery.isEmptyObject(years)) {
