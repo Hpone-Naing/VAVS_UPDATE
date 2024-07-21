@@ -1,4 +1,5 @@
-﻿using VAVS_Client.Util;
+﻿using System.Globalization;
+using VAVS_Client.Util;
 
 namespace VAVS_Client.Models
 {
@@ -18,9 +19,25 @@ namespace VAVS_Client.Models
 
         public bool IsExceedMaximunSearch() => (this.SearchCount >= Utility.MAXIMUM_SEARCH_TIME);
 
-        public bool AllowNextTimeRegiste()
+        /*public bool AllowNextTimeRegiste()
         {
             return (this.ReSearchTime != null && DateTime.Now >= DateTime.Parse(this.ReSearchTime));
+        }*/
+        public bool AllowNextTimeRegiste()
+        {
+            Console.WriteLine("here AllowNextTimePendingPayment............................");
+            if (DateTime.TryParseExact(this.ReSearchTime, "dd/MM/yyyy h:mm:ss tt", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime rePaymentTime))
+            {
+                Console.WriteLine("here if....................");
+                Console.WriteLine("  > ...................." + (DateTime.Now >= rePaymentTime) + " Now / time" + DateTime.Now + " / " + rePaymentTime);
+                return DateTime.Now >= rePaymentTime;
+            }
+            else
+            {
+                Console.WriteLine("here else");
+                return false;
+            }
         }
+
     }
 }

@@ -210,6 +210,23 @@ namespace VAVS_Client.Services.Impl
             }
         }
 
+        public T CreateAndReturnObj(T t)
+        {
+            _logger.LogInformation(">>>>>>>>>> [AbstractServiceImpl][Create] Save object.  <<<<<<<<<<");
+            try
+            {
+                _context.Set<T>().Add(t);
+                _context.SaveChanges();
+                _logger.LogInformation(">>>>>>>>>> Create Success. <<<<<<<<<<");
+                return t; // Return the saved object
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(">>>>>>>>>> Create Fail. <<<<<<<<<<" + e);
+                throw;
+            }
+        }
+
         public bool Update(T t)
         {
             _logger.LogInformation(">>>>>>>>>> [AbstractServiceImpl][Update] Update object.  <<<<<<<<<<");

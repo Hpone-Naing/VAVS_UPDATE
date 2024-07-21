@@ -78,7 +78,7 @@ namespace VAVS_Client.Controllers.TaxValidationController
                 }
             }
         } 
-        public IActionResult PendingList(int? pageNo)
+        public async Task<IActionResult> PendingList(int? pageNo)
         {
             SessionService sessionService = _serviceFactory.CreateSessionServiceService();
             if (!sessionService.IsActiveSession(HttpContext))
@@ -97,11 +97,13 @@ namespace VAVS_Client.Controllers.TaxValidationController
                     ViewBag.GIR = string.IsNullOrEmpty(personalDetail.GIR) ? "" : personalDetail.GIR;
 
                 }
-                PagingList<TaxValidation> taxValidations = _serviceFactory.CreateTaxValidationService().GetTaxValidationPendigListPagin(HttpContext, pageNo, pageSize);
+                List<TaxValidation> PagedtaxValidation = await _serviceFactory.CreatePaymentService().GetTaxValidationListByPendingPayment(HttpContext);
+                PagingList<TaxValidation> taxValidations = PagingList<TaxValidation>.CreateAsync(PagedtaxValidation.AsQueryable(), pageNo ?? 1, pageSize);
                 if (Request.Query["export"] == "excel")
                 {
                     bool ExportAll = Request.Query["ExportAll"] == "true";
-                    return ExportExcel(_serviceFactory.CreateTaxValidationService().GetTaxValidationPendigListForExcelPagin(HttpContext, pageNo, pageSize));
+                    List<TaxValidation> PagedTaxValidation = await _serviceFactory.CreatePaymentService().GetTaxValidationEgerLoadListByPendingPayment(HttpContext);
+                    return ExportExcel(PagingList<TaxValidation>.CreateAsync(PagedTaxValidation.AsQueryable(), pageNo ?? 1, pageSize));
                 }
                 return View(taxValidations);
             }

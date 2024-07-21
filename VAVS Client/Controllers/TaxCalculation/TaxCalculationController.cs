@@ -20,7 +20,7 @@ namespace VAVS_Client.Controllers.TaxCalculation
             _serviceFactory = serviceFactory;
         }
         [HttpPost]
-        public IActionResult ShowCalculateTaxForm(VehicleStandardValue vehicleStandardValue)
+        public async Task<IActionResult> ShowCalculateTaxForm(VehicleStandardValue vehicleStandardValue)
         {
             SessionService sessionService = _serviceFactory.CreateSessionServiceService();
             TaxpayerInfo taxPayerInfo = sessionService.GetLoginUserInfo(HttpContext);
@@ -31,11 +31,17 @@ namespace VAVS_Client.Controllers.TaxCalculation
             }
             if (vehicleStandardValue.VehicleNumber != null)
             {
-                bool IsTaxed = _serviceFactory.CreateTaxValidationService().IsTaxedVehicle(taxPayerInfo.NRC, vehicleStandardValue.VehicleNumber);
+                bool IsTaxed = await _serviceFactory.CreatePaymentService().IsALreadyPayment(HttpContext, vehicleStandardValue.VehicleNumber);
                 if(IsTaxed)
                 {
                     Utility.AlertMessage(this, "This vehicle has already taxed.", "alert-info");
                     return RedirectToAction("SearchVehicleStandardValue", "VehicleStandardValue");
+                }
+                bool IsAlreadyPayment = await _serviceFactory.CreatePaymentService().IsALreadyPendingPayment(HttpContext, vehicleStandardValue.VehicleNumber);
+                if (IsAlreadyPayment)
+                {
+                    Utility.AlertMessage(this, "အခွန်ဆောင်ရန်ကျန်ရှိနေသောစာရင်းတွင် ထိုမော်တော်ယာဥ်ပါရှိပါသည်။ ထိုမော်တော်ယာဥ်ကိုရှာဖွေ၍အခွန်ဆက်လက်လုပ်ဆောင်နိုင်ပါသည်။", "alert-info");
+                    return RedirectToAction("RemainPayments", "Payment");
                 }
             }
 
@@ -102,11 +108,17 @@ namespace VAVS_Client.Controllers.TaxCalculation
             
             if (vehicleStandardValue.VehicleNumber != null)
             {
-                bool IsTaxed = _serviceFactory.CreateTaxValidationService().IsTaxedVehicle(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber);
+                bool IsTaxed = await _serviceFactory.CreatePaymentService().IsALreadyPayment(HttpContext, vehicleStandardValue.VehicleNumber);
                 if (IsTaxed)
                 {
                     Utility.AlertMessage(this, "This vehicle has already taxed.", "alert-info");
                     return RedirectToAction("SearchVehicleStandardValue", "VehicleStandardValue");
+                }
+                bool IsAlreadyPayment = await _serviceFactory.CreatePaymentService().IsALreadyPendingPayment(HttpContext, vehicleStandardValue.VehicleNumber);
+                if (IsAlreadyPayment)
+                {
+                    Utility.AlertMessage(this, "အခွန်ဆောင်ရန်ကျန်ရှိနေသောစာရင်းတွင် ထိုမော်တော်ယာဥ်ပါရှိပါသည်။ ထိုမော်တော်ယာဥ်ကိုရှာဖွေ၍အခွန်ဆက်လက်လုပ်ဆောင်နိုင်ပါသည်။", "alert-info");
+                    return RedirectToAction("RemainPayments", "Payment");
                 }
             }
 

@@ -16,6 +16,7 @@ namespace VAVS_Client.Util
         public static int MAXIMUM_REGISTRATION_TIME = 5;
         public static int MAXIMUM_RESEND_CODE_TIME = 3;
         public static int MAXIMUM_SEARCH_TIME = 5;
+        public static int MAXIMUM_PENDINGPAYMENT_TIME = 3;
         public static int OTP_EXPIRE_MINUTE = 0;
         public static int OTP_EXPIRE_SECOND = 120;
         public static int NEXT_RESENDCODE_TIME_IN_MINUTE = 7; 
@@ -23,6 +24,7 @@ namespace VAVS_Client.Util
         public static int NEXT_REGISTER_TIME_IN_MINUTE = 30;
         public static int NEXT_REGISTER_TIME_IN_SECOND = 0;
         public static int NEXT_SEARCH_TIME_IN_MINUTE = 10;
+        public static int NEXT_PENDINGPAYMENT_TIME_IN_DAYS = 3;
         public static string REGISTRATION_AUTH_FIREBASE_PATH = "DeviceInfos/";
         public static string LOGIN_AUTH_FIREBASE_PATH = "LoginAuths/";
         public static string LoginUserInfo_FIREBASE_PATH = "LoginUserInfos/";
@@ -181,6 +183,21 @@ namespace VAVS_Client.Util
             }
 
             return result.ToString();
+        }
+
+        public static string GenerateGUID()
+        {
+            var guid = Guid.NewGuid();
+            return guid.ToString();
+        }
+
+        public static string UniqueTransactionNumber()
+        {
+
+            var timestamp = DateTime.Now.ToString("yyyyMMddHHmmssffff");
+            var uniqueId = GenerateGUID().Substring(0, 8);
+            return $"{timestamp}{uniqueId}";
+            
         }
     }
 }

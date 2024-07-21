@@ -14,6 +14,7 @@ namespace VAVS_Client.Services
         public T GetObjByIntVal(string columnName, int intVal);
         public List<SelectListItem> GetItemsFromList<T>(List<T> list, string valuePropertyName, string textPropertyName);
         public bool Create(T entity);
+        public T CreateAndReturnObj(T t);
         public bool Update(T t);
 
     }

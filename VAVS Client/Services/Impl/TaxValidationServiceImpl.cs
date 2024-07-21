@@ -10,35 +10,12 @@ namespace VAVS_Client.Services.Impl
     {
 
         private readonly ILogger<TaxValidationServiceImpl> _logger;
-        private readonly TaxPayerInfoService _taxPayerInfoService;
         private readonly SessionService _sessionService;
-        public TaxValidationServiceImpl(VAVSClientDBContext context, ILogger<TaxValidationServiceImpl> logger, TaxPayerInfoService taxPayerInfoService, SessionService sessionService) : base(context, logger)
+        public TaxValidationServiceImpl(VAVSClientDBContext context, ILogger<TaxValidationServiceImpl> logger, SessionService sessionService) : base(context, logger)
         {
 
             _logger = logger;
-            _taxPayerInfoService = taxPayerInfoService;
             _sessionService = sessionService;
-        }
-        public bool IsTaxedVehicle(string nrc, string vehicleNumber)
-        {
-            _logger.LogInformation(">>>>>>>>>> [TaxValidationServiceImpl][IsTaxedVehicle] Find Taxed Vehicle by VehicleNumber. <<<<<<<<<<");
-
-            try
-            {
-                TaxValidation taxValidation = _context.TaxValidations.FirstOrDefault(taxValidation => taxValidation.PersonNRC == nrc && taxValidation.VehicleNumber == vehicleNumber);//FindByString("VehicleNumber", vehicleNumber);
-                if (taxValidation != null)
-                {
-                    return true;
-                }
-                _logger.LogInformation(">>>>>>>>>> Success. Find Taxed Vehicle by VehicleNumber. <<<<<<<<<<");
-                return false;
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(">>>>>>>>>> Error occur when finding Taxed Vehicle by VehicleNumber. <<<<<<<<<<" + e);
-                throw;
-            }
-
         }
 
         public TaxValidation FindTaxValidationByNrc(string nrc)
@@ -62,7 +39,6 @@ namespace VAVS_Client.Services.Impl
 
         public TaxValidation FindTaxValidationByIdEgerLoad(int id)
         {
-
             try
             {
                 Console.WriteLine("here taxvalidation service impl id: " + id);
@@ -118,8 +94,6 @@ namespace VAVS_Client.Services.Impl
 
                     List<TaxValidation> taxValidationPendingList = _context.TaxValidations.Where(taxValidation => taxValidation.PersonNRC == loginTaxPayerInfo.NRC && (taxValidation.QRCodeNumber == null && taxValidation.DemandNumber == null) && taxValidation.IsDeleted == false)
                         .Include(taxValidation => taxValidation.PersonalDetail)
-                        .Include(taxValidation => taxValidation.PersonalDetail.Township)
-                        .Include(taxValidation => taxValidation.PersonalDetail.Township.StateDivision)
                         .Include(taxValidation => taxValidation.PersonalDetail.Township)
                         .Include(taxValidation => taxValidation.PersonalDetail.Township.StateDivision)
                         .ToList();

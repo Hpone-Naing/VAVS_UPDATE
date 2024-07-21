@@ -43,6 +43,20 @@ namespace VAVS_Client.Services.Impl
             return taxCalculation.CalculateTax(maximumValue);
         }
 
+        public bool SaveTaxValidation(TaxValidation taxValidation)
+        {
+            try
+            {
+                _logger.LogInformation("Save TaxValidation success");
+                return Create(taxValidation);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error occur when save tax validation" + ex); ;
+                throw;
+            }
+        }
+
         public async Task<bool> SaveTaxValidation(HttpContext httpContext, TaxInfo taxInfo1)
         {
             try
@@ -114,6 +128,19 @@ namespace VAVS_Client.Services.Impl
             catch (Exception e)
             {
                 Console.WriteLine("Error occur when saving taxvalidation: " + e);
+                throw;
+            }
+        }
+
+        public bool HardDeleteTaxCalculation(TaxValidation taxValidation)
+        {
+            try
+            {
+                return HardDelete(taxValidation);
+            }
+            catch(Exception e)
+            {
+                _logger.LogError("Exception occur when delete taxValidation" + e);
                 throw;
             }
         }

@@ -29,7 +29,6 @@ namespace VAVS_Client.Services.Impl
 
         public SearchLimit GetSearchLimitByNrc(string nrc)
         {
-            Console.WriteLine("Nrc...................................//" + nrc);
             return FindByString("Nrc", nrc);
         }
         public bool HardDeleteSearchLimit(string nrc)
@@ -59,9 +58,8 @@ namespace VAVS_Client.Services.Impl
                 { 
                     if(searchLimit.ReSearchTime != null && searchLimit.AllowNextTimeRegiste())
                     {
-                        searchLimit.SearchCount = 0;
-                        searchLimit.ReSearchTime = null;
-                        return Update(searchLimit);
+                        return HardDelete(searchLimit);
+                        
                     }
                     searchLimit.ReSearchTime = DateTime.Now.AddMinutes(Utility.NEXT_SEARCH_TIME_IN_MINUTE).ToString();
                     return Update(searchLimit);

@@ -26,6 +26,8 @@ namespace VAVS_Client.Factories
         NRCANDTownshipService CreateNRCANDTownshipService();
         TaxPersonImageService CreateTaxPersonImageService();
         SearchLimitService CreateSearchLimitService();
+        PaymentService CreatePaymentService();
+        PendingPaymentLimitService CreatePendingPaymentLimitService();
 
     }
 }

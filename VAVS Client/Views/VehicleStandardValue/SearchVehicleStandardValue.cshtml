@@ -20,7 +20,8 @@
     <div class="col">
         <form class="input-group" method="get" action="@Url.Action("SearchVehicleStandardValue", "VehicleStandardValue")">
             <div class="input-group">
-                <input type="text" name="SearchString" class="form-control" placeholder="Enter Vehicle Number to Search" style="border-top-left-radius: 25px; border-bottom-left-radius: 25px">
+                <input type="text" name="SearchString" class="form-control" placeholder="Enter Vehicle Number to Search" pattern="[A-Za-z0-9]{1,2}/\d{4}"
+                       title="Eg.1A/1234 or AA/1234" style="border-top-left-radius: 25px; border-bottom-left-radius: 25px">
                 <button class="btn btn-outline-secondary" type="submit" data-translate="Vehicle_SearchBtn" style="border-top-right-radius: 20px;border-bottom-right-radius: 20px;">Search</button>
             </div>
         </form>
@@ -32,7 +33,21 @@
     </div>
     
 </div>
-
+@if (ViewBag.PendingPaymentLimitCount >= 2)
+{
+    <div class="text-red border border-dark rounded shadow-lg p-2 mb-2 bg-body">
+        <p>လူကြီးမင်းအခွန်ဆောင်ရန်မော်တော်ယာဥ်များကျန်ရှိနေသည်။</p>
+        <p>ယခု ၁ကြိမ် ပြီးသွားပါက မော်တော်ယာဥ်ရှာဖွေခွင့်နှင့်အခွန်ဆောင်ခွင့်ကို ၃ရက်ရပ်နားထားမည်ဖြစ်ပါသည်။</p>
+    </div>
+}
+    @if (ViewBag.SearchLimitCount > 4)
+    {
+        <div class="text-red border border-dark rounded shadow-lg p-2 mb-2 bg-body">
+            <p>လူကြီးမင်းမော်တော်ယာဥ်ရှာဖွေခ္ငင့်၁ကြိမ်သာကျန်ရှိပါတော့သည်။</p>
+            <p>ထို၁ကြိမ်ပြီးသွားပါက ရှာဖွေမှုကို ၁၀မိနစ်ရပ်နားထားမည်ဖြစ်ပါသည်။</p>
+        </div>
+    }
+    
 <div class="d-flex justify-content-center align-item-center py-2" style="background-color: #0f3cbd">
     @if (!string.IsNullOrEmpty(ViewBag.SearchString))
     {

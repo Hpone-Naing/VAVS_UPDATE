@@ -20,7 +20,8 @@
                         <div class="col">
                            @if(string.IsNullOrEmpty(Model.VehicleNumber))
                             {
-                                <input class="form-control" asp-for="VehicleNumber" value="@Model.VehicleNumber" required />
+                                <input class="form-control" asp-for="VehicleNumber" value="@Model.VehicleNumber" pattern="[A-Za-z0-9]{1,2}/\d{4}"
+                                       title="Eg.1A/1234 or AA/1234" required />
 
                             }
                             else

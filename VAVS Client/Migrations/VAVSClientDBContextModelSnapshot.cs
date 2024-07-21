@@ -128,6 +128,10 @@ namespace VAVS_Client.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
+                    b.Property<string>("ChessisNumber")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
                     b.Property<string>("ContractValue")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
@@ -141,6 +145,10 @@ namespace VAVS_Client.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("FuelType")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Grade")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
@@ -231,22 +239,98 @@ namespace VAVS_Client.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PaymentPkid"), 1L, 1);
 
-                    b.Property<string>("PaymentAmount")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                    b.Property<string>("AccountTitle")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
-                    b.Property<DateTime>("PaymentDate")
-                        .HasColumnType("datetime2");
+                    b.Property<decimal?>("BalanceAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("BankName")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("BankTransactionRefNo")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("IncomeYear")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<bool?>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal?>("PaidAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("PaymentHubRefNo")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("PaymentMethod")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("PaymentStatus")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("PaymentType")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("PersonalPkid")
+                        .HasColumnType("int");
+
+                    b.Property<decimal?>("TaxAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("TaxType")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("TaxValidationPkid")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("TransactionDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TransactionNumber")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("PaymentPkid");
 
+                    b.HasIndex("PersonalPkid");
+
+                    b.HasIndex("TaxValidationPkid");
+
                     b.ToTable("TB_Payment");
+                });
+
+            modelBuilder.Entity("VAVS_Client.Models.PendingPaymentLimit", b =>
+                {
+                    b.Property<int>("PendingPaymentLimitPkid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PendingPaymentLimitPkid"), 1L, 1);
+
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LimitTime")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Nrc")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("PendingPaymentLimitPkid");
+
+                    b.ToTable("TB_PendingPaymentLimit");
                 });
 
             modelBuilder.Entity("VAVS_Client.Models.PersonalDetail", b =>
@@ -282,11 +366,18 @@ namespace VAVS_Client.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("NRCBackImagePath")
-                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("NRCBackImageUrl")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("NRCFrontImagePath")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("NRCFrontImageUrl")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
@@ -349,6 +440,30 @@ namespace VAVS_Client.Migrations
                     b.ToTable("TB_PersonalDetail");
                 });
 
+            modelBuilder.Entity("VAVS_Client.Models.SearchLimit", b =>
+                {
+                    b.Property<int>("SearchLimitPkid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SearchLimitPkid"), 1L, 1);
+
+                    b.Property<string>("Nrc")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("ReSearchTime")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("SearchCount")
+                        .HasColumnType("int");
+
+                    b.HasKey("SearchLimitPkid");
+
+                    b.ToTable("TB_SearchLimit");
+                });
+
             modelBuilder.Entity("VAVS_Client.Models.StateDivision", b =>
                 {
                     b.Property<int>("StateDivisionPkid")
@@ -381,6 +496,76 @@ namespace VAVS_Client.Migrations
                     b.HasKey("StateDivisionPkid");
 
                     b.ToTable("TB_StateDivision");
+                });
+
+            modelBuilder.Entity("VAVS_Client.Models.TaxPersonImage", b =>
+                {
+                    b.Property<int>("TaxPersonImagePkid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TaxPersonImagePkid"), 1L, 1);
+
+                    b.Property<string>("CarNumber")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("CensusImagePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CensusImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ImageId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("NrcImagePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NrcImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OwnerBookImagePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OwnerBookImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PersonalDetailPkid")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TransactionContractImagePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TransactionContractImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VehicleImagePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VehicleImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WheelTagImagePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WheelTagImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TaxPersonImagePkid");
+
+                    b.HasIndex("PersonalDetailPkid");
+
+                    b.ToTable("TB_TaxPersonImage");
                 });
 
             modelBuilder.Entity("VAVS_Client.Models.TaxValidation", b =>
@@ -483,8 +668,8 @@ namespace VAVS_Client.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("VehicleNumber")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("TaxValidationPkid");
 
@@ -691,6 +876,25 @@ namespace VAVS_Client.Migrations
                     b.ToTable("TB_VehicleStandardValue");
                 });
 
+            modelBuilder.Entity("VAVS_Client.Models.Payment", b =>
+                {
+                    b.HasOne("VAVS_Client.Models.PersonalDetail", "PersonalDetail")
+                        .WithMany()
+                        .HasForeignKey("PersonalPkid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("VAVS_Client.Models.TaxValidation", "TaxValidation")
+                        .WithMany()
+                        .HasForeignKey("TaxValidationPkid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PersonalDetail");
+
+                    b.Navigation("TaxValidation");
+                });
+
             modelBuilder.Entity("VAVS_Client.Models.PersonalDetail", b =>
                 {
                     b.HasOne("VAVS_Client.Models.StateDivision", "StateDivision")
@@ -708,6 +912,17 @@ namespace VAVS_Client.Migrations
                     b.Navigation("StateDivision");
 
                     b.Navigation("Township");
+                });
+
+            modelBuilder.Entity("VAVS_Client.Models.TaxPersonImage", b =>
+                {
+                    b.HasOne("VAVS_Client.Models.PersonalDetail", "PersonalDetail")
+                        .WithMany()
+                        .HasForeignKey("PersonalDetailPkid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PersonalDetail");
                 });
 
             modelBuilder.Entity("VAVS_Client.Models.TaxValidation", b =>

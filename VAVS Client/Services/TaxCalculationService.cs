@@ -7,7 +7,7 @@ namespace VAVS_Client.Services
     {
         public long CalculateTotalTax(long contractPrice, long assetValue);
         public Task<bool> SaveTaxValidation(HttpContext httpContext, TaxInfo taxInfo);
-
-
+        public bool SaveTaxValidation(TaxValidation taxValidation);
+        public bool HardDeleteTaxCalculation(TaxValidation taxValidation);
     }
 }

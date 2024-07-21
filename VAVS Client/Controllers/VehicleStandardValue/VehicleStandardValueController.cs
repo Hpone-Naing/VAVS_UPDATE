@@ -13,9 +13,11 @@ namespace VAVS_Client.Controllers.VehicleStandardValueController
     public class VehicleStandardValueController : Controller
     {
         private readonly ServiceFactory _serviceFactory;
+        private readonly PendingPaymentLimitService _pendingPaymentLimitService;
         public VehicleStandardValueController(ServiceFactory serviceFactory)
         {
             _serviceFactory = serviceFactory;
+            _pendingPaymentLimitService = _serviceFactory.CreatePendingPaymentLimitService();
         }
 
         private SearchLimit InitializeSearchLimit(string nrc)
@@ -28,23 +30,36 @@ namespace VAVS_Client.Controllers.VehicleStandardValueController
             };
         }
 
+        public IActionResult LimitSearch()
+        {
+            return View();
+        }
         public async Task<IActionResult> SearchVehicleStandardValue()
         {
             try
             {
-                /*LoginUserInfo loginTaxPayerInfo = _serviceFactory.CreateTaxPayerInfoService().GetLoginUserByHashedToken(SessionUtil.GetToken(HttpContext));
-                if (loginTaxPayerInfo.IsTaxpayerInfoNull())
-                {
-                    Utility.AlertMessage(this, "You haven't login yet.", "alert-danger");
-                    return RedirectToAction("Index", "Login");
-                }*/
                 SessionService sessionService = _serviceFactory.CreateSessionServiceService();
                 if(!sessionService.IsActiveSession(HttpContext))
                 {
                     Utility.AlertMessage(this, "You haven't login yet.", "alert-danger");
                     return RedirectToAction("Index", "Login");
                 }
+                
                 string nrc = sessionService.GetLoginUserInfo(HttpContext).NRC;
+                PendingPaymentLimit pendingPaymentLimit = _pendingPaymentLimitService.GetPendingPaymentLimitByNrc(nrc);
+                if (pendingPaymentLimit != null)
+                {
+                    if (pendingPaymentLimit.IsExceedMaximun() && (pendingPaymentLimit.LimitTime != null && !pendingPaymentLimit.AllowNextTimePendingPayment()))
+                    {
+                        ViewBag.LimitTime = pendingPaymentLimit.LimitTime;
+                        return View("LimitPayment");
+                    }
+                    if (pendingPaymentLimit != null && (pendingPaymentLimit.LimitTime != null && pendingPaymentLimit.AllowNextTimePendingPayment()))
+                    {
+                        await _serviceFactory.CreatePaymentService().HardDeletePendingStatusPayments(HttpContext);
+                        _pendingPaymentLimitService.UpdatePendingPaymentLimit(nrc);
+                    }
+                }
                 SearchLimitService searchLimitSerice = _serviceFactory.CreateSearchLimitService();
                 SearchLimit searchLimit = searchLimitSerice.GetSearchLimitByNrc(nrc);
                 string searchString;
@@ -53,7 +68,7 @@ namespace VAVS_Client.Controllers.VehicleStandardValueController
                 {
                     searchLimitSerice.CreateSearchLimit(InitializeSearchLimit(nrc));
                 }
-                if(searchLimit != null && searchLimit.ReSearchTime != null && !searchLimit.AllowNextTimeRegiste())
+                if(searchLimit != null && (searchLimit.ReSearchTime != null && !searchLimit.AllowNextTimeRegiste()))
                 {
                     ViewBag.SearchLimit = searchLimit.ReSearchTime;
                     return View("LimitSearch");
@@ -65,53 +80,42 @@ namespace VAVS_Client.Controllers.VehicleStandardValueController
                     return View("LimitSearch");
                 }
 
-                /*if(searchLimit == null)
-                {
-                    searchLimitSerice.CreateSearchLimit(InitializeSearchLimit(nrc));
-                }
-                if(searchLimit.IsExceedMaximunSearch())
-                {
-                    if(searchLimit.ReSearchTime == null)
-                    {
-                        searchLimitSerice.UpdateSearchLimit(nrc);
-                        ViewBag.SearchLimit = searchLimit.ReSearchTime;
-                        return View("LimitSearch");
-                    }
-                    if(!searchLimit.AllowNextTimeRegiste())
-                    {
-                        ViewBag.SearchLimit = searchLimit.ReSearchTime;
-                        return View("LimitSearch");
-                    }
-                    
-                    searchString = Request.Query["SearchString"];
-                    ViewBag.SearchString = searchString;
-                    if (string.IsNullOrEmpty(searchString))
-                        return View();
-                    searchLimitSerice.UpdateSearchLimit(nrc);
-                    vehicleStandardValue = await _serviceFactory.CreateVehicleStandardValueService().GetVehicleValueByVehicleNumberInDBAndAPI(searchString);//await _serviceFactory.CreateVehicleStandardValueService().GetVehicleValueByVehicleNumber(searchString);
-                    if (vehicleStandardValue == null)
-                    {
-                        ViewBag.SearchString = "Not Found";
-                        ViewBag.CurrentPage = "SearchVehicleStandardValue";
-                        return View("SearchVehicleStandardValue");
-                    }
-                    if (string.IsNullOrEmpty(vehicleStandardValue.ChessisNumber))
-                    {
-                        vehicleStandardValue.ChessisNumber = await _serviceFactory.CreateVehicleStandardValueService().GetVehicleChessisNumber(searchString);
-                    }
-                    return View("Details", vehicleStandardValue);
-                }*/
                 searchString = Request.Query["SearchString"];
                 ViewBag.SearchString = searchString;
-
+                
                 if (string.IsNullOrEmpty(searchString))
-                    return View();
+                {
+                    if(searchLimit != null && searchLimit.ReSearchTime != null && searchLimit.AllowNextTimeRegiste())
+                    {
+                        searchLimitSerice.UpdateSearchLimit(nrc);
+                    }
+                    ViewBag.SearchLimitCount = (searchLimit != null) ? searchLimit.SearchCount : 0;
+                    ViewBag.PendingPaymentLimitCount = (pendingPaymentLimit != null) ? pendingPaymentLimit.Count : 0;
+                    return View("SearchVehicleStandardValue");
+                }
+                if (!string.IsNullOrEmpty(searchString))
+                {
+                    bool IsTaxed = await _serviceFactory.CreatePaymentService().IsALreadyPayment(HttpContext, searchString);
+                    if (IsTaxed)
+                    {
+                        Utility.AlertMessage(this, "This vehicle has already taxed.", "alert-info");
+                        return RedirectToAction("SearchVehicleStandardValue", "VehicleStandardValue");
+                    }
+                    bool IsAlreadyPendingPayment = await _serviceFactory.CreatePaymentService().IsALreadyPendingPayment(HttpContext, searchString);
+                    if (IsAlreadyPendingPayment)
+                    {
+                        Utility.AlertMessage(this, "အခွန်ဆောင်ရန်ကျန်ရှိနေသောစာရင်းတွင် ထိုမော်တော်ယာဥ်ပါရှိပါသည်။ ထိုမော်တော်ယာဥ်ကိုရှာဖွေ၍အခွန်ဆက်လက်လုပ်ဆောင်နိုင်ပါသည်။", "alert-info");
+                        return RedirectToAction("RemainPayments", "Payment");
+                    }
+                }
                 searchLimitSerice.UpdateSearchLimit(nrc);
                 vehicleStandardValue = await _serviceFactory.CreateVehicleStandardValueService().GetVehicleValueByVehicleNumberInDBAndAPI(searchString);//await _serviceFactory.CreateVehicleStandardValueService().GetVehicleValueByVehicleNumber(searchString);
                 if (vehicleStandardValue == null)
                 {
                     ViewBag.SearchString = "Not Found";
                     ViewBag.CurrentPage = "SearchVehicleStandardValue";
+                    ViewBag.SearchLimitCount = (searchLimit != null) ? searchLimit.SearchCount : 0;
+                    ViewBag.PendingPaymentLimitCount = (pendingPaymentLimit != null) ? pendingPaymentLimit.Count : 0;
                     return View("SearchVehicleStandardValue");
                 }
                 if(string.IsNullOrEmpty(vehicleStandardValue.ChessisNumber))
@@ -245,6 +249,7 @@ namespace VAVS_Client.Controllers.VehicleStandardValueController
                     ViewBag.MadeModel = MadeModel;
                     ViewBag.MadeYear = makeModelYear;
                     ViewBag.Brand = brand;
+                    ViewBag.SearchLimitCount = (searchLimit != null) ? searchLimit.SearchCount : 0;
                     return View("SearchVehicleStandardValue", pageVehicleStandardValues);
                 }
                 searchLimitSerice.UpdateSearchLimit(nrc);
@@ -259,6 +264,7 @@ namespace VAVS_Client.Controllers.VehicleStandardValueController
                 ViewBag.MadeModel = MadeModel;
                 ViewBag.MadeYear = makeModelYear;
                 ViewBag.Brand = brand;
+                ViewBag.SearchLimitCount = (searchLimit != null) ? searchLimit.SearchCount : 0;
                 return View("SearchVehicleStandardValue", pageVehicleStandardValues);
             }
             catch (Exception e)

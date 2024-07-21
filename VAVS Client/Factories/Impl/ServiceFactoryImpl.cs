@@ -115,7 +115,7 @@ namespace VAVS_Client.Factories.Impl
         public TaxValidationService CreateTaxValidationService()
         {
             ILogger<TaxValidationServiceImpl> taxValidationLogger = new Logger<TaxValidationServiceImpl>(_loggerFactory);
-            return new TaxValidationServiceImpl(_context, taxValidationLogger, CreateTaxPayerInfoService(), _sessionService);
+            return new TaxValidationServiceImpl(_context, taxValidationLogger, _sessionService);
         }
 
         public ResetPhoneNumberAuthService CreateResetPhoneNumberAuthService()
@@ -148,6 +148,18 @@ namespace VAVS_Client.Factories.Impl
         {
             ILogger<SearchLimitServiceImpl> SerchLimitServiceImplLogger = new Logger<SearchLimitServiceImpl>(_loggerFactory);
             return new SearchLimitServiceImpl(_context, SerchLimitServiceImplLogger);
+        }
+
+        public PaymentService CreatePaymentService()
+        {
+            ILogger<PaymentServiceImpl> paymentServiceImplLogger = new Logger<PaymentServiceImpl>(_loggerFactory);
+            return new PaymentServiceImpl(_context, paymentServiceImplLogger, CreatePersonalDetailService(), CreateTownshipService(), CreateLoginUserInfoDBService(), _financialYearService, CreateTaxCalculationService(), CreateTaxPersonImageService());
+        }
+
+        public PendingPaymentLimitService CreatePendingPaymentLimitService()
+        {
+            ILogger<PendingPaymentLimitServiceImpl> paymentServiceImplLogger = new Logger<PendingPaymentLimitServiceImpl>(_loggerFactory);
+            return new PendingPaymentLimitServiceImpl(_context, paymentServiceImplLogger);
         }
     }
 }
