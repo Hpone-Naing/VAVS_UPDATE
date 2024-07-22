@@ -45,33 +45,9 @@
                 </span>
             </a>
         </div>
-        @{
-            string phoneNumber = (string)ViewData["phoneNumber"];
-            string maskedPhoneNumber;
-
-            if (phoneNumber.StartsWith("+959") && phoneNumber.Length > 4)
-            {
-                string countryCode = phoneNumber.Substring(0, 4);
-                int numberLength = phoneNumber.Length - 4;
-
-                if (numberLength <= 4)
-                {
-                    maskedPhoneNumber = phoneNumber;
-                }
-                else
-                {
-                    string maskedPart = new string('*', numberLength - 4);
-                    string lastPart = phoneNumber.Substring(phoneNumber.Length - 4);
-                    maskedPhoneNumber = $"{countryCode}{maskedPart}{lastPart}";
-                }
-            }
-            else
-            {
-                maskedPhoneNumber = phoneNumber;
-            }
-        }
+        
         <!-- /Logo -->
-        <p class="mb-4">We have sent OTP code to Phone number: {@maskedPhoneNumber}</p>
+        <p class="mb-4">We have sent OTP code to Phone number: {@Model.PhoneNumber}</p>
         <form class="mb-3" method="post" action="@Url.Action("CheckRegisterAuthentication", "RegistrationAuthCode")" enctype="multipart/form-data">
             <input type="hidden" asp-for="NRCTownshipNumber" />
             <input type="hidden" asp-for="NRCTownshipInitial" />
