@@ -33,14 +33,14 @@
     </div>
     
 </div>
-@if (ViewBag.PendingPaymentLimitCount >= 2)
+@if (ViewBag.PendingPaymentLimitCount == 2)
 {
     <div class="text-red border border-dark rounded shadow-lg p-2 mb-2 bg-body">
         <p>လူကြီးမင်းအခွန်ဆောင်ရန်မော်တော်ယာဥ်များကျန်ရှိနေသည်။</p>
         <p>ယခု ၁ကြိမ် ပြီးသွားပါက မော်တော်ယာဥ်ရှာဖွေခွင့်နှင့်အခွန်ဆောင်ခွင့်ကို ၃ရက်ရပ်နားထားမည်ဖြစ်ပါသည်။</p>
     </div>
 }
-    @if (ViewBag.SearchLimitCount > 4)
+    @if (ViewBag.SearchLimitCount == 4)
     {
         <div class="text-red border border-dark rounded shadow-lg p-2 mb-2 bg-body">
             <p>လူကြီးမင်းမော်တော်ယာဥ်ရှာဖွေခ္ငင့်၁ကြိမ်သာကျန်ရှိပါတော့သည်။</p>
