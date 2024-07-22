@@ -70,15 +70,19 @@ namespace VAVS_Client.Controllers.VehicleStandardValueController
                 }
                 if(searchLimit != null && (searchLimit.ReSearchTime != null && !searchLimit.AllowNextTimeRegiste()))
                 {
+                    Console.WriteLine("here 1/............................./");
                     ViewBag.SearchLimit = searchLimit.ReSearchTime;
                     return View("LimitSearch");
                 }
                 if(searchLimit != null && searchLimit.IsExceedMaximunSearch() && searchLimit.ReSearchTime == null)
                 {
+                    Console.WriteLine("here 2/............................./");
+
                     searchLimitSerice.UpdateSearchLimit(nrc);
                     ViewBag.SearchLimit = searchLimit.ReSearchTime;
                     return View("LimitSearch");
                 }
+                Console.WriteLine("here 3/............................./");
 
                 searchString = Request.Query["SearchString"];
                 ViewBag.SearchString = searchString;

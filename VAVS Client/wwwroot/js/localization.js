@@ -24,7 +24,7 @@
 
         Menu_Vehicle: "Vehicle",
         Menu_TaxValidation: "Tax Validation",
-        Menu_Localization: "Localization",    
+        Menu_Localization: "Language",    
         SubmMenu_SearchVehicle: "Search",
         SubmMenu_Pending: "Pending List",
         SubMenu_Approve: "Approve List",
@@ -39,7 +39,7 @@
         Vehicle_SearchBtn: "Search",
         Vehicle_MadeModel_SearchBtn: "Made Model",
 
-        VehicleDetail_CarManufacturer: "Manufacturer",
+        VehicleDetail_CarManufacturer: "Made Model",
         VehicleDetail_Grade: "Grade",
         VehicleDetail_FuelType: "Fuel Type",
         VehicleDetail_VehicleBrand: "Brand Name",
@@ -52,7 +52,7 @@
         VehicleDetail_CalcTaxBtn: "Calculate",
 
         CalculateTax_PlateNo: "Car Number",
-        CalculateTax_CarManufacturer: "Manufacturer",
+        CalculateTax_CarManufacturer: "Made Model",
         CalculateTax_MakeModel: "Make Model",
         CalculateTax_Grade: "Grade",
         CalculateTax_VehicleBrand: "Brand Name",

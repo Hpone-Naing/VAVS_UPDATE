@@ -61,7 +61,7 @@ namespace VAVS_Client.Services.Impl
                         return HardDelete(searchLimit);
                         
                     }
-                    searchLimit.ReSearchTime = DateTime.Now.AddMinutes(Utility.NEXT_SEARCH_TIME_IN_MINUTE).ToString();
+                    searchLimit.ReSearchTime = DateTime.Now.AddMinutes(Utility.NEXT_SEARCH_TIME_IN_MINUTE).ToString("dd/MM/yyyy hh:mm:ss tt");
                     return Update(searchLimit);
                 }
                 searchLimit.SearchCount++;

@@ -3,6 +3,7 @@ using System.Text.Json;
 using VAVS_Client.Classes;
 using VAVS_Client.Factories;
 using VAVS_Client.Models;
+using VAVS_Client.Paging;
 using VAVS_Client.Services;
 using VAVS_Client.Util;
 using LoginUserInfo = VAVS_Client.Models.LoginUserInfo;
@@ -111,6 +112,26 @@ namespace VAVS_Client.Controllers
             return View("RemainPayment", remainPayments);
         }
 
+        public async Task<IActionResult> ApprovePayments(int? pageNo)
+        {
+            SessionService sessionService = _serviceFactory.CreateSessionServiceService();
+            if (!sessionService.IsActiveSession(HttpContext))
+            {
+                Utility.AlertMessage(this, "Login First!", "alert-danger");
+                return RedirectToAction("Index", "Login");
+            }
+            LoginUserInfo loginUserInfo = _serviceFactory.CreateLoginUserInfoDBService().GetLoginUserByHashedToken(SessionUtil.GetToken(HttpContext));
+            if (loginUserInfo == null)
+            {
+                Utility.AlertMessage(this, "Search Vehicle First!", "alert-danger");
+                return RedirectToAction("SearchVehicleStandardValue", "VehicleStandardValue");
+            }
+            int pageSize = Utility.DEFAULT_PAGINATION_NUMBER;
+            List<Payment> approvePayments = await _serviceFactory.CreatePaymentService().GetApprovePaymentListEgerLoad(HttpContext);
+            PagingList<Payment> paymentsPagin = PagingList<Payment>.CreateAsync(approvePayments.AsQueryable(), pageNo ?? 1, pageSize);
+            return View("ApprovePayments", paymentsPagin);
+        }
+
         [HttpPost]
         public async Task<IActionResult> MakePayment(Payment payment)
         {
@@ -136,7 +157,8 @@ namespace VAVS_Client.Controllers
                 }
                 await _serviceFactory.CreatePaymentService().UpdatePaymentStatus(payment.TransactionNumber);
                 _pendingPaymentLimitService.UpdatePendingPaymentLimitAfterMakePayment(sessionService.GetLoginUserInfo(HttpContext).NRC);
-                return RedirectToAction("PendingList", "TaxValidation");
+                //return RedirectToAction("PendingList", "TaxValidation");
+                return RedirectToAction("ShowTaxOfficeAddressForm", "TaxCalculation");
             }
             Utility.AlertMessage(this, "Payment အချက်အလက်များပြင်ဆင်ခွင့်မရှိပါ!", "alert-danger");
             return RedirectToAction("RemainPayments", "Payment");

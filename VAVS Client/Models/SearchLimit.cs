@@ -25,18 +25,29 @@ namespace VAVS_Client.Models
         }*/
         public bool AllowNextTimeRegiste()
         {
-            Console.WriteLine("here AllowNextTimePendingPayment............................");
-            if (DateTime.TryParseExact(this.ReSearchTime, "dd/MM/yyyy h:mm:ss tt", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime rePaymentTime))
+            try
             {
-                Console.WriteLine("here if....................");
-                Console.WriteLine("  > ...................." + (DateTime.Now >= rePaymentTime) + " Now / time" + DateTime.Now + " / " + rePaymentTime);
-                return DateTime.Now >= rePaymentTime;
+                Console.WriteLine("here AllowNextTimePendingPayment............................");
+                Console.WriteLine("ReSearchTime: " + this.ReSearchTime);
+                Console.WriteLine("Date time now: " + DateTime.Now);
+                if (DateTime.TryParseExact(this.ReSearchTime, "dd/MM/yyyy h:mm:ss tt", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime rePaymentTime))
+                {
+                    Console.WriteLine("here if....................");
+                    Console.WriteLine("  > ...................." + (DateTime.Now >= rePaymentTime) + " Now / time" + DateTime.Now + " / " + rePaymentTime);
+                    return DateTime.Now >= rePaymentTime;
+                }
+                else
+                {
+                    Console.WriteLine("here else");
+                    return false;
+                }
             }
-            else
+            catch (Exception e)
             {
-                Console.WriteLine("here else");
+                Console.WriteLine("Exception ................." + e.ToString()); // Detailed exception output
                 return false;
             }
+
         }
 
     }

@@ -53,7 +53,7 @@ namespace VAVS_Client.Services.Impl
                     if (loginAuth.ReResendCodeTime == null)
                     {
                         loginAuth.ResendOTPCount = 0;
-                        loginAuth.ReResendCodeTime = DateTime.Now.AddMinutes(Utility.NEXT_RESENDCODE_TIME_IN_MINUTE).ToString();
+                        loginAuth.ReResendCodeTime = DateTime.Now.AddMinutes(Utility.NEXT_RESENDCODE_TIME_IN_MINUTE).ToString("dd/MM/yyyy hh:mm:ss tt");
                     }
                     else
                     {

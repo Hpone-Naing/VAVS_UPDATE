@@ -11,6 +11,8 @@
         public Task<bool> IsALreadyPayment(HttpContext httpContext, string vehicleNumber);
         public Task<bool> IsALreadyPendingPayment(HttpContext httpContext, string vehicleNumber);
         public Task<bool> UpdatePaymentStatus(string transactionNumber);
+        public Task<List<Payment>> GetApprovePaymentList(HttpContext httpContext);
+        public Task<List<Payment>> GetApprovePaymentListEgerLoad(HttpContext httpContext);
         public Task<List<TaxValidation>> GetTaxValidationListByPendingPayment(HttpContext httpContext);
         public Task<List<TaxValidation>> GetTaxValidationEgerLoadListByPendingPayment(HttpContext httpContext);
         public Task<bool> HardDeletePendingStatusPayments(HttpContext httpContext);

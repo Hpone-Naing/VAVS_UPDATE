@@ -8,7 +8,7 @@
     <div class="card-body">
         <p class="mb-3 fw-bold" style="font-size: clamp(12px, 2vw, 16px);">စည်းကြပ်ခံယူမည့်ရုံးမှာ‌အောက်ပါအတိုင်းဖြစ်ပါသည်</p>
 
-        <form class="mb-2" action="@Url.Action("Payment", "Payment")" method="post">
+        <form class="mb-2" action="@Url.Action("PendingList", "TaxValidation")" method="post">
             <div class="row mb-3">
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="form-group mt-2">
@@ -55,7 +55,7 @@
                 </div>
             </div>
             <div class="mb-2 mt-2 d-flex justify-content-center align-item-center">
-                <button class="btn btn-outline-primary d-grid" type="submit">Submit</button>
+                <button class="btn btn-outline-primary d-grid" type="submit">Complete Process</button>
             </div>
         </form>
     </div>

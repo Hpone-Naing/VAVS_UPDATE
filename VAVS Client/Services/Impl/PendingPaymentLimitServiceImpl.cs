@@ -77,7 +77,7 @@ namespace VAVS_Client.Services.Impl
                     }
                     Console.WriteLine("Here is limit time null......................................................................../");
 
-                    pendingPaymentLimit.LimitTime = DateTime.Now.AddDays(Utility.NEXT_PENDINGPAYMENT_TIME_IN_DAYS).ToString();
+                    pendingPaymentLimit.LimitTime = DateTime.Now.AddDays(Utility.NEXT_PENDINGPAYMENT_TIME_IN_DAYS).ToString("dd/MM/yyyy hh:mm:ss tt");
                     return Update(pendingPaymentLimit);
                 }
                 Console.WriteLine("Here is not exceed max........................................................../");

@@ -222,6 +222,27 @@ namespace VAVS_Client.Services.Impl
             }
         }
 
+        public async Task<List<Payment>> GetApprovePaymentList(HttpContext httpContext)
+        {
+            try
+            {
+                SessionService sessionService = new SessionServiceImpl();
+                TaxpayerInfo loginUserInfo = sessionService.GetLoginUserInfo(httpContext);
+                if (loginUserInfo == null)
+                    return null;
+                PersonalDetail personalDetail = await _personalDetailService.GetPersonalInformationByNRCInDBAndAPI(loginUserInfo.NRC);
+                if (personalDetail == null)
+                    return null;
+                List<Payment> approvePaymentList = _context.Payments.Where(payment => payment.IsDeleted == false).Where(payment => payment.PersonalPkid == personalDetail.PersonalPkid && payment.PaymentStatus == "Approve").ToList();
+                return approvePaymentList;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error occur GetApprovePaymentList." + ex);
+                throw;
+            }
+        }
+
         public async Task<List<Payment>> GetApprovePaymentListEgerLoad(HttpContext httpContext)
         {
             try

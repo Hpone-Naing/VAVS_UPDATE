@@ -1,0 +1,161 @@
+﻿@model VAVS_Client.Paging.PagingList<VAVS_Client.Models.Payment>
+
+@{
+    ViewData["Title"] = "List";
+}
+
+<div id="spinner-container">
+    <img id="spinner" decoding="async" src="~/image/loading/spinner.gif" asp-append-version="true" />
+</div>
+
+<div class="d-flex justify-content-center align-item-center mb-2">
+    <label class="text-primary h4" style="font-size: clamp(14px, 4vw, 20px);"> Payment Approve List</label>
+</div>
+@if (TempData.ContainsKey("Message") && TempData.ContainsKey("CssColor"))
+{
+    <div class="alert @TempData["CssColor"]"> @TempData["Message"] </div>
+}
+
+<div class="d-flex bd-highlight">
+    <form method="get" action="@Url.Action("ApproveList", "TaxValidation")">
+        <input type="hidden" name="export" value="excel">
+        <input type="hidden" name="pageNo" asp-for="@(Model.PageIndex)">
+        <div class="p-1 bd-highlight">
+            <button id="exportButton" type="submit" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Export Excel File"><i class="far fa-file-excel fa-lg"></i></button>
+        </div>
+    </form>
+</div>
+<div class="table-responsive mt-2 rounded">
+    <table class="table table-bordered  table-striped">
+        <thead style="background-color: #0f3cbd;;">
+            <tr>
+                <th class="text-white">
+                    <label class="mb-2">စဥ်</label>
+                </th>
+                <th class="text-white">
+                    <label class="mb-2">မော်တော်ယာဥ်အချက်အလက်</label>
+                </th>
+                <th class="text-white">
+                    ငွေလွှဲအမှတ်
+                </th>
+                <th class="text-white">
+                    ငွေလွှဲရက်စွဲ
+                </th>
+                <th class="text-white">
+                    <label class="mb-2">စည်းကြပ်တန်ဖိုး </label>
+                </th>
+                <th class="text-white">
+                    <label class="mb-2"> ပေးသွင်းအခွန်ငွေ</label>
+                </th>
+                <th class="text-white">
+                    အခွန်အမျိုးအစား
+                </th>
+                <th class="text-white">
+                    <label class="mb-2">အကောင့်ခေါင်းစဥ်</label>
+                </th>
+                <th class="text-white">
+                    <label class="mb-2">
+                        ပေးသွင်းငွေအမျိုးအစား
+                    </label>
+                </th>
+                <th class="text-white">
+                    <label class="mb-2">စည်းကြပ်နှစ်</label>
+                </th>
+                <th class="text-white">
+                    <label class="mb-2">ဘဏ်အမည်</label>
+                </th>
+                <th class="text-white">
+                    <label class="mb-2">ငွေပေးချေမှုအမျိုးအစား</label>
+                </th>
+                <th class="text-white">
+                    <label class="mb-2">Status</label>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Count > 0)
+            {
+
+                int i = 0;
+
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @{
+                                i++;
+                            }
+                            @i
+                        </td>
+                        <td>
+                            @Html.Raw((item.TaxValidation.VehicleNumber != null ? item.TaxValidation.VehicleNumber + ", " : "") + item.TaxValidation.VehicleBrand + "<br> " + item.TaxValidation.BuildType)
+                        <td>
+                            @item.TransactionNumber
+                        </td>
+                        <td>
+                            @item.TransactionDate
+                        </td>
+                        <td>
+                            @item.TaxAmount
+                        </td>
+                        <td>
+                            @item.PaidAmount
+                        </td>
+                        <td>
+                            @item.TaxType
+                        </td>
+                        <td>
+                            @item.AccountTitle
+                        </td>
+                        <td class="address">
+                            @item.PaymentType
+                        </td>
+                        <td>
+                            @item.IncomeYear
+                        </td>
+
+                        <td>
+                            @item.BankName
+                        </td>
+                        <td>
+                            @item.PaymentMethod
+                        </td>
+                        <td>
+                            <span class="text-success">Approve</span>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+    <br />
+    @if (Model != null && Model.Any())
+    {
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+        var totalPageNo = Model.TotalPageNo;
+        var currentPageNo = Model.PageIndex;
+        var searchString = ViewBag.SearchString ?? null;
+
+        <a asp-action="ApproveList"
+           asp-route-pageNo="@(Model.PageIndex - 1)"
+           class="link btn btn-primary btn-sm @prevDisabled">
+            Previous
+        </a>
+        <a asp-action="ApproveList"
+           asp-route-pageNo="@(Model.PageIndex + 1)"
+           class="link btn btn-primary btn-sm @nextDisabled">
+            Next
+        </a>
+        <span>
+            Page No : @currentPageNo of @totalPageNo
+        </span>
+    }
+    else
+    {
+        <span>No data available</span>
+        <a asp-controller="TaxValidation" asp-action="ApproveList" class="fas far fa-sync fa-xl"></a>
+    }
+
+</div>

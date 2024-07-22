@@ -37,7 +37,7 @@ namespace VAVS_Client.Services.Impl
                     {
                         deviceInfo.RegistrationCount = 0;
                         deviceInfo.ResendCodeTime = 0;
-                        deviceInfo.ReRegistrationTime = DateTime.Now.AddMinutes(Utility.NEXT_REGISTER_TIME_IN_MINUTE).ToString();
+                        deviceInfo.ReRegistrationTime = DateTime.Now.AddMinutes(Utility.NEXT_REGISTER_TIME_IN_MINUTE).ToString("dd/MM/yyyy hh:mm:ss tt");
                     }
                     else
                     {
@@ -80,7 +80,7 @@ namespace VAVS_Client.Services.Impl
                     if (deviceInfo.ReResendCodeTime == null)
                     {
                         deviceInfo.ResendCodeTime = 0;
-                        deviceInfo.ReResendCodeTime = DateTime.Now.AddMinutes(Utility.NEXT_RESENDCODE_TIME_IN_MINUTE).ToString();
+                        deviceInfo.ReResendCodeTime = DateTime.Now.AddMinutes(Utility.NEXT_RESENDCODE_TIME_IN_MINUTE).ToString("dd/MM/yyyy hh:mm:ss tt");
                     }
                     else
                     {

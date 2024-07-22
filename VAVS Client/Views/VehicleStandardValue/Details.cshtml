@@ -29,7 +29,20 @@
 <form method="post" action="@Url.Action("ShowCalculateTaxForm", "TaxCalculation")">
     <div class="row mt-1 " style="border-radius: 20px;">
         <div class="col-lg-12 col-md-12 col-sm-12">
-            <div class="row p-2" style="background-color: #c0c0c052;">
+            @if (Model.VehicleNumber != null)
+            {
+                <div class="row p-2" style="background-color: #c0c0c052;">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-3 col-sm-3 col-5">
+                            <label class="fw-bold control-label" data-translate="VehicleDetail_VehicleNumber"></label>
+                        </div>
+                        <div class="col-7">
+                            <input type="text" asp-for="VehicleNumber" value="@Model.VehicleNumber" readonly="" style="background-color: inherit;border: none;">
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="row p-2">
                 <div class="row">
                     <div class="col-lg-4 col-md-3 col-sm-3 col-5">
                         <label class="fw-bold control-label" data-translate="VehicleDetail_CarManufacturer">Car Manufacturer</label>
@@ -40,7 +53,7 @@
                 </div>
             </div>
 
-            <div class="row p-2">
+            <div class="row p-2" style="background-color: #c0c0c052;">
                 <div class="row">
                     <div class="col-lg-4 col-md-3 col-sm-3 col-5">
                         <label class="fw-bold control-label" data-translate="VehicleDetail_VehicleBrand">Car Brand</label>
@@ -51,7 +64,7 @@
                 </div>
             </div>
 
-            <div class="row p-2" style="background-color: #c0c0c052;">
+            <div class="row p-2">
                 <div class="row">
                     <div class="col-lg-4 col-md-3 col-sm-3 col-5">
                         <label class="fw-bold control-label" data-translate="VehicleDetail_BuildType"></label>
@@ -61,7 +74,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row p-2">
+            <div class="row p-2" style="background-color: #c0c0c052;">
                 <div class="row">
                     <div class="col-lg-4 col-md-3 col-sm-3 col-5">
                         <label class="fw-bold control-label" data-translate="VehicleDetail_EnginePower"></label>
@@ -71,7 +84,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row p-2" style="background-color: #c0c0c052;">
+            <div class="row p-2">
                 <div class="row">
                     <div class="col-lg-4 col-md-3 col-sm-3 col-5">
                         <label class="fw-bold control-label" data-translate="VehicleDetail_ModelYear"></label>
@@ -83,7 +96,7 @@
             </div>
         </div>
         <div class="col-lg-12 col-md-12 col-sm-12">
-                <div class="row p-2">
+                @*<div class="row p-2">
                     <div class="row">
                         <div class="col-lg-4 col-md-3 col-sm-3 col-5">
                             <label class="fw-bold control-label" data-translate="VehicleDetail_FuelType"></label>
@@ -92,7 +105,7 @@
                             <input type="text" asp-for="Fuel.FuelType" value="@Model.Fuel.FuelType" readonly="" style="background-color: inherit;border: none;">
                         </div>
                     </div>
-                </div>
+            </div>*@
 
             @if(!string.IsNullOrEmpty(Model.Grade))
             {
@@ -107,21 +120,9 @@
                     </div>
                 </div>
             }
-            @if (Model.VehicleNumber != null)
+            
+            @if (Model.ChessisNumber != null)
             {
-                <div class="row p-2" style="background-color: #c0c0c052;">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-3 col-sm-3 col-5">
-                            <label class="fw-bold control-label" data-translate="VehicleDetail_VehicleNumber"></label>
-                        </div>
-                        <div class="col-7">
-                            <input type="text" asp-for="VehicleNumber" value="@Model.VehicleNumber" readonly="" style="background-color: inherit;border: none;">
-                        </div>
-                    </div>
-                </div>
-            }
-            @*@if (Model.ChessisNumber != null)
-            {*@
                 <div class="row p-2">
                     <div class="row">
                         <div class="col-lg-4 col-md-3 col-sm-3 col-5">
@@ -132,7 +133,7 @@
                         </div>
                     </div>
                 </div>
-            @*}*@
+            }
             <div class="row p-2" style="background-color: #c0c0c052;">
                 <div class="row">
                     <div class="col-lg-4 col-md-3 col-sm-3 col-5">
