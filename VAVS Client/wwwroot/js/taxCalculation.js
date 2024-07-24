@@ -41,11 +41,11 @@ document.addEventListener("DOMContentLoaded", function () {
     var shortCells = document.querySelectorAll(".shortCell");
     vehicleNumberCells.forEach(function (cell) {
         var vehicleNumber = cell.textContent.trim();
-        if (vehicleNumber.length > 15) {
+        if (vehicleNumber.length > 25) {
             var splitLines = [];
-            while (vehicleNumber.length > 15) {
-                splitLines.push(vehicleNumber.substring(0, 15));
-                vehicleNumber = vehicleNumber.substring(15);
+            while (vehicleNumber.length > 25) {
+                splitLines.push(vehicleNumber.substring(0, 25));
+                vehicleNumber = vehicleNumber.substring(25);
             }
             splitLines.push(vehicleNumber);
             cell.innerHTML = splitLines.join("<br>");

@@ -190,9 +190,9 @@ namespace VAVS_Client.Services.Impl
             }
         }
 
-        public bool FindPaymentByTaxValidationWithPendingStatus(int taxValidationPkId)
+        public async Task<bool> FindPaymentByTaxValidationWithPendingStatus(int taxValidationPkId)
         {
-            Payment payment = _context.Payments.Where(payment => payment.IsDeleted == false).Where(payment => payment.TaxValidationPkid == taxValidationPkId && payment.PaymentStatus == "Pending").FirstOrDefault();
+            Payment payment = await _context.Payments.Where(payment => payment.IsDeleted == false).Where(payment => payment.TaxValidationPkid == taxValidationPkId && payment.PaymentStatus == "Pending").FirstOrDefaultAsync();
             if (payment != null)
                 return true;
             return false;

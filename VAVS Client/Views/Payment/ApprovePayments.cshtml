@@ -87,8 +87,8 @@
                             }
                             @i
                         </td>
-                        <td>
-                            @Html.Raw((item.TaxValidation.VehicleNumber != null ? item.TaxValidation.VehicleNumber + ", " : "") + item.TaxValidation.VehicleBrand + "<br> " + item.TaxValidation.BuildType)
+                        <td class="address">
+                            @Html.Raw((item.TaxValidation.VehicleNumber != null ? item.TaxValidation.VehicleNumber + ", " : "") + item.TaxValidation.VehicleBrand + ", " + item.TaxValidation.BuildType + ", " + item.TaxValidation.VehicleNumber)
                         <td>
                             @item.TransactionNumber
                         </td>

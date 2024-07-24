@@ -197,11 +197,11 @@
                         @Html.Raw(formattedPersonNRC)*@
                         @item.PersonNRC
                     </td>
-                    <td class ="address">
+                    <td>
                         @ViewBag.Address
                     </td>
-                    <td>
-                        @Html.Raw((item.VehicleNumber != null ? item.VehicleNumber + ", " : "") + item.VehicleBrand + "<br> " + item.BuildType)
+                    <td class="address">
+                        @Html.Raw((item.VehicleNumber != null ? item.VehicleNumber + ", " : "") + item.VehicleBrand + ", " + item.BuildType + ", " + item.VehicleNumber)
                     </td>
 
                     <td>

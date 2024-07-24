@@ -7,7 +7,7 @@
         public Task<Payment> FindPaymentByVAVATransactionNumberEgerLoad(string trasNo);
         public Task<Payment> CretePayment(HttpContext httpContext);
         public Task<List<Payment>> GetRemainPaymentList(HttpContext httpContext);
-        public bool FindPaymentByTaxValidationWithPendingStatus(int taxValidationPkId);
+        public Task<bool> FindPaymentByTaxValidationWithPendingStatus(int taxValidationPkId);
         public Task<bool> IsALreadyPayment(HttpContext httpContext, string vehicleNumber);
         public Task<bool> IsALreadyPendingPayment(HttpContext httpContext, string vehicleNumber);
         public Task<bool> UpdatePaymentStatus(string transactionNumber);
