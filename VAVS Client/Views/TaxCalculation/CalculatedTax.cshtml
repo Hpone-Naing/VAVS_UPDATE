@@ -65,7 +65,7 @@
             </div>
         </div>
         <div class="form-group mt-2">
-            <div class="row">
+            <div class="row p-2">
                 <div class="fw-bold col-lg-6 col-md-6 col-sm-4 col-4 control-label">
                     <label class="control-label fw-bold"> Chessis Number </label>
                 </div>
@@ -94,20 +94,20 @@
         </div>
         @if(!string.IsNullOrEmpty(Model.VehicleStandardValue.Grade))
         {
-            <div class="row p-2 " style="background-color: #c0c0c052;">
+            <div class="row p-2 ">
                 <label asp-for="VehicleStandardValue.Grade" class="fw-bold col-lg-6 col-md-6 col-sm-4 col-4 control-label" data-translate="VehicleDetail_Grade"></label>
                 <div class="col-lg-4 col-md-6 col-sm-4 col-8">
                     <input type="text" asp-for="VehicleStandardValue.Grade" value="@Model.VehicleStandardValue.Grade" readonly="" style="background-color: inherit;border: none;">
                 </div>
             </div>
         }
-        <div class="row p-2 ">
+        <div class="row p-2 " style="background-color: #c0c0c052;">
             <label asp-for="VehicleStandardValue.ModelYear" class="fw-bold col-lg-6 col-md-6 col-sm-4 col-4 control-label" data-translate="VehicleDetail_ModelYear"></label>
             <div class="col-lg-4 col-md-6 col-sm-4 col-8">
                 <input type="text" asp-for="VehicleStandardValue.ModelYear" value="@Model.VehicleStandardValue.ModelYear" readonly="" style="background-color: inherit;border: none;">
             </div>
         </div>
-        <div class="row p-2 " style="background-color: #c0c0c052;">
+        <div class="row p-2 ">
             <label asp-for="VehicleStandardValue.EnginePower" class="fw-bold col-lg-6 col-md-6 col-sm-4 col-4 control-label" data-translate="VehicleDetail_EnginePower"></label>
             <div class="col-lg-4 col-md-6 col-sm-4 col-8">
                 <input type="text" asp-for="VehicleStandardValue.EnginePower" value="@Model.VehicleStandardValue.EnginePower" readonly="" style="background-color: inherit;border: none;">
@@ -115,7 +115,7 @@
         </div>
         @if(Model.VehicleStandardValue.Fuel != null)
         {
-            <div class="row p-2 ">
+            <div class="row p-2 " style="background-color: #c0c0c052;">
                 <label asp-for="VehicleStandardValue.Fuel" class="fw-bold col-lg-6 col-md-6 col-sm-4 col-4 control-label" data-translate="VehicleDetail_FuelType"></label>
                 <div class="col-lg-4 col-md-6 col-sm-4 col-8">
                     <input type="text" asp-for="FuelType" value="@Model.VehicleStandardValue.Fuel.FuelType" readonly="" style="background-color: inherit;border: none;">
