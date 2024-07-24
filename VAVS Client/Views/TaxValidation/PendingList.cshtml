@@ -114,6 +114,9 @@
                 <th class="text-white">
                     <label class="mb-2">ကျသင့်အခွန်</label>
                 </th>
+                <th class="text-white">
+                    <label class="mb-2">ပေးသွင်းအခွန်</label>
+                </th>
                 <th class="text-white">လုပ်ဆောင်ချက်များ</th>
             </tr>
         </thead>
@@ -184,6 +187,15 @@
                                 : taxAmt.Split('.')[0] + "<br />";
                             }
                             <label class="d-flex align-item-end justify-content-end"> @Html.Raw(formatTaxAmt)</label>
+                        </td>
+                        <td>
+                            @{
+                                string paidAmt = item.TaxAmount.ToString();
+                                string formatPaidAmt = string.IsNullOrEmpty(taxAmt)
+                                ? taxAmt
+                                : taxAmt.Split('.')[0] + "<br />";
+                            }
+                            <label class="d-flex align-item-end justify-content-end"> @Html.Raw(formatPaidAmt)</label>
                         </td>
                         <td>
                             <a class="" data-toggle="tooltip" data-placement="top" title="Detail" asp-action="Details" asp-route-id="@item.TaxValidationPkid" style="color:blue">Details</a>

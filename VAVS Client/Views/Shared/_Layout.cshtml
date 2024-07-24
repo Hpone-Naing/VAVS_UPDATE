@@ -14,37 +14,13 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
     <link rel="stylesheet" href="~/Content/css/style_edit.css" asp-append-version="true">
-    <script src="~/Content/plugins/chart.js/Chart.min.js"></script>
-
-
-
-    <script src="~/Content/plugins/jQuery/jquery-2.2.3.min.js" asp-append-version="true"></script>
-    <script src="~/Content/plugins/select2/select2.full.min.js" asp-append-version="true"></script>
-    <script src="~/Content/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js" asp-append-version="true"></script>
-    <script src="~/Content/plugins/datatables/jquery.dataTables.min.js" asp-append-version="true"></script>
-    <script src="~/Content/plugins/datatables/dataTables.bootstrap.min.js" asp-append-version="true"></script>
-    <script src="~/Content/plugins/datatables/dataTables.bootstrap.js" asp-append-version="true"></script>
-    <script src="~/Content/plugins/input-mask/jquery.inputmask.js" asp-append-version="true"></script>
-    <script src="~/Content/plugins/input-mask/jquery.inputmask.date.extensions.js" asp-append-version="true"></script>
-    <script src="~/Content/plugins/input-mask/jquery.inputmask.extensions.js" asp-append-version="true"></script>
-    <!-- Select Box -->
-    <link rel="stylesheet" href="~/Content/plugins/select2/select2.min.css" asp-append-version="true">
-    <!-- daterange picker -->
-    <link rel="stylesheet" href="~/Content/bower_components/bootstrap-daterangepicker/daterangepicker.css" asp-append-version="true">
-    <!-- bootstrap datepicker -->
-    <link rel="stylesheet" href="~/Content/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" asp-append-version="true">
-
-    @*<script src="~/Content/plugins/iCheck/icheck.min.js"></script>*@
-    @*<script src="~/Content/plugins/bootstrap-slider/bootstrap-slider.js"></script>*@
-
-    <!--<link href="~/Content/dist/css/fontawesome.min.css" rel="stylesheet" asp-append-version="true" />-->
     <!-- Bootstrap 3.3.7 -->
-    <!--<link rel="stylesheet" href="~/Content/bower_components/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true">-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/css/bootstrap.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/css/bootstrap-select.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/jquery-ui/1.12.1/jquery-ui.min.css" asp-append-version="true" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/css/bootstrap-select.min.css" asp-append-version="true">    <!-- Font Awesome -->
     <!--<link rel="stylesheet" href="~/Content/bower_components/font-awesome/css/font-awesome.min.css" asp-append-version="true">-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="~/lib/fontawesome/6.6.0/css/all.min.css" asp-append-version="true" />
     @*<link rel="stylesheet" href="~/Content/bower_components/font-awesome/css/fontawesome-all.min.css">*@
     <!-- Ionicons -->
     <link rel="stylesheet" href="~/Content/bower_components/Ionicons/css/ionicons.min.css" asp-append-version="true">
@@ -56,24 +32,17 @@
     <!-- Morris chart -->
     <link rel="stylesheet" href="~/Content/bower_components/morris.js/morris.css" asp-append-version="true">
     <!-- jvectormap -->
-    <link rel="stylesheet" href="~/Content/bower_components/jvectormap/jquery-jvectormap.css" asp-append-version="true">
     <!-- Date Picker -->
-    <link rel="stylesheet" href="~/Content/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" asp-append-version="true">
     <!-- Daterange picker -->
-    <link rel="stylesheet" href="~/Content/bower_components/bootstrap-daterangepicker/daterangepicker.css" asp-append-version="true">
     <!-- bootstrap wysihtml5 - text editor -->
-    <link rel="stylesheet" href="~/Content/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" asp-append-version="true">
 
     <link href="~/Content/plugins/toastr/toastr.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/Content/plugins/toastr/toastr.min.css" rel="stylesheet" asp-append-version="true" />
 
-    @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css" />*@
 
-    <link href="~/Content/css/bootstrap-multiselect.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/vehicleData.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/payment.css" asp-append-version="true" />
-    <link href=”https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css” rel=”stylesheet”>
 </head>
 
 <body class="hold-transition skin-yellow-light sidebar-mini">
@@ -307,17 +276,6 @@
                         <li class="active menu-open">
                             <a href="#" class="active text-decoration-none">
                                 <i class="fa fa-list"></i>
-                                <span style=" font-size: 16px;">အခွန်ကျန်ရှိကားစာရင်း</span>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li>
-                                    <a class="link active" href="@Url.Action("RemainPayments", "Payment")" style="font-size: 14px; text-decoration:none;"><i class=""></i><span class="fa-solid fa-book"></span><label class="ms-2">List</label></a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="active menu-open">
-                            <a href="#" class="active text-decoration-none">
-                                <i class="fa fa-list"></i>
                                 <span style=" font-size: 16px;">ငွေပေးချေပြီးသောကားစာရင်း</span>
                             </a>
                             <ul class="treeview-menu">
@@ -329,8 +287,19 @@
                         <li class="active menu-open">
                             <a href="#" class="active text-decoration-none">
                                 <i class="fa fa-list"></i>
-                                <span style=" font-size: 16px;" data-translate="Menu_Localization">Language</span>
-                                <span class="me-2" onclick="setLanguage('en')" style="cursor: pointer;"><img width="20px;" src="~/Content/images/united-states.png"></span>
+                                <span style=" font-size: 16px;">အခွန်ကျန်ရှိကားစာရင်း</span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li>
+                                    <a class="link active" href="@Url.Action("RemainPayments", "Payment")" style="font-size: 14px; text-decoration:none;"><i class=""></i><span class="fa-solid fa-book"></span><label class="ms-2">List</label></a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="active menu-open">
+                            <a href="#" class="active text-decoration-none">
+                                <i class="fa fa-list"></i>
+                                <span style=" font-size: 16px;" data-translate="Menu_Localization">Localization</span>
+                                <span class="me-2" onclick="setLanguage('en')" style="cursor: pointer;"><img width="20px;" src="~/Content/images/british-flag.png"></span>
                                 <span onclick="setLanguage('my')" style="cursor: pointer;"><img src="~/Content/images/myanmar.png" width="20px;"></span>
 
                             </a>
@@ -392,62 +361,35 @@
         <div class="control-sidebar-bg"></div>
     </div>
     <!-- ./wrapper -->
-    <script src="~/Content/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js" asp-append-version="true"></script>
-    <script src="~/Content/plugins/datatables/jquery.dataTables.min.js" asp-append-version="true"></script>
-    <script src="~/Content/plugins/datatables/dataTables.bootstrap.min.js" asp-append-version="true"></script>
-    <script src="~/Content/plugins/datatables/dataTables.bootstrap.js" asp-append-version="true"></script>
-    <script src="~/Content/plugins/input-mask/jquery.inputmask.js" asp-append-version="true"></script>
-    <script src="~/Content/plugins/input-mask/jquery.inputmask.date.extensions.js" asp-append-version="true"></script>
-    <script src="~/Content/plugins/input-mask/jquery.inputmask.extensions.js" asp-append-version="true"></script>
-    <script src="~/Content/bower_components/morris.js/morris.min.js" asp-append-version="true"></script>
+    
     <!-- jQuery 3 -->
-    <script src="~/Content/bower_components/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
     <!-- jQuery UI 1.11.4 -->
-    <script src="~/Content/bower_components/jquery-ui/jquery-ui.min.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/lib/jquery-ui/1.12.1/jquery-ui.min.js" asp-append-version="true"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
         $.widget.bridge('uibutton', $.ui.button);
     </script>
     <!-- Bootstrap 3.3.7 -->
     <!--<script src="~/Content/bower_components/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/js/bootstrap.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/js/bootstrap-select.min.js"></script>
-
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/js/bootstrap-select.min.js" asp-append-version="true"></script>
     <!-- Morris.js charts -->
-    <script src="~/Content/bower_components/raphael/raphael.min.js" asp-append-version="true"></script>
-    <script src="~/Content/bower_components/morris.js/morris.min.js" asp-append-version="true"></script>
     <!-- Sparkline -->
-    <script src="~/Content/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js" asp-append-version="true"></script>
     <!-- jvectormap -->
-    <script src="~/Content/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js" asp-append-version="true"></script>
-    <script src="~/Content/plugins/jvectormap/jquery-jvectormap-world-mill-en.js" asp-append-version="true"></script>
     <!-- jQuery Knob Chart -->
-    <script src="~/Content/bower_components/jquery-knob/dist/jquery.knob.min.js" asp-append-version="true"></script>
     <!-- daterangepicker -->
-    <script src="~/Content/bower_components/moment/min/moment.min.js" asp-append-version="true"></script>
-    <script src="~/Content/bower_components/bootstrap-daterangepicker/daterangepicker.js" asp-append-version="true"></script>
     <!-- datepicker -->
-    <script src="~/Content/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js" asp-append-version="true"></script>
     <!-- Bootstrap WYSIHTML5 -->
     <!-- Slimscroll -->
-    <script src="~/Content/bower_components/jquery-slimscroll/jquery.slimscroll.min.js" asp-append-version="true"></script>
     <!-- FastClick -->
     <script src="~/Content/bower_components/fastclick/lib/fastclick.js" asp-append-version="true"></script>
     <!-- AdminLTE App -->
     <script src="~/Content/dist/js/adminlte.min.js" asp-append-version="true"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <!-- AdminLTE for demo purposes -->
-    <script src="~/Content/bower_components/jquery-ui/jquery-ui.js" asp-append-version="true"></script>
-    <script src="~/Content/scripts/Chart.min.js" asp-append-version="true"></script>
-    <script src="~/Content/scripts/Chart.min.js" asp-append-version="true"></script>
-    <script src="~/Content/plugins/toastr/toastr.min.js" asp-append-version="true"></script>
-
-    <script src="~/Content/bower_components/moment/locale/my.js"></script>
-    <script src="~/js/sweetalert2@11.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     @*<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>*@
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/js/bootstrap.bundle.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="~/js/localization.js" asp-append-version="true"></script>
     <script src="~/js/index.js" asp-append-version="true"></script>
     <script src="~/js/common.js" asp-append-version="true"></script>
