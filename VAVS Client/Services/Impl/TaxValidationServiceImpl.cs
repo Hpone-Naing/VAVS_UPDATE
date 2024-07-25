@@ -119,8 +119,11 @@ namespace VAVS_Client.Services.Impl
                 try
                 {
                     TaxpayerInfo loginTaxPayerInfo = _sessionService.GetLoginUserInfo(httpContext);
-                    List<TaxValidation> taxValidationPendingList = _context.TaxValidations.Where(taxValidation => taxValidation.PersonNRC == loginTaxPayerInfo.NRC && (taxValidation.QRCodeNumber != null || taxValidation.DemandNumber != null) && taxValidation.IsDeleted == false).ToList();
-                    return GetAllWithPagin(taxValidationPendingList, pageNo, PageSize);
+                    Console.WriteLine("login payer info.........................." + loginTaxPayerInfo.NRC);
+                    List<TaxValidation> taxValidationApproveList = _context.TaxValidations.Where(taxValidation => taxValidation.PersonNRC == loginTaxPayerInfo.NRC && (taxValidation.QRCodeNumber != null || taxValidation.DemandNumber != null) && taxValidation.IsDeleted == false).ToList();
+                    Console.WriteLine("list count............................" + taxValidationApproveList.Count);
+                    
+                    return GetAllWithPagin(taxValidationApproveList, pageNo, PageSize);
                 }
                 catch (Exception e)
                 {

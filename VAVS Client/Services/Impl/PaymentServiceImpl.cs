@@ -1,6 +1,7 @@
 ﻿using DocumentFormat.OpenXml.Office2010.ExcelAc;
 using VAVS_Client.Classes;
 using VAVS_Client.Data;
+using VAVS_Client.Models;
 using VAVS_Client.Util;
 using LoginUserInfo = VAVS_Client.Models.LoginUserInfo;
 
@@ -411,7 +412,8 @@ namespace VAVS_Client.Services.Impl
             {
                 List<Payment> payments = await GetApprovePaymentListWithTaxValidationEgerLoad(httpContext);
                 List<TaxValidation> taxValidationList = payments
-                .Select(payment => payment.TaxValidation).Where(taxValidation => taxValidation.IsDeleted == false)
+                .Select(payment => payment.TaxValidation).Where(taxValidation => taxValidation.IsDeleted == false && taxValidation.QRCodeNumber == null &&
+                taxValidation.DemandNumber == null)
                 .ToList();
                 _logger.LogInformation("Retrieved taxValidation list successfully.");
                 return taxValidationList;

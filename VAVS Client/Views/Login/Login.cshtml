@@ -88,6 +88,43 @@
                             <label class="control-label fw-bold mt-2" data-translate="Global_Nrc"> Nrc Number: </label>
                         </div>
                         <div class="col">
+                            <div class="d-flex">
+                                <select class="form-control me-2" id="lstNRCTownshipNumberId" name="NRCTownshipNumber" onchange="FilterNRCTownshipInitial(this, 'lstNRCTownshipInitial')" required>
+                                    <option value="">?</option>
+                                    <option value="၁">၁/</option>
+                                    <option value="၂">၂/</option>
+                                    <option value="၃">၃/</option>
+                                    <option value="၄">၄/</option>
+                                    <option value="၅">၅/</option>
+                                    <option value="၆">၆/</option>
+                                    <option value="၇">၇/</option>
+                                    <option value="၈">၈/</option>
+                                    <option value="၉">၉/</option>
+                                    <option value="၁၀">၁၀/</option>
+                                    <option value="၁၁">၁၁/</option>
+                                    <option value="၁၂">၁၂/</option>
+                                    <option value="၁၃">၁၃/</option>
+                                    <option value="၁၄">၁၄/</option>
+                                </select>
+                                <select class="form-control me-2" id="lstNRCTownshipInitial" name="NRCTownshipInitial" required>
+                                    <option value="">?</option>
+                                    <option value="လသယ">လသယ</option>
+                                    <option value="ဥကတ">ဥကတ</option>
+                                </select>
+                                <select class="form-control me-2" name="NRCType" required>
+                                    <option value="">?</option>
+                                    <option value="(နိုင်)">(နိုင်)</option>
+                                    <option value="(ဧည့်)">(ဧည့်)</option>
+                                    <option value="(ဝတ်)">(ဝတ်)</option>
+                                    <option value="(ပြု)">(ပြု)</option>
+                                </select>
+                                <input class="form-control ms-2" name="NRCNumber" pattern="\d{5,6}" title="NRC number must contain only 5 to 6 digits" maxlength="6" required />
+                                <span class="text-danger" asp-validation-for="PersonalDetail.NRCTownshipNumber"></span>
+                                <span class="text-danger" asp-validation-for="PersonalDetail.NRCTownshipInitial"></span>
+                                <span class="text-danger" asp-validation-for="PersonalDetail.NRCType"></span>
+                                <span class="text-danger" asp-validation-for="PersonalDetail.NRCNumber"></span>
+                            </div>
+                            @*
                             <div class="row mt-2">
                                 <div class="col">
                                     <select class="form-control" id="lstNRCTownshipNumberId" name="NRCTownshipNumber" onchange="FilterNRCTownshipInitial(this, 'lstNRCTownshipInitial')" required>
@@ -132,7 +169,7 @@
                                 <span class="text-danger" asp-validation-for="PersonalDetail.NRCType"></span>
                                 <span class="text-danger" asp-validation-for="PersonalDetail.NRCNumber"></span>
                             </div>
-                        </div>
+                        </div>*@
                     </div>
                 </div>
                 <div class="mb-3">
