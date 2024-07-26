@@ -14,14 +14,14 @@ namespace VAVS_Client.Util
          * Resend code and register
          */
         public static int MAXIMUM_REGISTRATION_TIME = 5;
-        public static int MAXIMUM_RESEND_CODE_TIME = 3;
+        public static int MAXIMUM_RESEND_CODE_TIME = 2;
         public static int MAXIMUM_SEARCH_TIME = 5;
         public static int MAXIMUM_PENDINGPAYMENT_TIME = 3;
         public static int OTP_EXPIRE_MINUTE = 0;
         public static int OTP_EXPIRE_SECOND = 120;
         public static int NEXT_RESENDCODE_TIME_IN_MINUTE = 7; 
         public static int NEXT_RESENDCODE_TIME_IN_SECOND = 0;
-        public static int NEXT_REGISTER_TIME_IN_MINUTE = 30;
+        public static int NEXT_REGISTER_TIME_IN_MINUTE = 25;
         public static int NEXT_REGISTER_TIME_IN_SECOND = 0;
         public static int NEXT_SEARCH_TIME_IN_MINUTE = 10;
         public static int NEXT_PENDINGPAYMENT_TIME_IN_DAYS = 3;

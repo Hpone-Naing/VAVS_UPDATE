@@ -93,21 +93,26 @@ namespace VAVS_Client.Controllers.Auth
 
         private Otp MakeOtp(HttpContext httpContext)
         {
-            string digit1 = httpContext.Request.Form["digit1"];
-            string digit2 = httpContext.Request.Form["digit2"];
-            string digit3 = httpContext.Request.Form["digit3"];
-            string digit4 = httpContext.Request.Form["digit4"];
-            string digit5 = httpContext.Request.Form["digit5"];
-            string digit6 = httpContext.Request.Form["digit6"];
-            return new Otp()
+            if (httpContext.Request.HasFormContentType)
             {
-                Digit1 = digit1,
-                Digit2 = digit2,
-                Digit3 = digit3,
-                Digit4 = digit4,
-                Digit5 = digit5,
-                Digit6 = digit6
-            };
+                string digit1 = httpContext.Request.Form["digit1"];
+                string digit2 = httpContext.Request.Form["digit2"];
+                string digit3 = httpContext.Request.Form["digit3"];
+                string digit4 = httpContext.Request.Form["digit4"];
+                string digit5 = httpContext.Request.Form["digit5"];
+                string digit6 = httpContext.Request.Form["digit6"];
+                return new Otp()
+                {
+                    Digit1 = digit1,
+                    Digit2 = digit2,
+                    Digit3 = digit3,
+                    Digit4 = digit4,
+                    Digit5 = digit5,
+                    Digit6 = digit6
+                };
+            }
+            return null;
+            
         }
 
         [HttpPost]
@@ -279,18 +284,26 @@ namespace VAVS_Client.Controllers.Auth
                  */
                 if (currentTime < DateTime.Parse(storedExpireTime))
                 {
+                    if(MakeOtp(HttpContext)==null)
+                    {
+                        ViewData["ExpireTime"] = HttpContext.Session.GetString("ExpireTime");
+                        ViewData["phoneNumber"] = personalInformation.PhoneNumber;
+                        return View("LoginAuthCode");
+                    }    
+
                     if (MakeOtp(HttpContext).IsValidOtp(existingUser.OTP))
                     {
                         /*
                          * Valid OTP and set session for loginUser and redirect vehicle search page
                          */
                         //await _serviceFactory.CreateSMSVerificationService().SendSMSOTP(personalDetail.PhoneNumber, Utility.MakeMessage("Your Username", "mgmg", " Your Password", "mgmg123++", "for Login"));
-                        existingUser.Nrc = loginUserInfo.NRC;
+                        /*existingUser.Nrc = loginUserInfo.NRC;
                         existingUser.PhoneNumber = personalInformation.PhoneNumber;
                         existingUser.OTP = null;
                         existingUser.ReResendCodeTime = null;
                         existingUser.ResendOTPCount = 0;
-                        factoryBuilder.CreateLoginAuthDBService().UpdateLoginAuth(existingUser);
+                        factoryBuilder.CreateLoginAuthDBService().UpdateLoginAuth(existingUser);*/
+                        factoryBuilder.CreateLoginAuthDBService().HardDeleteLoginAuth(existingUser);
                         HttpContext.Session.Remove("ExpireTime");
                         //loginControllerLogger.LogInformation("Valid otp and redirect to menu.....................");
 

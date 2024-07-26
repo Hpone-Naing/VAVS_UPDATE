@@ -12,7 +12,7 @@
     <link rel="icon" href="~/Content/images/MADB Logo.jpg">
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/Content/css/style_edit.css" asp-append-version="true">
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
@@ -47,10 +47,10 @@
 
 <body class="hold-transition skin-yellow-light sidebar-mini">
     <div class="wrapper">
-        <header class="main-header">
+        <header class="main-header bg-white">
             <!-- Logo -->
 
-            <a href="@Url.Action("SearchVehicleStandardValue", "VehicleStandardValue")" class="logo text-decoration-none" style="padding:0px;line-height:45px; background-color: #0f3cbd;">
+            <a href="@Url.Action("SearchVehicleStandardValue", "VehicleStandardValue")" class="logo text-decoration-none bg-white" style="padding:0px;line-height:45px;">
                 <!-- mini logo for sidebar mini 50x50 pixels -->
                 @*<span class="logo-mini"><b>INNO</b></span>*@
                 <!-- logo for regular state and mobile devices -->
@@ -62,15 +62,15 @@
                 <label class="animate-charcter">ပြည်တွင်းအခွန်များဦးစီးဌာန</label>
             </a>
             <!-- Header Navbar: style can be found in header.less -->
-            <nav class="" style="height: 50px;background-color: #0f3cbd;">
+            <nav class="bg-white shadow" style="height: 50px;">
                 <div style="height: auto;" class="d-flex justify-content-between p-1">
                     <!-- Sidebar toggle button-->
                     <div>
-                        <a b-zogy9lo6il="" href="#" class="sidebar-toggle text-white ms-2 pt-2 text-decoration-none" data-toggle="push-menu" role="button">
+                        <a b-zogy9lo6il="" href="#" class="sidebar-toggle text-black pt-2 text-decoration-none" data-toggle="push-menu" role="button">
                             <span b-zogy9lo6il="" class="sr-only">Toggle navigation</span>
                         </a>
                     </div>
-                    <div><span class="text-white" style="font-size: 25px;">VAVS</span></div>
+                    <div><span class="text-primary" style="font-size: 25px;">VAVS</span></div>
                     <!-- Example split danger button -->
                     <div class="btn-group">
                         <button class="btn">
@@ -89,12 +89,12 @@
 
                             <span style="background-color: #47b047;border-radius: 50px;width: 10px;display: inline-block;height: 10px;"></span>
                             @*<img src="~/Content/images/Alphabet/@(initialName[0].ToString().ToLower()).png" alt="User Image" style="width: 20px;" class="rounded-pill">*@
-                            <span class="hidden-xs text-white">
+                            <span class="hidden-xs text-primary">
                                 @name
                             </span>
 
                         </button>
-                        <button type="button" data-bs-toggle="dropdown" aria-expanded="false" class="btn dropdown-toggle dropdown-toggle-split text-white mt-1">
+                        <button type="button" data-bs-toggle="dropdown" aria-expanded="false" class="btn dropdown-toggle dropdown-toggle-split bg-primary text-white btn-sm mt-1">
                             <span class="visually-hidden">Toggle Dropdown</span>
                         </button>
                         <ul class="dropdown-menu" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(-32px, 40px);" data-popper-placement="bottom-end">
@@ -194,7 +194,7 @@
                 <!-- search form -->
                 <!-- /.search form -->
                 <!-- sidebar menu: : style can be found in sidebar.less -->
-                <ul class="sidebar-menu" data-widget="tree" style="margin-top:60px;">
+                <ul class="sidebar-menu bg-white" data-widget="tree" style="margin-top:60px;">
         @*<li class="active treeview">
                     <a href="#">
                     <i class="fa fa-dashboard"></i> <span>Dashboard</span>
@@ -244,53 +244,53 @@
                     </li>
                     </ul>
                     </li>*@
-                        <li class="active menu-open">
-                            <a href="#" class="active text-decoration-none">
+                        <li class="active menu-open bg-white">
+                            <a href="#" class="active text-decoration-none bg-white">
                                 <i class="fa fa-list"></i>
                                 <span style=" font-size: 16px;" data-translate="Menu_Vehicle">Search</span>
                             </a>
                             <ul class="treeview-menu">
                                 <li>
-                                    <a class="link active" href="@Url.Action("SearchVehicleStandardValue", "VehicleStandardValue")" style="font-size: 14px; text-decoration:none;"><i class=""></i><span class="fas fa-search"></span><label class="ms-2" data-translate="SubmMenu_SearchVehicle">Vehicle Data</label></a>
+                                    <a class="link active" href="@Url.Action("SearchVehicleStandardValue", "VehicleStandardValue")" style="font-size: 14px; text-decoration:none;"><i class=""></i><span class="fas fa-search text-primary"></span><label class="ms-2" data-translate="SubmMenu_SearchVehicle">Vehicle Data</label></a>
                                 </li>
                             </ul>
                         </li>
 
-                        <li class="active menu-open">
-                            <a href="#" class="active text-decoration-none">
+                        <li class="active menu-open bg-white">
+                            <a href="#" class="active text-decoration-none bg-white">
                                 <i class="fa fa-list"></i>
                                 <span style=" font-size: 16px;" data-translate="Menu_TaxValidation">Tax Validation</span>
                             </a>
-                            <ul class="treeview-menu">
+                            <ul class="treeview-menu bg-white">
                                 <li>
-                                    <a class="link active" href="@Url.Action("PendingList", "TaxValidation")" style="font-size: 14px; text-decoration:none;"><i class=""></i><span class="fa-solid fa-book"></span><label class="ms-2" data-translate="SubmMenu_Pending">Pending List</label></a>
+                                    <a class="link active" href="@Url.Action("PendingList", "TaxValidation")" style="font-size: 14px; text-decoration:none;"><i class=""></i><span class="fa-solid fa-book text-primary"></span><label class="ms-2" data-translate="SubmMenu_Pending">Pending List</label></a>
                                 </li>
                             </ul>
-                            <ul class="treeview-menu">
+                            <ul class="treeview-menu bg-white">
                                 <li>
-                                    <a class="link active" href="@Url.Action("ApproveList", "TaxValidation")" style="font-size: 14px; text-decoration:none;"><i class=""></i><span class="fa-solid fa-book"></span><label class="ms-2" data-translate="SubMenu_Approve">Approve List</label></a>
+                                    <a class="link active" href="@Url.Action("ApproveList", "TaxValidation")" style="font-size: 14px; text-decoration:none;"><i class=""></i><span class="fa-solid fa-book text-primary"></span><label class="ms-2" data-translate="SubMenu_Approve">Approve List</label></a>
                                 </li>
                             </ul>
                         </li>
-                        <li class="active menu-open">
-                            <a href="#" class="active text-decoration-none">
+                        <li class="active menu-open bg-white">
+                            <a href="#" class="active text-decoration-none bg-white">
                                 <i class="fa fa-list"></i>
                                 <span style=" font-size: 16px;" data-translate="Menu_PaymentHistory">Payment History</span>
                             </a>
-                            <ul class="treeview-menu">
+                            <ul class="treeview-menu bg-white">
                                 <li>
-                                    <a class="link active" href="@Url.Action("ApprovePayments", "Payment")" style="font-size: 14px; text-decoration:none;"><i class=""></i><span class="fa-solid fa-book"></span><label class="ms-2" data-translate="SubMenu_PaymentApprove">Complete Payment</label></a>
+                                    <a class="link active" href="@Url.Action("ApprovePayments", "Payment")" style="font-size: 14px; text-decoration:none;"><i class=""></i><span class="fa-solid fa-book text-primary"></span><label class="ms-2" data-translate="SubMenu_PaymentApprove">Complete Payment</label></a>
                                 </li>
                             </ul>
-                            <ul class="treeview-menu">
+                            <ul class="treeview-menu bg-white">
                                 <li>
-                                    <a class="link active" href="@Url.Action("RemainPayments", "Payment")" style="font-size: 14px; text-decoration:none;"><i class=""></i><span class="fa-solid fa-book"></span><label class="ms-2" data-translate="SubMenu_PaymentPending">Incomplete Payment</label></a>
+                                    <a class="link active" href="@Url.Action("RemainPayments", "Payment")" style="font-size: 14px; text-decoration:none;"><i class=""></i><span class="fa-solid fa-book text-primary"></span><label class="ms-2" data-translate="SubMenu_PaymentPending">Incomplete Payment</label></a>
                                 </li>
                             </ul>
 
                         </li>
-                        <li class="active menu-open">
-                            <a href="#" class="active text-decoration-none">
+                        <li class="active menu-open bg-white">
+                            <a href="#" class="active text-decoration-none bg-white">
                                 <i class="fa fa-list"></i>
                                 <span style=" font-size: 16px;" data-translate="Menu_Localization">Localization</span>
                                 <span class="me-2" onclick="setLanguage('en')" style="cursor: pointer;"><img width="20px;" src="~/Content/images/british-flag.png"></span>
@@ -319,7 +319,7 @@
         @*<marquee style="color:white;background-color:#2b580c;font-size:large;font-weight:300;padding:10px;">@ViewBag.AnnouncemnetDesc</marquee>*@<!--<marquee style="color:white;background-color:#2b580c;font-size:large;font-weight:300;padding:10px;"></marquee>-->
         @*</section>*@
             <!-- Main content -->
-            <section class="content">
+            <section class="content bg-white">
 
             @RenderBody()
             </section>

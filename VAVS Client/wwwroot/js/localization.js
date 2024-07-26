@@ -4,14 +4,16 @@
         Global_OldPhone: "Old Phone Number:",
         Global_NewPhone: "New Phone Number:",
         Global_PhoneNo: "Phone Number:",
-
         ChooseUser_TitleForOwner: "Owner",
         ChooseUser_TitleForRepresentive: "Representive",
+        Global_NextBtn: "Next",
+        Global_SubmitBtn: "Submit",
 
+        ChooseUser_ChooseUser: "Choose",
         Login_Label: "Please sign-in to your account",
-        Login_NewAccount: "Create an account",
+        Login_NewAccount: "Create account",
         Login_ChangePhone: "Change Phone Number",
-
+        LoginAuthCode_ResendBtn: "Resend",
         Reg_StateDivision: "State/Division:",
         Reg_Township: "Township:",
         Reg_Quarter: "Quarter:",
@@ -86,17 +88,20 @@
         TaxValidationDetail_BaseValue: "Calculated Base Value"
     },
     my: {
-        Global_Nrc: "မှတ်ပုံတင်",
+        Global_Nrc: "မှတ်ပုံတင်အမှတ်",
         Global_OldPhone: "ဖုန်းနံပါတ်အဟောင်း",
         Global_NewPhone: "ဖုန်ံးနံပါတ်အသစ်",
         Global_PhoneNo: "ဖုန်ံးနံပါတ်",
+        Global_NextBtn: "ရှေ့သို့",
+        Global_SubmitBtn: "ဝင်မည်",
 
         ChooseUser_TitleForOwner: "ပိုင်ရှင်ကိုယ်တိုင်",
         ChooseUser_TitleForRepresentive: "ကိုယ်စားလှယ်",
 
-        Login_Label: "ကျေးဇူးပြု၍ Loginဝင်ပါ",
-        Login_NewAccount: "Account အသစ်ပြုလုပ်ရန်",
+        Login_Label: "ကျေးဇူးပြု၍ Login ဝင်ပါ",
+        Login_NewAccount: "အကောင့်ဖွင့်ရန်",
         Login_ChangePhone: "ဖုန်းနံပါတ်ပြောင်းရန်",
+        LoginAuthCode_ResendBtn: "ကုဒ်ပြန်ပို့ပါ",
 
         Reg_StateDivision: "တိုင်းဒေသကြီး",
         Reg_Township: "မြို့နယ်",

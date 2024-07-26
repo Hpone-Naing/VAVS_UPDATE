@@ -119,6 +119,17 @@ namespace VAVS_Client.Services.Impl
             }
         }
 
+        public bool HardDeleteDeviceInfo(DeviceInfo deviceInfo)
+        {
+            try
+            {
+                return HardDelete(deviceInfo);
+            }catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
         public async Task<bool> VpnTurnOn()
         {
             string token = "ce0f6c22b96675";

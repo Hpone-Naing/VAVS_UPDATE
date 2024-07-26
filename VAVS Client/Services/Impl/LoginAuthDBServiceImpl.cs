@@ -73,5 +73,19 @@ namespace VAVS_Client.Services.Impl
                 Update(loginAuth);
             }
         }
+
+        public bool HardDeleteLoginAuth(LoginAuth loginAuth)
+        {
+            try
+            {
+                return HardDelete(loginAuth);
+            }
+            catch(Exception e) 
+            {
+                throw;
+            }
+
+
+        }
     }
 }

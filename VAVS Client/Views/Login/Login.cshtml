@@ -89,7 +89,7 @@
                         </div>
                         <div class="col">
                             <div class="d-flex">
-                                <select class="form-control me-2" id="lstNRCTownshipNumberId" name="NRCTownshipNumber" onchange="FilterNRCTownshipInitial(this, 'lstNRCTownshipInitial')" required>
+                                <select class="form-control me-2" id="lstNRCTownshipNumberId" name="NRCTownshipNumber" onchange="FilterNRCTownshipInitial(this, 'lstNRCTownshipInitial')" style="width: 50px;" required>
                                     <option value="">?</option>
                                     <option value="၁">၁/</option>
                                     <option value="၂">၂/</option>
@@ -106,19 +106,19 @@
                                     <option value="၁၃">၁၃/</option>
                                     <option value="၁၄">၁၄/</option>
                                 </select>
-                                <select class="form-control me-2" id="lstNRCTownshipInitial" name="NRCTownshipInitial" required>
+                                <select class="form-control me-2" id="lstNRCTownshipInitial" name="NRCTownshipInitial" style="width: 70px;" required>
                                     <option value="">?</option>
                                     <option value="လသယ">လသယ</option>
                                     <option value="ဥကတ">ဥကတ</option>
                                 </select>
-                                <select class="form-control me-2" name="NRCType" required>
+                                <select class="form-control me-2" name="NRCType" style="width: 50px;" required>
                                     <option value="">?</option>
                                     <option value="(နိုင်)">(နိုင်)</option>
                                     <option value="(ဧည့်)">(ဧည့်)</option>
                                     <option value="(ဝတ်)">(ဝတ်)</option>
                                     <option value="(ပြု)">(ပြု)</option>
                                 </select>
-                                <input class="form-control ms-2" name="NRCNumber" pattern="\d{5,6}" title="NRC number must contain only 5 to 6 digits" maxlength="6" required />
+                                <input class="form-control" name="NRCNumber" pattern="\d{5,6}" title="NRC number must contain only 5 to 6 digits" maxlength="6" required />
                                 <span class="text-danger" asp-validation-for="PersonalDetail.NRCTownshipNumber"></span>
                                 <span class="text-danger" asp-validation-for="PersonalDetail.NRCTownshipInitial"></span>
                                 <span class="text-danger" asp-validation-for="PersonalDetail.NRCType"></span>
@@ -172,9 +172,9 @@
                         </div>*@
                     </div>
                 </div>
-                <div class="mb-3">
+                <div class="m-3">
                     <div class="d-flex align-item-center justify-content-center">
-                        <button class="btn btn-primary d-grid w-10" type="submit">Sign in</button>
+                            <button class="btn btn-primary d-grid w-10" type="submit" data-translate="Global_NextBtn"><label class="mb-1 me-1">Next</label></button>
                     </div>
                 </div>
             </form>
@@ -183,7 +183,7 @@
             <span>New on our platform?</span>
             <!-- Button trigger modal-->
             <a data-bs-toggle="modal" data-bs-target="#register" style="cursor:pointer;">
-                <span class="text-primary" data-translate="Login_NewAccount">Create an account</span>
+                <span class="text-primary" data-translate="Login_NewAccount">Create account</span>
             </a> 
         </p>
         <p class="text-center">

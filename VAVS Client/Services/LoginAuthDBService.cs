@@ -8,5 +8,6 @@
         public LoginAuth GetLoginAuthByNrc(string nrc);
         public void UpdateOtp(string phoneNumber, string hashedOtp = null);
         public void UpdateResendCodeTime(string nrc, string hashedOtp = null);
+        public bool HardDeleteLoginAuth(LoginAuth loginAuth);
     }
 }

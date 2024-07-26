@@ -39,21 +39,25 @@ namespace VAVS_Client.Controllers.Auth
         }
         private Otp MakeOtp(HttpContext httpContext)
         {
-            string digit1 = httpContext.Request.Form["digit1"];
-            string digit2 = httpContext.Request.Form["digit2"];
-            string digit3 = httpContext.Request.Form["digit3"];
-            string digit4 = httpContext.Request.Form["digit4"];
-            string digit5 = httpContext.Request.Form["digit5"];
-            string digit6 = httpContext.Request.Form["digit6"];
-            return new Otp()
+            if (httpContext.Request.HasFormContentType)
             {
-                Digit1 = digit1,
-                Digit2 = digit2,
-                Digit3 = digit3,
-                Digit4 = digit4,
-                Digit5 = digit5,
-                Digit6 = digit6
-            };
+                string digit1 = httpContext.Request.Form["digit1"];
+                string digit2 = httpContext.Request.Form["digit2"];
+                string digit3 = httpContext.Request.Form["digit3"];
+                string digit4 = httpContext.Request.Form["digit4"];
+                string digit5 = httpContext.Request.Form["digit5"];
+                string digit6 = httpContext.Request.Form["digit6"];
+                return new Otp()
+                {
+                    Digit1 = digit1,
+                    Digit2 = digit2,
+                    Digit3 = digit3,
+                    Digit4 = digit4,
+                    Digit5 = digit5,
+                    Digit6 = digit6
+                };
+            }
+            return null;
         }
 
         
@@ -209,7 +213,6 @@ namespace VAVS_Client.Controllers.Auth
                     }
                     HttpContext.Session.SetString("ExpireTime", expireTime.ToString("yyyy-MM-ddTHH:mm:ss"));
                     ViewData["ExpireTime"] = HttpContext.Session.GetString("ExpireTime");
-                    Console.WriteLine("nrctonhipno:........................" + personalDetail.NRCTownshipNumber);
 
                     return View("RegistrationAuthCode", personalDetail);
                 }
@@ -218,6 +221,12 @@ namespace VAVS_Client.Controllers.Auth
                  */
                 if (currentTime < DateTime.Parse(storedExpireTime))
                 {
+                    if (MakeOtp(HttpContext) == null)
+                    {
+                        ViewData["ExpireTime"] = HttpContext.Session.GetString("ExpireTime");
+                        ViewData["phoneNumber"] = personalDetail.PhoneNumber;
+                        return View("LoginAuthCode");
+                    }
                     if (MakeOtp(HttpContext).IsValidOtp(existingDeviceInfo.OTP))
                     {
                         /*

@@ -24,7 +24,7 @@
         </form>
     </div>
     <div class="col make-model-desktop-view">
-        <button class="btn btn-outline-primary"  data-bs-toggle="modal" data-bs-target="#searchModelType">
+        <button class="btn btn-primary rounded-pill"  data-bs-toggle="modal" data-bs-target="#searchModelType">
             <label class="mb-1" style="font-size: clamp(11px, 2vw, 15px);">စံနှုန်းဖြင့်စည်းကြပ်မှုခံယူရန်</label>
         </button>
     </div>
@@ -65,7 +65,48 @@
         <div class="row mt-1 border border-dark rounded shadow-lg p-2 mb-2">
     @foreach (var item in Model)
     {
-        <div class="col-lg-6 col-md-6 col-sm-12 border border-dark">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row p-2">
+                        <label class="fw-bold col-lg-6 col-md-6 col-sm-4 control-label" data-translate="VehicleDetail_CarManufacturer">Manufacturer</label>
+                        <div class="col-lg-6 col-md-6 col-sm-8">
+                                <i class="fa-solid fa-car text-primary me-2"></i>
+                                <font style="font-size: 18px;">
+                                @Html.DisplayFor(modelItem => item.Manufacturer)
+                                </font>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row p-2">
+                        <label class="fw-bold col-lg-6 col-md-6 col-sm-4 control-label" data-translate="VehicleDetail_ModelYear">Model Year</label>
+                        <div class="col-lg-6 col-md-6 col-sm-8">
+                                <i class="fa-solid fa-check text-success me-2"></i>
+                            @Html.DisplayFor(modelItem => item.ModelYear)
+                        </div>
+                    </div>
+                    <div class="row p-2">
+                        <label class="fw-bold col-lg-6 col-md-6 col-sm-4 control-label" data-translate="VehicleDetail_VehicleBrand">Brand Name</label>
+                        <div class="col-lg-6 col-md-6 col-sm-8">
+                                <i class="fa-solid fa-check text-success me-2"></i>
+                            @Html.DisplayFor(modelItem => item.VehicleBrand)
+                        </div>
+                    </div>
+                    <div class="row p-2">
+                        <label class="fw-bold col-lg-6 col-md-6 col-sm-4 control-label" data-translate="VehicleDetail_EnginePower">Engine Power</label>
+                        <div class="col-lg-6 col-md-6 col-sm-8">
+                                <i class="fa-solid fa-check text-success me-2"></i>
+                            @Html.DisplayFor(modelItem => item.EnginePower)
+                        </div>
+                    </div>
+                    <div class="col-12 d-flex justify-content-end mt-2 mb-1">
+                            <a class="btn btn-primary rounded-pill btn-sm" asp-controller="VehicleStandardValue" asp-action="Details" asp-route-pkId="@item.VehicleStandardValuePkid" asp-route-madeModel="@item.Manufacturer" asp-route-modelYear="@item.ModelYear">More <i aria-hidden="true" class="fa fa-angle-double-right fa-sm"></i></a>
+                    </div>
+                </div>
+            </div>
+            </div>
+        @*<div class="col-lg-6 col-md-6 col-sm-12 border border-dark">
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="row p-2">
                     <label class="fw-bold col-lg-6 col-md-6 col-sm-4 control-label" data-translate="VehicleDetail_CarManufacturer">Manufacturer</label>
@@ -101,7 +142,7 @@
             <div class="col-12 d-flex justify-content-center mt-2 mb-1">
                 <a class="btn btn-primary rounded-pill" asp-controller="VehicleStandardValue" asp-action="Details" asp-route-pkId="@item.VehicleStandardValuePkid" asp-route-madeModel="@item.Manufacturer" asp-route-modelYear="@item.ModelYear">More >></a>
             </div>
-        </div>
+        </div>*@
     }
         </div>
     <br />
