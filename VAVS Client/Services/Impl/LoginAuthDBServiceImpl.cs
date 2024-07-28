@@ -71,6 +71,7 @@ namespace VAVS_Client.Services.Impl
                     loginAuth.ResendOTPCount++;
                 }
                 Update(loginAuth);
+                
             }
         }
 
