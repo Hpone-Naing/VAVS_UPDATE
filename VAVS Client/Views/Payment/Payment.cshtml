@@ -29,15 +29,15 @@
 <form action="@Url.Action("MakePayment", "Payment")" method="post">
     <div class="d-flex justify-content-center align-item-center">
         <div class="row col-md-8" style="background-color: #dedddda6;">
-            <label class="control-label fw-bold">Payment Detail</label>
-            <div class="row">
-                <div class="form-group">
+            <label class="control-label fw-bold mt-3">Payment Detail</label>
+            <div class="row mb-3">
+                <div class="form-group mt-2">
                     <label>VAVS Payment Ref No.</label>
                     <div>
                         <input class="control-label text-primary fw-bold" asp-for="@Model.TransactionNumber" value="@Model.TransactionNumber" readonly="" style="background-color: inherit;border: none;" />
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group mt-2">
                     <label>Tax Amount.</label>
                     <div>
                         <input class="control-label fw-bold text-danger" value="@string.Format("{0:N0}", Model.TaxValidation.TaxAmount)" readonly="" style="background-color: inherit;border: none; cursor:not-allowed" />
