@@ -16,5 +16,8 @@
         public Task<List<TaxValidation>> GetTaxValidationListByPendingPayment(HttpContext httpContext);
         public Task<List<TaxValidation>> GetTaxValidationEgerLoadListByPendingPayment(HttpContext httpContext);
         public Task<bool> HardDeletePendingStatusPayments(HttpContext httpContext);
+        public Task<int> GetPendingPaymentCount(HttpContext httpContext);
+        public Task<int> GetApprovePaymentCount(HttpContext httpContext);
+        public Task<int> GetTaxValidationCountByApprovePayment(HttpContext httpContext);
     }
 }

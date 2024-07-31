@@ -27,6 +27,7 @@ namespace VAVS_Client.Models
         public string? EnginePower { get; set; }
 
         [StringLength(10)]
+        [DisplayFormat(DataFormatString = "{0:N0}")]
         public string? StandardValue { get; set; }
 
         [StringLength(10)]

@@ -22,38 +22,28 @@
         </ul>
     </nav>
 </div>
-<div class="card" style="border-radius: 20px;">
-    <div class="card-body">
-        <p class="mb-3 fw-bold" style="font-size: clamp(12px, 2vw, 16px);">စည်းကြပ်ခံယူမည့်ရုံးမှာ‌အောက်ပါအတိုင်းဖြစ်ပါသည်</p>
 
-        <form class="mb-2" action="@Url.Action("PendingList", "TaxValidation")" method="post">
+<div class="d-flex justify-content-center align-item-center">
+<div class="card text-center col-md-6">
+    <div class="card-header">
+        <div><i style="background-color: #98df98;font-size: 40px;" class="fa-solid fa-check rounded-pill p-4 text-success"></i></div>
+        <div><label class="fw-bold">Awesome!</label></div>
+        <div><label class="">You're ready to proceed for request certificate.</label></div>
+    </div>
+    <div class="card-body" style="background-color: #3d9457b0;">
+            <h5 class="card-title text-white" style="font-size: clamp(13px, 2vw, 18px);">စည်းကြပ်ခံယူမည့်ရုံးမှာ‌အောက်ပါအတိုင်းဖြစ်ပါသည်</h5>
+        <form class="mb-2" action="/TaxValidation/PendingList" method="post">
             <div class="row mb-3">
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="form-group mt-2">
                         <div class="row">
-                            <div class="col-lg-4 col-md-4 col-sm-3 col-5">
-                                <label class="control-label fw-bold" data-translate="Reg_StateDivision">State/Division</label>
+                            <div class="d-flex justify-content-center align-item-center">
+                                <div class="col-lg-12 col-md-4 col-sm-3 col-5">
+                                    <label class="control-label fw-bold text-white" data-translate="Reg_StateDivision">State/Division</label>
+                                </div>
                             </div>
-                            <div class="col">
-                                @*<select class="form-control" id="lstStateDivisionId" asp-for="StateDivisionPkid" onchange="FilterStateDivision(this, 'lstTownship')" required="">
-                                        <option value="">ရွေးချယ်ရန်</option>
-                                        <option value="01">ကချင်</option>
-                                        <option value="02">ကယား</option>
-                                        <option value="03">ကရင်</option>
-                                        <option value="04">ချင်း</option>
-                                        <option value="05">စစ်ကိုင်း</option>
-                                        <option value="06">တနင်္သာရီ</option>
-                                        <option value="07">ပဲခူး</option>
-                                        <option value="08">မကွေး</option>
-                                        <option value="09">မန္တလေး</option>
-                                        <option value="10">မွန်</option>
-                                        <option value="11">ရခိုင်</option>
-                                        <option value="12">ရန်ကုန်</option>
-                                        <option value="13">ရှမ်း</option>
-                                        <option value="14">ဧရာဝတီ</option>
-                                        <option value="15">နေပြည်တော်</option>
-                                </select>*@
-                                <label class="control-label">@ViewBag.RegisteredStateDivisionName</label>
+                            <div class="col-12">
+                                <label class="control-label text-white">@ViewBag.RegisteredStateDivisionName</label>
                             </div>
                         </div>
                     </div>
@@ -61,20 +51,22 @@
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="form-group mt-2">
                         <div class="row">
-                            <div class="col-lg-4 col-md-4 col-sm-3 col-5">
-                                <label class="control-label fw-bold" data-translate="Reg_Township">Township</label>
+                            <div class="d-flex justify-content-center align-item-center">
+                                <div class="col-lg-12 col-md-12 col-sm-3 col-5">
+                                    <label class="control-label fw-bold text-white" data-translate="Reg_Township">Township</label>
+                                </div>
                             </div>
-                            <div class="col">
-                                @*<select class="form-control" id="lstTownship" asp-for="TownshipPkid" asp-items="ViewBag.Townships" required></select>*@
-                                <label class="control-label">@ViewBag.RegisteredTownshipName</label>
+                            <div class="col-12">
+                                <label class="control-label text-white">@ViewBag.RegisteredTownshipName</label>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="mb-2 mt-2 d-flex justify-content-center align-item-center">
-                <button class="btn btn-outline-primary d-grid" type="submit">Complete Process</button>
+                <button type="submit" class="btn btn-primary d-grid">Complete Process</button>
             </div>
         </form>
     </div>
+</div>
 </div>

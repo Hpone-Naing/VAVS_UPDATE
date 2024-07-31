@@ -112,7 +112,38 @@ namespace VAVS_Client.Services.Impl
             }
         }
 
-        public  PagingList<TaxValidation> GetTaxValidationApprevedListPagin(HttpContext httpContext, int? pageNo, int PageSize)
+        public async Task<int> GetTaxValidationApprevedCount(HttpContext httpContext)
+        {
+            try
+            {
+                TaxpayerInfo loginTaxPayerInfo = _sessionService.GetLoginUserInfo(httpContext);
+
+                if (loginTaxPayerInfo == null || string.IsNullOrEmpty(loginTaxPayerInfo.NRC))
+                {
+                    _logger.LogWarning("No valid taxpayer information found in the session.");
+                    return 0;
+                }
+
+                _logger.LogInformation("Fetching tax validation approved count for NRC: {NRC}", loginTaxPayerInfo.NRC);
+
+                int taxValidationApprovetCount = await _context.TaxValidations
+                    .AsNoTracking()
+                    .Where(taxValidation => taxValidation.PersonNRC == loginTaxPayerInfo.NRC
+                        && (taxValidation.QRCodeNumber != null || taxValidation.DemandNumber != null)
+                        && taxValidation.IsDeleted == false)
+                    .CountAsync();
+
+                return taxValidationApprovetCount;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("An error occurred while getting the tax validation approved count: {Error}", e);
+                throw;
+            }
+        }
+
+
+        public PagingList<TaxValidation> GetTaxValidationApprevedListPagin(HttpContext httpContext, int? pageNo, int PageSize)
         {
             try
             {

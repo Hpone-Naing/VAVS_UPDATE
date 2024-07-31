@@ -27,65 +27,151 @@
     </nav>
 </div>
 <form action="@Url.Action("MakePayment", "Payment")" method="post">
-    <div class="form-group">
-        <label class="control-label fw-bold mb-3">Payment Method</label>
-        <div class="row">
-            <div class="col-lg-3 col-md-3 col-sm-5 col-6">
-                <div class="card" style="background-color: #2457d2;">
-                    <div class="card-body">
-                        <div class="row">
-                            <img class="card-img-top" alt="KBZPay" style="width: 80px;height: 50px;" src="https://play-lh.googleusercontent.com/cnKJYzzHFAE5ZRepCsGVhv7ZnoDfK8Wu5z6lMefeT-45fTNfUblK_gF3JyW5VZsjFc4">
-                        </div>
-                        <div class="mt-2">
-                            <input type="radio" name="PaymentMethod" value="KBZPay" id="kbzpay" class="form-check-input">
-                            <label for="kbzpay" class="form-check-label text-black fw-bold" style="font-size: clamp(11px, 2vw, 16px);">Select KPay</label>
-                        </div>
+    <div class="d-flex justify-content-center align-item-center">
+        <div class="row col-md-8" style="background-color: #dedddda6;">
+            <label class="control-label fw-bold">Payment Detail</label>
+            <div class="row">
+                <div class="form-group">
+                    <label>VAVS Payment Ref No.</label>
+                    <div>
+                        <input class="control-label text-primary fw-bold" asp-for="@Model.TransactionNumber" value="@Model.TransactionNumber" readonly="" style="background-color: inherit;border: none;" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Tax Amount.</label>
+                    <div>
+                        <input class="control-label fw-bold text-danger" value="@string.Format("{0:N0}", Model.TaxValidation.TaxAmount)" readonly="" style="background-color: inherit;border: none; cursor:not-allowed" />
                     </div>
                 </div>
             </div>
+            @*<label class="control-label fw-bold mb-3">Payment Method</label>
+            <div class="row">
             <div class="col-lg-3 col-md-3 col-sm-5 col-6">
-                <div class="card" style="background-color: #c13d3d;">
-                    <div class="card-body">
-                        <div class="row">
-                            <img class="card-img-top" alt="KBZPay" style="width: 80px;height: 50px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0yz7j-fGrH6neCGBaGN4T4fxuDC0ylHnMsA&amp;s">
-                        </div>
-                        <div class="mt-2">
-                            <input type="radio" name="PaymentMethod" value="KBZPay" id="ayaPay" class="form-check-input">
-                            <label for="kbzpay" class="form-check-label text-black fw-bold" style="font-size: clamp(11px, 2vw, 16px);">Select AyaPay</label>
-                        </div>
-                    </div>
-                </div>
+            <div class="card" style="background-color: #2457d2;">
+            <div class="card-body">
+            <div class="row">
+            <img class="card-img-top" alt="KBZPay" style="width: 80px;height: 50px;" src="https://play-lh.googleusercontent.com/cnKJYzzHFAE5ZRepCsGVhv7ZnoDfK8Wu5z6lMefeT-45fTNfUblK_gF3JyW5VZsjFc4">
+            </div>
+            <div class="mt-2">
+            <input type="radio" name="PaymentMethod" value="KBZPay" id="kbzpay" class="form-check-input">
+            <label for="kbzpay" class="form-check-label text-black fw-bold" style="font-size: clamp(11px, 2vw, 16px);">Select KPay</label>
+            </div>
+            </div>
+            </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-5 col-6">
+            <div class="card" style="background-color: #c13d3d;">
+            <div class="card-body">
+            <div class="row">
+            <img class="card-img-top" alt="KBZPay" style="width: 80px;height: 50px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0yz7j-fGrH6neCGBaGN4T4fxuDC0ylHnMsA&amp;s">
+            </div>
+            <div class="mt-2">
+            <input type="radio" name="PaymentMethod" value="KBZPay" id="ayaPay" class="form-check-input">
+            <label for="kbzpay" class="form-check-label text-black fw-bold" style="font-size: clamp(11px, 2vw, 16px);">Select AyaPay</label>
+            </div>
+            </div>
+            </div>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-5 col-6 sw-576">
-                <div class="card" style="background-color: #289ade;">
-                    <div class="card-body">
-                        <div class="row">
-                            <img class="card-img-top" alt="CBPay" style="width: 80px;height: 50px;" src="https://play-lh.googleusercontent.com/z-wRjDo9L-3c1-39ZH-VyKwofSHsmI79VH3T_pSqlj_fRhZSpc7zbDlFKS4hle0bLOk">
-                        </div>
-                        <div class="mt-2">
-                            <input type="radio" name="PaymentMethod" value="CBPay" id="cbPay" class="form-check-input">
-                            <label for="kbzpay" class="form-check-label text-black fw-bold" style="font-size: clamp(11px, 2vw, 16px);">Select CBPay</label>
-                        </div>
+            <div class="card" style="background-color: #289ade;">
+            <div class="card-body">
+            <div class="row">
+            <img class="card-img-top" alt="CBPay" style="width: 80px;height: 50px;" src="https://play-lh.googleusercontent.com/z-wRjDo9L-3c1-39ZH-VyKwofSHsmI79VH3T_pSqlj_fRhZSpc7zbDlFKS4hle0bLOk">
+            </div>
+            <div class="mt-2">
+            <input type="radio" name="PaymentMethod" value="CBPay" id="cbPay" class="form-check-input">
+            <label for="kbzpay" class="form-check-label text-black fw-bold" style="font-size: clamp(11px, 2vw, 16px);">Select CBPay</label>
+            </div>
+            </div>
+            </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-5 col-6 sw-576">
+            <div class="card" style="background-color: #e1e15a;">
+            <div class="card-body">
+            <div class="row">
+            <img class="card-img-top" alt="KBZPay" style="width: 80px;height: 50px;" src="https://play-lh.googleusercontent.com/rPq4GMCZy12WhwTlanEu7RzxihYCgYevQHVHLNha1VcY5SU1uLKHMd060b4VEV1r-OQ">
+            </div>
+            <div class="mt-2">
+            <input type="radio" name="PaymentMethod" value="WavePay" id="wavePay" class="form-check-input">
+            <label for="kbzpay" class="form-check-label text-black fw-bold" style="font-size: clamp(11px, 2vw, 16px);">Select WavePay</label>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>*@
+        </div>
+    </div>
+    <div class="d-flex justify-content-center align-item-center">
+        <div class="row border border-dark col-md-8 mt-3">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="form-group">
+                    <label class="control-label">NRC</label>
+                    <div class="border border-primary p-2">
+                        <input class="control-label" value="@Model.TaxValidation.PersonNRC" readonly="" style="background-color: inherit;border: none; cursor:not-allowed" />
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-3 col-sm-5 col-6 sw-576">
-                <div class="card" style="background-color: #e1e15a;">
-                    <div class="card-body">
-                        <div class="row">
-                            <img class="card-img-top" alt="KBZPay" style="width: 80px;height: 50px;" src="https://play-lh.googleusercontent.com/rPq4GMCZy12WhwTlanEu7RzxihYCgYevQHVHLNha1VcY5SU1uLKHMd060b4VEV1r-OQ">
-                        </div>
-                        <div class="mt-2">
-                            <input type="radio" name="PaymentMethod" value="WavePay" id="wavePay" class="form-check-input">
-                            <label for="kbzpay" class="form-check-label text-black fw-bold" style="font-size: clamp(11px, 2vw, 16px);">Select WavePay</label>
-                        </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="form-group">
+                    <label class="control-label">Name</label>
+                    <div class="border border-primary p-2">
+                        <input class="control-label" value="@Model.PersonalDetail.Name" readonly="" style="background-color: inherit;border: none; cursor:not-allowed" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 mb-2">
+                <div class="form-group">
+                    <label class="control-label">Address</label>
+                    @{
+                        var address = string.Concat("အမှတ်(" + Model.PersonalDetail.HousingNumber + ")၊", Model.PersonalDetail.Street, "၊", Model.PersonalDetail.Quarter, "၊", Model.PersonalDetail.Township.TownshipName, "၊", Model.PersonalDetail.Township.StateDivision.StateDivisionName);
+                    }
+                    <div class="border border-primary p-2">
+                        <input class="control-label" value="@address" readonly="" style="background-color: inherit;border: none; cursor:not-allowed" />
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="form-group mt-3">
+    <div class="d-flex justify-content-center align-item-center">
+        <div class="row border border-dark col-md-8 mt-3">
+            <div class="col-lg-6 col-md-6 col-sm-12 mb-2">
+                <div class="form-group">
+                    <label class="control-label">Tax Type</label>
+                    <div class="border border-primary p-2">
+                        <input class="control-label" value="@Model.TaxType" readonly="" style="background-color: inherit;border: none; cursor:not-allowed" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Amount Title</label>
+                    <div class="border border-primary p-2">
+                        <input class="control-label" value="@Model.AccountTitle" readonly="" style="background-color: inherit;border: none; cursor:not-allowed" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Income Year</label>
+                    <div class="border border-primary p-2">
+                        <input class="control-label" value="@Model.IncomeYear" readonly="" style="background-color: inherit;border: none; cursor:not-allowed" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 mb-2">
+                <div class="form-group">
+                    <label class="control-label">Tax Office</label>
+                    <div class="border border-primary p-2">
+                        <input class="control-label" value="@Model.PersonalDetail.StateDivision.StateDivisionName" readonly="" style="background-color: inherit;border: none; cursor:not-allowed" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Payment Type</label>
+                    <div class="border border-primary p-2">
+                        <input class="control-label" value="@Model.PaymentType" readonly="" style="background-color: inherit;border: none; cursor:not-allowed" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    @*<div class="form-group mt-3">
         <label class="control-label fw-bold mb-1">Payment Summary</label>
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-12 col-12">
@@ -192,10 +278,14 @@
         <div class="col">
             <input name="Amount" class="form-control"  />
         </div>
-    </div>
-    <div class="form-group mt-2">
-        <div class="d-flex align-item-center justify-content-center">
-            <button type="submit" class="btn btn-outline-success btn-md">Pay Now</button>
+    </div>*@
+    <div class="d-flex justify-content-center align-item-center">
+        <div class="row col-md-8 mt-2">
+            <div class="form-group">
+                <div class="d-flex align-item-end justify-content-end">
+                    <button type="submit" class="btn btn-primary btn-md">Pay Now</button>
+                </div>
+            </div>
         </div>
     </div>
 </form>

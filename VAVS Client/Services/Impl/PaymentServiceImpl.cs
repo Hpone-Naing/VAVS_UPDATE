@@ -147,6 +147,49 @@ namespace VAVS_Client.Services.Impl
             }
         }
 
+        public async Task<int> GetPaymentCount(HttpContext httpContext, string paymentStatus)
+        {
+            try
+            {
+                SessionService _sessionService = new SessionServiceImpl();
+                TaxpayerInfo loginUserInfo = _sessionService.GetLoginUserInfo(httpContext);
+                if (loginUserInfo == null)
+                {
+                    _logger.LogWarning("Login user info is null.");
+                    return 0;
+                }
+
+                PersonalDetail personalDetail = await _personalDetailService.GetPersonalInformationByNRCInDBAndAPI(loginUserInfo.NRC);
+                if (personalDetail == null)
+                {
+                    _logger.LogWarning("Personal detail is null for NRC: {NRC}", loginUserInfo.NRC);
+                    return 0;
+                }
+
+                int count = await _context.Payments
+                    .Where(payment => payment.IsDeleted == false && payment.PersonalPkid == personalDetail.PersonalPkid && payment.PaymentStatus == paymentStatus)
+                    .CountAsync();
+
+                _logger.LogInformation("Retrieved payment count successfully for status: {PaymentStatus}", paymentStatus);
+                return count;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error occurred when retrieving payment count for status {PaymentStatus}: {Error}", paymentStatus, ex);
+                throw;
+            }
+        }
+
+        public async Task<int> GetPendingPaymentCount(HttpContext httpContext)
+        {
+            return await GetPaymentCount(httpContext, "Pending");
+        }
+
+        public async Task<int> GetApprovePaymentCount(HttpContext httpContext)
+        {
+            return await GetPaymentCount(httpContext, "Approve");
+        }
+
         public async Task<List<Payment>> GetRemainPaymentList(HttpContext httpContext)
         {
             try
@@ -288,6 +331,41 @@ namespace VAVS_Client.Services.Impl
             }
         }
 
+        public async Task<List<Payment>> GetApprovePaymentWithTaxValidationEgerLoad1(HttpContext httpContext)
+        {
+            try
+            {
+                SessionService _sessionService = new SessionServiceImpl();
+                TaxpayerInfo loginUserInfo = _sessionService.GetLoginUserInfo(httpContext);
+                if (loginUserInfo == null)
+                {
+                    _logger.LogWarning("Login user info is null.");
+                    return null;
+                }
+
+                PersonalDetail personalDetail = await _personalDetailService.GetPersonalInformationByNRCInDBAndAPI(loginUserInfo.NRC);
+                if (personalDetail == null)
+                {
+                    _logger.LogWarning("Personal detail is null for NRC: {NRC}", loginUserInfo.NRC);
+                    return null;
+                }
+
+                List<Payment> approvePaymentList = await _context.Payments
+                    .Where(payment => payment.IsDeleted == false && payment.PersonalPkid == personalDetail.PersonalPkid && payment.PaymentStatus == "Approve")
+                    .Include(payment => payment.TaxValidation)
+                    .ToListAsync();
+
+                _logger.LogInformation("Retrieved all approved payment list successfully.");
+                return approvePaymentList;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error occurred in GetApprovePaymentWithTaxValidationEgerLoad1: {Error}", ex);
+                throw;
+            }
+        }
+
+
         public async Task<Payment> FindPaymentByNrcWithApproveStatus(HttpContext httpContext)
         {
             try
@@ -405,6 +483,56 @@ namespace VAVS_Client.Services.Impl
                 throw;
             }
         }
+
+        public async Task<int> GetTaxValidationCountByPendingPayment(HttpContext httpContext)
+        {
+            try
+            {
+                List<Payment> payments = await GetApprovePaymentWithTaxValidationEgerLoad1(httpContext);
+                int pendingTaxValidationCount = payments
+                .Select(payment => payment.TaxValidation).Where(taxValidation => taxValidation.IsDeleted == false && taxValidation.QRCodeNumber == null &&
+                taxValidation.DemandNumber == null)
+                .Count();
+                _logger.LogInformation("Retrieved taxValidation list successfully.");
+                return pendingTaxValidationCount;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Error occur UpdatePaymentStatus: " + e);
+                throw;
+            }
+        }
+
+        public async Task<int> GetTaxValidationCountByApprovePayment(HttpContext httpContext)
+        {
+            try
+            {
+                var payments = await GetApprovePaymentWithTaxValidationEgerLoad1(httpContext);
+
+                if (payments == null)
+                {
+                    _logger.LogWarning("No approved payments found.");
+                    return 0;
+                }
+
+                // Filter and count the pending TaxValidations directly
+                int pendingTaxValidationCount = payments
+                    .Select(payment => payment.TaxValidation)
+                    .Count(taxValidation => taxValidation.IsDeleted == false
+                        && taxValidation.QRCodeNumber == null
+                        && taxValidation.DemandNumber == null);
+
+                _logger.LogInformation("Retrieved taxValidation list successfully. Pending count: {Count}", pendingTaxValidationCount);
+
+                return pendingTaxValidationCount;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Error occurred in GetTaxValidationCountByApprovePayment: {Error}", e);
+                throw;
+            }
+        }
+
 
         public async Task<List<TaxValidation>> GetTaxValidationListByPendingPayment(HttpContext httpContext)
         {

@@ -14,5 +14,6 @@ namespace VAVS_Client.Services
         PagingList<TaxValidation> GetTaxValidationApprevedListForExcelPagin(HttpContext httpContext, int? pageNo, int PageSize);
 
         DataTable MakeVehicleDataExcelData(PagingList<TaxValidation> taxValidations, HttpContext httpContext);
+        public Task<int> GetTaxValidationApprevedCount(HttpContext httpContext);
     }
 }

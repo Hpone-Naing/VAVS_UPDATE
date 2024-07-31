@@ -18,110 +18,118 @@
 }
 
 <form method="post" action="@Url.Action("ShowCalculateTaxForm", "TaxCalculation")">
-    <div class="card">
-        <div class="card-header">
+    <div class="d-flex justify-content-center align-item-center">
+        <div class="card col-md-6">
+            <div class="card-header">
                 <div class="row">
                     <div class="d-flex justify-content-center align-item-center">
-                        <label class="control-label" data-translate="VehicleDetail_ModelYear"></label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="d-flex justify-content-center align-item-center">
-                    <input class="fw-bold text-center" type="text" asp-for="ModelYear" value="@Model.ModelYear" readonly="" style="background-color: inherit;border: none; font-size:18px; cursor:not-allowed;">
+                        <label class="control-label opacity-50" data-translate="VehicleDetail_ModelYear"></label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="d-flex justify-content-center align-item-center">
-                    <label class="control-label" data-translate="VehicleDetail_CarManufacturer">Car Manufacturer</label>
+                        <input class="fw-bold text-center" type="text" asp-for="ModelYear" value="@Model.ModelYear" readonly="" style="background-color: inherit;border: none; font-size:24px; cursor:not-allowed;">
                     </div>
                 </div>
                 <div class="row">
                     <div class="d-flex justify-content-center align-item-center">
-                    <input class="fw-bold text-center" type="text" asp-for="Manufacturer" value="@Model.Manufacturer" readonly="" style="background-color: inherit;border: none; font-size:18px; cursor:not-allowed;">
-                    </div>
-                </div>
-                <div class ="row">
-                    <div class="d-flex justify-content-center align-item-center">
-                        <label class="control-label" data-translate="VehicleDetail_StandardValue"></label>
+                        <label class="control-label opacity-50" data-translate="VehicleDetail_CarManufacturer">Car Manufacturer</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="d-flex justify-content-center align-item-center">
-                    <input class="fw-bold text-center" type="text " asp-for="StandardValue" value="@(Model.StandardValue == "NULL" || Model.StandardValue == "0" ? "0" : string.Concat(Model.StandardValue, "00000"))" readonly="" style="background-color: inherit;border: none; font-size:18px; cursor:not-allowed;">
+                        <input class="fw-bold text-center" type="text" asp-for="Manufacturer" value="@Model.Manufacturer" readonly="" style="background-color: inherit;border: none; font-size:24px; cursor:not-allowed;">
                     </div>
                 </div>
-        </div>
-        <div class="card-body">
-            <ul class="list-group list-group-flush">
-                @if (Model.VehicleNumber != null)
-                {
-                    <li class="list-group-item">
-                        <div class="row p-2">
+                <div class="row">
+                    <div class="d-flex justify-content-center align-item-center">
+                        <label class="control-label opacity-50" data-translate="VehicleDetail_StandardValue"></label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="d-flex justify-content-center align-item-center">
+                        <input class="fw-bold text-center text-danger" type="text" asp-for="StandardValue" value="@(Model.StandardValue == "NULL" || Model.StandardValue == "0" ? "0" : string.Concat(Model.StandardValue, "00000"))" readonly="" style="background-color: inherit;border: none; font-size:24px; cursor:not-allowed;">
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    @if (Model.VehicleNumber != null)
+                    {
+                        <li class="list-group-item">
                             <div class="row">
-                                <div class="col-lg-4 col-md-3 col-sm-3 col-5">
-                                    <label class="fw-bold control-label" data-translate="VehicleDetail_VehicleNumber"></label>
-                                </div>
-                                <div class="col-7">
-                                    <input type="text" asp-for="VehicleNumber" value="@Model.VehicleNumber" readonly="" style="background-color: inherit;border: none; cursor:not-allowed;">
+                                    <div class="col-lg-5 col-md-5 col-sm-6 col-6">
+                                        <label class="fw-bold control-label" data-translate="VehicleDetail_VehicleNumber"></label>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="d-flex justify-content-end align-item-end">
+                                            <input type="text" asp-for="VehicleNumber" value="@Model.VehicleNumber" readonly="" style="background-color: inherit;border: none; cursor:not-allowed;">
+                                        </div>
+                                    </div>
+                            </div>
+                        </li>
+                    }
+                    @if (Model.ChessisNumber != null)
+                    {
+                        <li class="list-group-item">
+                            <div class="row">
+                                    <div class="col-lg-5 col-md-5 col-sm-6 col-6">
+                                        <label class="fw-bold control-label">Chessis Number</label>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="d-flex justify-content-end align-item-end">
+                                            <input type="text" asp-for="ChessisNumber" value="@Model.ChessisNumber" readonly="" style="background-color: inherit;border: none; cursor:not-allowed;">
+                                        </div>
+                                    </div>
+                            </div>
+                        </li>
+                    }
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-lg-5 col-md-5 col-sm-6 col-6">
+                                <label class="fw-bold control-label" data-translate="VehicleDetail_VehicleBrand">Car Brand</label>
+                            </div>
+                            <div class="col-6">
+                                <div class="d-flex justify-content-end align-item-end">
+                                    <input type="text" asp-for="VehicleBrand" value="@Model.VehicleBrand" readonly="" style="background-color: inherit;border: none; cursor:not-allowed;">
                                 </div>
                             </div>
                         </div>
                     </li>
-                }
-                @if (Model.ChessisNumber != null)
-                {
                     <li class="list-group-item">
-                        <div class="row p-2">
-                            <div class="row">
-                                <div class="col-lg-4 col-md-3 col-sm-3 col-5">
-                                    <label class="fw-bold control-label">Chessis Number</label>
-                                </div>
-                                <div class="col-7">
-                                    <input type="text" asp-for="ChessisNumber" value="@Model.ChessisNumber" readonly="" style="background-color: inherit;border: none; cursor:not-allowed;">
+                        <div class="row">
+                            <div class="col-lg-5 col-md-5 col-sm-6 col-6">
+
+                                <label class="fw-bold control-label" data-translate="VehicleDetail_BuildType"></label>
+                            </div>
+                            <div class="col-6">
+                                <div class="d-flex justify-content-end align-item-end">
+                                    <input type="text" asp-for="BuildType" value="@Model.BuildType" readonly="" style="background-color: inherit;border: none; cursor:not-allowed;">
                                 </div>
                             </div>
                         </div>
                     </li>
-                }
-                <li class="list-group-item">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-3 col-sm-3 col-5">
-                            <label class="fw-bold control-label" data-translate="VehicleDetail_VehicleBrand">Car Brand</label>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-lg-5 col-md-5 col-sm-6 col-6">
+                                <label class="fw-bold control-label" data-translate="VehicleDetail_EnginePower"></label>
+                            </div>
+                            <div class="col-6">
+                                <div class="d-flex justify-content-end align-item-end">
+                                    <input type="text" asp-for="EnginePower" value="@Model.EnginePower" readonly="" style="background-color: inherit;border: none; cursor:not-allowed;">
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-7">
-                            <input type="text" asp-for="VehicleBrand" value="@Model.VehicleBrand" readonly="" style="background-color: inherit;border: none; cursor:not-allowed;">
-                        </div>
-                    </div>
-                </li>
-                <li class="list-group-item">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-3 col-sm-3 col-5">
-                            <label class="fw-bold control-label" data-translate="VehicleDetail_BuildType"></label>
-                        </div>
-                        <div class="col-7">
-                            <input type="text" asp-for="BuildType" value="@Model.BuildType" readonly="" style="background-color: inherit;border: none; cursor:not-allowed;">
-                        </div>
-                    </div>
-                </li>
-                <li class="list-group-item">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-3 col-sm-3 col-5">
-                            <label class="fw-bold control-label" data-translate="VehicleDetail_EnginePower"></label>
-                        </div>
-                        <div class="col-7">
-                            <input type="text" asp-for="EnginePower" value="@Model.EnginePower" readonly="" style="background-color: inherit;border: none; cursor:not-allowed;">
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div class="card-footer text-muted">
-            <div class="d-flex justify-content-center align-item-center mt-2">
-                <button class="btn btn-primary" type="submit" style="border-radius: 50px;">Calculate Tax</button>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-footer text-muted">
+                <div class="d-flex justify-content-center align-item-center mt-2">
+                    <button class="btn btn-primary" type="submit" style="border-radius: 50px;">Calculate Tax</button>
+                </div>
             </div>
         </div>
-    </div>    
-    
+    </div>
 </form>
 @section Scripts {
     @{

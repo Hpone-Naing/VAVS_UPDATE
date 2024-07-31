@@ -1,5 +1,6 @@
 ﻿@using VAVS_Client.Classes;
 @using VAVS_Client.Util;
+@inject VAVS_Client.Factories.ServiceFactory _serviceFactory
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @using Newtonsoft.Json
 
@@ -73,6 +74,7 @@
                     <div><span class="text-primary" style="font-size: 25px;">VAVS</span></div>
                     <!-- Example split danger button -->
                     <div class="btn-group">
+                        <button class="fa-solid fa-message btn btn-outline-primary btn-sm"></button>
                         <button class="btn">
                             @{
                                 var name = "";
@@ -263,12 +265,18 @@
                             </a>
                             <ul class="treeview-menu bg-white">
                                 <li>
-                                    <a class="link active" href="@Url.Action("PendingList", "TaxValidation")" style="font-size: 14px; text-decoration:none;"><i class=""></i><span class="fa-solid fa-book text-primary"></span><label class="ms-2" data-translate="SubmMenu_Pending">Pending List</label></a>
+                                @{
+                                    var pendingTaxValidationCount = await _serviceFactory.CreatePaymentService().GetTaxValidationCountByApprovePayment(HttpContextAccessor.HttpContext);
+                                }
+                                    <a class="link active" href="@Url.Action("PendingList", "TaxValidation")" style="font-size: 14px; text-decoration:none;"><i class=""></i><span class="fa-solid fa-book text-primary"></span><label class="ms-1" data-translate="SubmMenu_Pending">Pending List</label><label style="background-color: blue;border-radius: 50px;width: 20px;height: 20px;" class="ms-1"><span class="ms-1 text-white" style="font-size: 15px;">@pendingTaxValidationCount</span></label></a>
                                 </li>
                             </ul>
                             <ul class="treeview-menu bg-white">
                                 <li>
-                                    <a class="link active" href="@Url.Action("ApproveList", "TaxValidation")" style="font-size: 14px; text-decoration:none;"><i class=""></i><span class="fa-solid fa-book text-primary"></span><label class="ms-2" data-translate="SubMenu_Approve">Approve List</label></a>
+                                @{
+                            var approvedTaxValidationCount = await _serviceFactory.CreateTaxValidationService().GetTaxValidationApprevedCount(HttpContextAccessor.HttpContext);
+                                }
+                                    <a class="link active" href="@Url.Action("ApproveList", "TaxValidation")" style="font-size: 14px; text-decoration:none;"><i class=""></i><span class="fa-solid fa-book text-primary"></span><label class="ms-1" data-translate="SubMenu_Approve">Approve List</label><label style="background-color: blue;border-radius: 50px;width: 20px;height: 20px;" class="ms-1"><span class="ms-1 text-white" style="font-size: 15px;">@approvedTaxValidationCount</span></label></a>
                                 </li>
                             </ul>
                         </li>
@@ -279,12 +287,18 @@
                             </a>
                             <ul class="treeview-menu bg-white">
                                 <li>
-                                    <a class="link active" href="@Url.Action("ApprovePayments", "Payment")" style="font-size: 14px; text-decoration:none;"><i class=""></i><span class="fa-solid fa-book text-primary"></span><label class="ms-2" data-translate="SubMenu_PaymentApprove">Complete Payment</label></a>
+                                @{
+                                    var approvePaymentCount = await _serviceFactory.CreatePaymentService().GetApprovePaymentCount(HttpContextAccessor.HttpContext);
+                                }
+                                    <a class="link active" href="@Url.Action("ApprovePayments", "Payment")" style="font-size: 14px; text-decoration:none;"><i class=""></i><span class="fa-solid fa-book text-primary"></span><label class="ms-1" data-translate="SubMenu_PaymentApprove">Complete Payment</label><label style="background-color: blue;border-radius: 50px;width: 20px;height: 20px;" class="ms-1"><span class="ms-1 text-white" style="font-size: 15px;">@approvePaymentCount</span></label></a>
                                 </li>
                             </ul>
                             <ul class="treeview-menu bg-white">
                                 <li>
-                                    <a class="link active" href="@Url.Action("RemainPayments", "Payment")" style="font-size: 14px; text-decoration:none;"><i class=""></i><span class="fa-solid fa-book text-primary"></span><label class="ms-2" data-translate="SubMenu_PaymentPending">Incomplete Payment</label></a>
+                                @{
+                                    var pendingPaymentCount = await _serviceFactory.CreatePaymentService().GetPendingPaymentCount(HttpContextAccessor.HttpContext);
+                                }
+                                    <a class="link active" href="@Url.Action("RemainPayments", "Payment")" style="font-size: 14px; text-decoration:none;"><i class=""></i><span class="fa-solid fa-book text-primary"></span><label class="ms-1" data-translate="SubMenu_PaymentPending">Incomplete Payment</label><label style="background-color: blue;border-radius: 50px;width: 20px;height: 20px;" class="ms-1"><span class="ms-1 text-white" style="font-size: 15px;">@pendingPaymentCount</span></label></a>
                                 </li>
                             </ul>
 
