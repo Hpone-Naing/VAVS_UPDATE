@@ -27,7 +27,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="d-flex justify-content-center align-item-center">
+                    <div class="text-end">
                         <input class="fw-bold text-center" type="text" asp-for="ModelYear" value="@Model.ModelYear" readonly="" style="background-color: inherit;border: none; font-size:24px; cursor:not-allowed;">
                     </div>
                 </div>
@@ -37,7 +37,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="d-flex justify-content-center align-item-center">
+                    <div class="text-end">
                         <input class="fw-bold text-center" type="text" asp-for="Manufacturer" value="@Model.Manufacturer" readonly="" style="background-color: inherit;border: none; font-size:24px; cursor:not-allowed;">
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="d-flex justify-content-center align-item-center">
+                    <div class="text-end">
                         <input class="fw-bold text-center text-danger" type="text" asp-for="StandardValue" value="@(Model.StandardValue == "NULL" || Model.StandardValue == "0" ? "0" : string.Concat(Model.StandardValue, "00000"))" readonly="" style="background-color: inherit;border: none; font-size:24px; cursor:not-allowed;">
                     </div>
                 </div>
@@ -62,7 +62,7 @@
                                         <label class="fw-bold control-label" data-translate="VehicleDetail_VehicleNumber"></label>
                                     </div>
                                     <div class="col-6">
-                                        <div class="d-flex justify-content-end align-item-end">
+                                        <div class="text-end">
                                             <input type="text" asp-for="VehicleNumber" value="@Model.VehicleNumber" readonly="" style="background-color: inherit;border: none; cursor:not-allowed;">
                                         </div>
                                     </div>
@@ -77,7 +77,7 @@
                                         <label class="fw-bold control-label">Chessis Number</label>
                                     </div>
                                     <div class="col-6">
-                                        <div class="d-flex justify-content-end align-item-end">
+                                        <div class="text-end">
                                             <input type="text" asp-for="ChessisNumber" value="@Model.ChessisNumber" readonly="" style="background-color: inherit;border: none; cursor:not-allowed;">
                                         </div>
                                     </div>
@@ -90,7 +90,7 @@
                                 <label class="fw-bold control-label" data-translate="VehicleDetail_VehicleBrand">Car Brand</label>
                             </div>
                             <div class="col-6">
-                                <div class="d-flex justify-content-end align-item-end">
+                                <div class="text-end">
                                     <input type="text" asp-for="VehicleBrand" value="@Model.VehicleBrand" readonly="" style="background-color: inherit;border: none; cursor:not-allowed;">
                                 </div>
                             </div>
@@ -103,7 +103,7 @@
                                 <label class="fw-bold control-label" data-translate="VehicleDetail_BuildType"></label>
                             </div>
                             <div class="col-6">
-                                <div class="d-flex justify-content-end align-item-end">
+                                <div class="text-end">
                                     <input type="text" asp-for="BuildType" value="@Model.BuildType" readonly="" style="background-color: inherit;border: none; cursor:not-allowed;">
                                 </div>
                             </div>
@@ -115,7 +115,7 @@
                                 <label class="fw-bold control-label" data-translate="VehicleDetail_EnginePower"></label>
                             </div>
                             <div class="col-6">
-                                <div class="d-flex justify-content-end align-item-end">
+                                <div class="text-end">
                                     <input type="text" asp-for="EnginePower" value="@Model.EnginePower" readonly="" style="background-color: inherit;border: none; cursor:not-allowed;">
                                 </div>
                             </div>
