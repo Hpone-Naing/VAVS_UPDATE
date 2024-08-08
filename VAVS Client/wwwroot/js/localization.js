@@ -98,6 +98,7 @@
         ChooseUser_TitleForOwner: "ပိုင်ရှင်ကိုယ်တိုင်",
         ChooseUser_TitleForRepresentive: "ကိုယ်စားလှယ်",
 
+        ChooseUser_ChooseUser: "ရွေးချယ်ပါ",
         Login_Label: "ကျေးဇူးပြု၍ Login ဝင်ပါ",
         Login_NewAccount: "အကောင့်ဖွင့်ရန်",
         Login_ChangePhone: "ဖုန်းနံပါတ်ပြောင်းရန်",

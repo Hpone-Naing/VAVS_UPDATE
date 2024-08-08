@@ -473,6 +473,7 @@ namespace VAVS_Client.Services.Impl
                 if(payment != null)
                 {
                     payment.PaymentStatus = "Approve";
+                    payment.PaidAmount = payment.TaxAmount;
                     Update(payment);
                 }
                 return false;

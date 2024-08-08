@@ -96,9 +96,22 @@
                             @item.TransactionDate
                         </td>
                         <td>
-                            @item.TaxAmount
+                                @{
+                                    string taxAmount = item.TaxAmount.ToString();
+                                    string formatTaxAmount = string.IsNullOrEmpty(taxAmount)
+                                    ? taxAmount
+                                    : taxAmount.Split('.')[0] + "<br />";
+                                }
+                            <label class="d-flex align-item-end justify-content-end"> @Html.Raw(formatTaxAmount)</label>
                         </td>
                         <td>
+                                @{
+                                    string paidAmount = item.PaidAmount.ToString();
+                                    string formatPaidAmount = string.IsNullOrEmpty(paidAmount)
+                                    ? paidAmount
+                                    : paidAmount.Split('.')[0] + "<br />";
+                                }
+                            <label class="d-flex align-item-end justify-content-end"> @Html.Raw(formatPaidAmount)</label>
                             @item.PaidAmount
                         </td>
                         <td>
