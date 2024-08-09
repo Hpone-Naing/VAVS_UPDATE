@@ -44,22 +44,7 @@ namespace VAVS_Client.Controllers.TaxCalculation
                     return RedirectToAction("RemainPayments", "Payment");
                 }
             }
-
-            Console.WriteLine("Chessis no....................." + vehicleStandardValue.ChessisNumber);
-            LoginUserInfo loginUserInfo = new LoginUserInfo()
-            {
-                StandardValue = vehicleStandardValue?.StandardValue,
-                VehicleNumber = vehicleStandardValue?.VehicleNumber,
-                Manufacturer = vehicleStandardValue?.Manufacturer,
-                BuildType = vehicleStandardValue?.BuildType,
-                FuelType = vehicleStandardValue?.Fuel?.FuelType,
-                ModelYear = vehicleStandardValue?.ModelYear,
-                CountryOfMade = vehicleStandardValue?.CountryOfMade,
-                EnginePower = vehicleStandardValue?.EnginePower,
-                VehicleBrand = vehicleStandardValue?.VehicleBrand,
-                Grade = vehicleStandardValue?.Grade,
-                ChessisNumber = vehicleStandardValue?.ChessisNumber
-            };
+            
             LoginUserInfo existingLoginUserInfo = _serviceFactory.CreateLoginUserInfoDBService().GetLoginUserByHashedToken(SessionUtil.GetToken(HttpContext));
             if (existingLoginUserInfo != null)
             {
@@ -79,6 +64,20 @@ namespace VAVS_Client.Controllers.TaxCalculation
             }
             else
             {
+                LoginUserInfo loginUserInfo = new LoginUserInfo()
+                {
+                    StandardValue = vehicleStandardValue?.StandardValue,
+                    VehicleNumber = vehicleStandardValue?.VehicleNumber,
+                    Manufacturer = vehicleStandardValue?.Manufacturer,
+                    BuildType = vehicleStandardValue?.BuildType,
+                    FuelType = vehicleStandardValue?.Fuel?.FuelType,
+                    ModelYear = vehicleStandardValue?.ModelYear,
+                    CountryOfMade = vehicleStandardValue?.CountryOfMade,
+                    EnginePower = vehicleStandardValue?.EnginePower,
+                    VehicleBrand = vehicleStandardValue?.VehicleBrand,
+                    Grade = vehicleStandardValue?.Grade,
+                    ChessisNumber = vehicleStandardValue?.ChessisNumber
+                };
                 _serviceFactory.CreateLoginUserInfoDBService().CreateLoginUserInfo(SessionUtil.GetToken(HttpContext), loginUserInfo);
             }
             return View("TaxCalculation", vehicleStandardValue);
@@ -99,22 +98,23 @@ namespace VAVS_Client.Controllers.TaxCalculation
         {
             SessionService sessionService = _serviceFactory.CreateSessionServiceService();
             TaxpayerInfo loginTaxPayerInfo = sessionService.GetLoginUserInfo(HttpContext);
-            
             if (!sessionService.IsActiveSession(HttpContext))
             {
                 Utility.AlertMessage(this, "You haven't login yet.", "alert-danger");
                 return RedirectToAction("Index", "Login");
             }
-            
+            string nrc = loginTaxPayerInfo.NRC;
+            PersonalDetail personalInformation = await _serviceFactory.CreatePersonalDetailService().GetPersonalInformationByNRCInDBAndAPI(nrc);//await _serviceFactory.CreatePersonalDetailService().GetPersonalInformationByNRC(nrc);
+
             if (vehicleStandardValue.VehicleNumber != null)
             {
-                bool IsTaxed = await _serviceFactory.CreatePaymentService().IsALreadyPayment(HttpContext, vehicleStandardValue.VehicleNumber);
+                bool IsTaxed = await _serviceFactory.CreatePaymentService().IsALreadyPayment(personalInformation.PersonalPkid, vehicleStandardValue.VehicleNumber);
                 if (IsTaxed)
                 {
                     Utility.AlertMessage(this, "This vehicle has already taxed.", "alert-info");
                     return RedirectToAction("SearchVehicleStandardValue", "VehicleStandardValue");
                 }
-                bool IsAlreadyPayment = await _serviceFactory.CreatePaymentService().IsALreadyPendingPayment(HttpContext, vehicleStandardValue.VehicleNumber);
+                bool IsAlreadyPayment = await _serviceFactory.CreatePaymentService().IsALreadyPendingPayment(personalInformation.PersonalPkid, vehicleStandardValue.VehicleNumber);
                 if (IsAlreadyPayment)
                 {
                     Utility.AlertMessage(this, "အခွန်ဆောင်ရန်ကျန်ရှိနေသောစာရင်းတွင် ထိုမော်တော်ယာဥ်ပါရှိပါသည်။ ထိုမော်တော်ယာဥ်ကိုရှာဖွေ၍အခွန်ဆက်လက်လုပ်ဆောင်နိုင်ပါသည်။", "alert-info");
@@ -122,8 +122,6 @@ namespace VAVS_Client.Controllers.TaxCalculation
                 }
             }
 
-            string nrc = loginTaxPayerInfo.NRC;
-            PersonalDetail personalInformation = await _serviceFactory.CreatePersonalDetailService().GetPersonalInformationByNRCInDBAndAPI(nrc);//await _serviceFactory.CreatePersonalDetailService().GetPersonalInformationByNRC(nrc);
             /*
              * Save Image Files
              */
@@ -148,21 +146,27 @@ namespace VAVS_Client.Controllers.TaxCalculation
                 fileService.SaveFile(Utility.ConcatNRCSemiComa(savePath), vehicleStandardValue.VehicleNumber, files);
 
                 TaxPersonImage taxPersonImage = _serviceFactory.CreateTaxPersonImageService().GetTaxPersonImageByPersonalDetailPkIdAndCarNumber(personalInformation.PersonalPkid, vehicleStandardValue.VehicleNumber);
+                string NrcImageUrl = Utility.MakeImageUrl(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber, NrcFileName);
+                string CensusImageUrl = Utility.MakeImageUrl(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber, CensusFileName);
+                string TransactionContractImageUrl = Utility.MakeImageUrl(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber, TransactionContractFileName);
+                string OwnerBookImageUrl = Utility.MakeImageUrl(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber, OwnerBookFileName);
+                string WheelTagImageUrl = Utility.MakeImageUrl(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber, WheelTabFileName);
+                string VehicleImageUrl = Utility.MakeImageUrl(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber, VehicleFileName);
+
                 if (taxPersonImage != null)
                 {
-                    Console.WriteLine("here not null..........................................");
                     taxPersonImage.NrcImagePath = NrcFileName;
                     taxPersonImage.CensusImagePath = CensusFileName;
                     taxPersonImage.TransactionContractImagePath = TransactionContractFileName;
                     taxPersonImage.OwnerBookImagePath = OwnerBookFileName;
                     taxPersonImage.WheelTagImagePath = WheelTabFileName;
                     taxPersonImage.VehicleImagePath = VehicleFileName;
-                    taxPersonImage.NrcImageUrl = Utility.MakeImageUrl(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber, NrcFileName);
-                    taxPersonImage.CensusImageUrl = Utility.MakeImageUrl(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber, CensusFileName);
-                    taxPersonImage.TransactionContractImageUrl = Utility.MakeImageUrl(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber, TransactionContractFileName);
-                    taxPersonImage.OwnerBookImageUrl = Utility.MakeImageUrl(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber, OwnerBookFileName);
-                    taxPersonImage.WheelTagImageUrl = Utility.MakeImageUrl(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber, WheelTabFileName);
-                    taxPersonImage.VehicleImageUrl = Utility.MakeImageUrl(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber, VehicleFileName);
+                    taxPersonImage.NrcImageUrl = NrcImageUrl//Utility.MakeImageUrl(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber, NrcFileName);
+                    taxPersonImage.CensusImageUrl = CensusImageUrl;//Utility.MakeImageUrl(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber, CensusFileName);
+                    taxPersonImage.TransactionContractImageUrl = TransactionContractImageUrl;//Utility.MakeImageUrl(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber, TransactionContractFileName);
+                    taxPersonImage.OwnerBookImageUrl = OwnerBookImageUrl;//Utility.MakeImageUrl(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber, OwnerBookFileName);
+                    taxPersonImage.WheelTagImageUrl = WheelTagImageUrl;//Utility.MakeImageUrl(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber, WheelTabFileName);
+                    taxPersonImage.VehicleImageUrl = VehicleImageUrl;//Utility.MakeImageUrl(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber, VehicleFileName);
                     _serviceFactory.CreateTaxPersonImageService().UpdateTaxPersonImage(taxPersonImage);
                 }
                 else
@@ -174,19 +178,19 @@ namespace VAVS_Client.Controllers.TaxCalculation
                         {
                             NrcImagePath = NrcFileName,
                             CensusImagePath = CensusFileName,
-                            TransactionContractImagePath = TransactionContractFileName, 
+                            TransactionContractImagePath = TransactionContractFileName,
                             OwnerBookImagePath = OwnerBookFileName,
                             WheelTagImagePath = WheelTabFileName,
                             VehicleImagePath = VehicleFileName,
-                            NrcImageUrl = Utility.MakeImageUrl(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber, NrcFileName),
-                            CensusImageUrl = Utility.MakeImageUrl(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber, CensusFileName),
-                            TransactionContractImageUrl = Utility.MakeImageUrl(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber, TransactionContractFileName),
-                            OwnerBookImageUrl = Utility.MakeImageUrl(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber, OwnerBookFileName),
-                            WheelTagImageUrl = Utility.MakeImageUrl(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber, WheelTabFileName),
-                            VehicleImageUrl = Utility.MakeImageUrl(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber, VehicleFileName),
+                            NrcImageUrl = NrcImageUrl, //Utility.MakeImageUrl(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber, NrcFileName),
+                            CensusImageUrl = CensusImageUrl,//Utility.MakeImageUrl(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber, CensusFileName),
+                            TransactionContractImageUrl = TransactionContractImageUrl,//Utility.MakeImageUrl(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber, TransactionContractFileName),
+                            OwnerBookImageUrl = OwnerBookImageUrl,//Utility.MakeImageUrl(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber, OwnerBookFileName),
+                            WheelTagImageUrl = WheelTagImageUrl,//Utility.MakeImageUrl(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber, WheelTabFileName),
+                            VehicleImageUrl = VehicleImageUrl,//Utility.MakeImageUrl(loginTaxPayerInfo.NRC, vehicleStandardValue.VehicleNumber, VehicleFileName),
                             CarNumber = vehicleStandardValue.VehicleNumber,
                             PersonalDetail = personalInformation
-                        }    
+                        }
                     );
                 }
             }

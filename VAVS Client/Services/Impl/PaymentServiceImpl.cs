@@ -223,7 +223,14 @@ namespace VAVS_Client.Services.Impl
                 PersonalDetail personalDetail = await _personalDetailService.GetPersonalInformationByNRCInDBAndAPI(loginUserInfo.NRC);
                 if (personalDetail == null)
                     return null;
-                List<Payment> remainingPaymentList = _context.Payments.Where(payment => payment.IsDeleted == false).Where(payment => payment.PersonalPkid == personalDetail.PersonalPkid && payment.PaymentStatus == "Pending").Include(payment => payment.TaxValidation).ToList();
+                //List<Payment> remainingPaymentList = _context.Payments.Where(payment => payment.IsDeleted == false).Where(payment => payment.PersonalPkid == personalDetail.PersonalPkid && payment.PaymentStatus == "Pending").Include(payment => payment.TaxValidation).ToList();
+                var remainingPaymentList = await _context.Payments
+                .AsNoTracking()
+                .Where(payment => payment.IsDeleted == false &&
+                                  payment.PersonalPkid == personalDetail.PersonalPkid &&
+                                  payment.PaymentStatus == "Pending")
+                                  .Include(payment => payment.TaxValidation)
+                                    .ToListAsync();
                 _logger.LogInformation("Get all remaining payment list success.");
                 return remainingPaymentList;
             }
@@ -287,6 +294,8 @@ namespace VAVS_Client.Services.Impl
             }
         }
 
+       
+
         public async Task<List<Payment>> GetApprovePaymentListEgerLoad(HttpContext httpContext)
         {
             try
@@ -320,7 +329,15 @@ namespace VAVS_Client.Services.Impl
                 PersonalDetail personalDetail = await _personalDetailService.GetPersonalInformationByNRCInDBAndAPI(loginUserInfo.NRC);
                 if (personalDetail == null)
                     return null;
-                List<Payment> approvePaymentList = _context.Payments.Where(payment => payment.IsDeleted == false).Where(payment => payment.PersonalPkid == personalDetail.PersonalPkid && payment.PaymentStatus == "Approve").Include(payment => payment.PersonalDetail).Include(payment => payment.TaxValidation).ToList();
+                //List<Payment> approvePaymentList = _context.Payments.Where(payment => payment.IsDeleted == false).Where(payment => payment.PersonalPkid == personalDetail.PersonalPkid && payment.PaymentStatus == "Approve").Include(payment => payment.PersonalDetail).Include(payment => payment.TaxValidation).ToList();
+                var approvePaymentList = await _context.Payments
+                        .AsNoTracking()
+                        .Where(payment => payment.IsDeleted == false &&
+                                          payment.PersonalPkid == personalDetail.PersonalPkid &&
+                                          payment.PaymentStatus == "Approve")
+                        .Include(payment => payment.PersonalDetail)
+                        .Include(payment => payment.TaxValidation)
+                        .ToListAsync();
                 _logger.LogInformation("Get all remaining payment list success.");
                 return approvePaymentList;
             }
@@ -413,8 +430,43 @@ namespace VAVS_Client.Services.Impl
         {
             try
             {
-                List<Payment> payments = await GetApprovePaymentListWithTaxValidationEgerLoad(httpContext);
-                return payments.Any(payment => payment.TaxValidation.VehicleNumber == vehicleNumber);
+                SessionService sessionService = new SessionServiceImpl();
+                TaxpayerInfo loginUserInfo = sessionService.GetLoginUserInfo(httpContext);
+                if (loginUserInfo == null)
+                    return false;
+
+                PersonalDetail personalDetail = await _personalDetailService.GetPersonalInformationByNRCInDBAndAPI(loginUserInfo.NRC);
+                if (personalDetail == null)
+                    return false;
+                /*List<Payment> payments = await GetApprovePaymentListWithTaxValidationEgerLoad(httpContext);
+                return payments.Any(payment => payment.TaxValidation.VehicleNumber == vehicleNumber);*/
+                bool isPaymentAlreadyMade = await _context.Payments
+            .AsNoTracking()
+            .AnyAsync(payment => payment.IsDeleted == false &&
+                                 payment.PersonalPkid == personalDetail.PersonalPkid &&
+                                 payment.PaymentStatus == "Approve" &&
+                                 payment.TaxValidation.VehicleNumber == vehicleNumber);
+
+                return isPaymentAlreadyMade;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Exception occur when IsALreadyPayment." + e);
+                throw;
+            }
+        }
+
+        public async Task<bool> IsALreadyPayment(int personalDetailPkid, string vehicleNumber)
+        {
+            try
+            {
+                bool isPaymentAlreadyMade = await _context.Payments
+            .AsNoTracking()
+            .AnyAsync(payment => payment.IsDeleted == false &&
+                                 payment.PersonalPkid == personalDetailPkid &&
+                                 payment.PaymentStatus == "Approve" &&
+                                 payment.TaxValidation.VehicleNumber == vehicleNumber);
+                return isPaymentAlreadyMade;
             }
             catch (Exception e)
             {
@@ -427,8 +479,45 @@ namespace VAVS_Client.Services.Impl
         {
             try
             {
-                List<Payment> payments = await GetRemainPaymentListTaxValidationEgerLoad(httpContext);
-                return payments.Any(payment => payment.TaxValidation.VehicleNumber == vehicleNumber);
+                SessionService sessionService = new SessionServiceImpl();
+                TaxpayerInfo loginUserInfo = sessionService.GetLoginUserInfo(httpContext);
+                if (loginUserInfo == null)
+                    return false;
+
+                PersonalDetail personalDetail = await _personalDetailService.GetPersonalInformationByNRCInDBAndAPI(loginUserInfo.NRC);
+                if (personalDetail == null)
+                    return false;
+                /*List<Payment> payments = await GetRemainPaymentListTaxValidationEgerLoad(httpContext);
+                return payments.Any(payment => payment.TaxValidation.VehicleNumber == vehicleNumber);*/
+                bool isPendingPaymentAlreadyMade = await _context.Payments
+                    .AsNoTracking()
+                    .AnyAsync(payment => payment.IsDeleted == false &&
+                                         payment.PersonalPkid == personalDetail.PersonalPkid &&
+                                         payment.PaymentStatus == "Pending" &&
+                                         payment.TaxValidation.VehicleNumber == vehicleNumber);
+
+                        return isPendingPaymentAlreadyMade;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Exception occur when IsALreadyPayment." + e);
+                throw;
+            }
+        }
+
+        public async Task<bool> IsALreadyPendingPayment(int personalDetailPkId, string vehicleNumber)
+        {
+            try
+            {
+              
+                bool isPendingPaymentAlreadyMade = await _context.Payments
+                    .AsNoTracking()
+                    .AnyAsync(payment => payment.IsDeleted == false &&
+                                         payment.PersonalPkid == personalDetailPkId &&
+                                         payment.PaymentStatus == "Pending" &&
+                                         payment.TaxValidation.VehicleNumber == vehicleNumber);
+
+                return isPendingPaymentAlreadyMade;
             }
             catch (Exception e)
             {

@@ -21,7 +21,11 @@ namespace VAVS_Client.Services.Impl
 
         public LoginUserInfo GetLoginUserByHashedToken(string token)
         {
-            return FindByString("Token", token);
+            return _context.LoginUserInfos
+            .FromSqlRaw("SELECT TOP 1 * FROM TB_LoginUserInfo WHERE Token = {0}", token)
+            .AsNoTracking()
+            .FirstOrDefault();
+            //return FindByString("Token", token);
         }
 
         public void UpdateTaxedPayerInfo(string token, LoginUserInfo taxPayerInfo)

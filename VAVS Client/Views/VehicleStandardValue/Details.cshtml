@@ -27,7 +27,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="text-end">
+                    <div class="text-center">
                         <input class="fw-bold text-center" type="text" asp-for="ModelYear" value="@Model.ModelYear" readonly="" style="background-color: inherit;border: none; font-size:24px; cursor:not-allowed;">
                     </div>
                 </div>
@@ -37,7 +37,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="text-end">
+                    <div class="text-center">
                         <input class="fw-bold text-center" type="text" asp-for="Manufacturer" value="@Model.Manufacturer" readonly="" style="background-color: inherit;border: none; font-size:24px; cursor:not-allowed;">
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="text-end">
+                    <div class="text-center">
                         <input class="fw-bold text-center text-danger" type="text" asp-for="StandardValue" value="@(Model.StandardValue == "NULL" || Model.StandardValue == "0" ? "0" : string.Concat(Model.StandardValue, "00000"))" readonly="" style="background-color: inherit;border: none; font-size:24px; cursor:not-allowed;">
                     </div>
                 </div>

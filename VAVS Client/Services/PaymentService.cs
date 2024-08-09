@@ -9,7 +9,9 @@
         public Task<List<Payment>> GetRemainPaymentList(HttpContext httpContext);
         public Task<bool> FindPaymentByTaxValidationWithPendingStatus(int taxValidationPkId);
         public Task<bool> IsALreadyPayment(HttpContext httpContext, string vehicleNumber);
+        public Task<bool> IsALreadyPayment(int personalDetailPkid, string vehicleNumber);
         public Task<bool> IsALreadyPendingPayment(HttpContext httpContext, string vehicleNumber);
+        public Task<bool> IsALreadyPendingPayment(int personalDetailPkid, string vehicleNumber);
         public Task<bool> UpdatePaymentStatus(string transactionNumber);
         public Task<List<Payment>> GetApprovePaymentList(HttpContext httpContext);
         public Task<List<Payment>> GetApprovePaymentListEgerLoad(HttpContext httpContext);

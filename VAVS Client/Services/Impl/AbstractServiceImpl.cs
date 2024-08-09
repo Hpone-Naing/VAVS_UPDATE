@@ -112,10 +112,15 @@ namespace VAVS_Client.Services.Impl
             try
             {
                 _logger.LogInformation(">>>>>>>>>> Found object's specific columnName's value match stringValue <<<<<<<<<<");
-                return _context.Set<T>().FirstOrDefault(entity =>
-                   entity != null && EF.Property<string>(entity, columnName)!=null && EF.Property<string>(entity, columnName) == str);
+                /*return _context.Set<T>().FirstOrDefault(entity =>
+                   entity != null && EF.Property<string>(entity, columnName)!=null && EF.Property<string>(entity, columnName) == str);*/
+                return _context.Set<T>()
+                       .AsNoTracking()
+                       .FirstOrDefault(entity =>
+                           entity != null && EF.Property<string>(entity, columnName) != null && EF.Property<string>(entity, columnName) == str);
+
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 _logger.LogError(">>>>>>>>>> Error occur when finding object's specific columnName's value match stringValue. <<<<<<<<<<" + e);
                 throw;

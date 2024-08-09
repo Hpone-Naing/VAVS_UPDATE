@@ -42,7 +42,12 @@ namespace VAVS_Client.Services.Impl
 
         public TaxPersonImage GetTaxPersonImageByPersonalDetailPkIdAndCarNumber(int personalDetailPkId, string carNumber)
         {
-            return _context.TaxPersonImages.FirstOrDefault(taxPersonImage => taxPersonImage.PersonalDetailPkid == personalDetailPkId && taxPersonImage.CarNumber == carNumber);
+           return _context.TaxPersonImages
+        .AsNoTracking()
+        .FirstOrDefault(taxPersonImage =>
+            taxPersonImage.PersonalDetailPkid == personalDetailPkId &&
+            taxPersonImage.CarNumber == carNumber);
+            //return _context.TaxPersonImages.FirstOrDefault(taxPersonImage => taxPersonImage.PersonalDetailPkid == personalDetailPkId && taxPersonImage.CarNumber == carNumber);
         }
 
         public bool HardDeleteTaxPersonImage(int personalDetailPkId, string carNumber)
